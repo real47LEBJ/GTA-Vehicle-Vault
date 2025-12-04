@@ -1,0 +1,28 @@
+.app {
+    background-color: rgb(231, 231, 231);
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.appNav {
+    height: 5%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.navButton {
+    margin: 0 10px;
+}
+
+.mainContent {
+    height: 95%;
+    width: 100%;
+    background-color: rgb(255, 255, 255);
+}
