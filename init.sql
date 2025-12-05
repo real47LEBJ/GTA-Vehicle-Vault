@@ -9,7 +9,8 @@ CREATE TABLE garage_overview (
   garage_name VARCHAR(255),
   garage_name_en VARCHAR(255),
   num INTEGER,
-  vehicle_list TEXT
+  vehicle_list TEXT,
+  remarks VARCHAR(255)
 );
 
 -- ----------------------------

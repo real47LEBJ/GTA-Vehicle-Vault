@@ -15,7 +15,7 @@ pub fn get_vehicle_overviews(app: AppHandle) -> Result<ApiResponse<Vec<VehicleOv
     let db_path = app_dir.join("gtavm_common.db");
 
     match Connection::open(&db_path) {
-        Ok(conn) => match conn.prepare("SELECT id, brand_id, vehicle_name, vehicle_name_en, remarks, feature FROM vehicle_overview") {
+        Ok(conn) => match conn.prepare("SELECT id, brand_id, vehicle_name, vehicle_name_en, remarks, feature, vehicle_type FROM vehicle_overview") {
             Ok(mut stmt) => {
                 match stmt.query_map([], |row| {
                     Ok(VehicleOverview {
@@ -25,6 +25,7 @@ pub fn get_vehicle_overviews(app: AppHandle) -> Result<ApiResponse<Vec<VehicleOv
                         vehicle_name_en: row.get(3)?,
                         remarks: row.get(4)?,
                         feature: row.get(5)?,
+                        vehicle_type: row.get(6)?,
                     })
                 }) {
                     Ok(vehicle_iter) => match vehicle_iter.collect::<Result<_>>() {
@@ -73,7 +74,7 @@ pub fn get_vehicle_overviews_by_brand(
     let db_path = app_dir.join("gtavm_common.db"); // 使用通用数据库文件存储车辆数据
 
     match Connection::open(&db_path) {
-        Ok(conn) => match conn.prepare("SELECT id, brand_id, vehicle_name, vehicle_name_en, remarks, feature FROM vehicle_overview WHERE brand_id = ?1") {
+        Ok(conn) => match conn.prepare("SELECT id, brand_id, vehicle_name, vehicle_name_en, remarks, feature, vehicle_type FROM vehicle_overview WHERE brand_id = ?1") {
             Ok(mut stmt) => {
                 match stmt.query_map(params![brand_id], |row| {
                     Ok(VehicleOverview {
@@ -83,6 +84,7 @@ pub fn get_vehicle_overviews_by_brand(
                         vehicle_name_en: row.get(3)?,
                         remarks: row.get(4)?,
                         feature: row.get(5)?,
+                        vehicle_type: row.get(6)?,
                     })
                 }) {
                     Ok(vehicle_iter) => match vehicle_iter.collect::<Result<_>>() {
@@ -155,15 +157,16 @@ pub fn add_vehicle_overview(
                     }
 
                     match tx.execute(
-                        "INSERT INTO vehicle_overview (id, brand_id, vehicle_name, vehicle_name_en, remarks, feature) 
-                         VALUES (?1, ?2, ?3, ?4, ?5, ?6)",
+                        "INSERT INTO vehicle_overview (id, brand_id, vehicle_name, vehicle_name_en, remarks, feature, vehicle_type) 
+                         VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7)",
                         params![
                             vehicle.id,
                             vehicle.brand_id,
                             vehicle.vehicle_name,
                             vehicle.vehicle_name_en,
                             vehicle.remarks,
-                            vehicle.feature
+                            vehicle.feature,
+                            vehicle.vehicle_type
                         ],
                     ) {
                         Ok(_) => {
@@ -251,13 +254,14 @@ pub fn update_vehicle_overview(
                     }
 
                     match tx.execute(
-                        "UPDATE vehicle_overview SET brand_id = ?1, vehicle_name = ?2, vehicle_name_en = ?3, remarks = ?4, feature = ?5 WHERE id = ?6",
+                        "UPDATE vehicle_overview SET brand_id = ?1, vehicle_name = ?2, vehicle_name_en = ?3, remarks = ?4, feature = ?5, vehicle_type = ?6 WHERE id = ?7",
                         params![
                             vehicle.brand_id,
                             vehicle.vehicle_name,
                             vehicle.vehicle_name_en,
                             vehicle.remarks,
                             vehicle.feature,
+                            vehicle.vehicle_type,
                             vehicle.id
                         ],
                     ) {
@@ -307,7 +311,7 @@ pub fn update_vehicle_overview(
 
 // 删除车辆概览
 #[command]
-pub fn delete_vehicle_overview(app: AppHandle, id: i32) -> Result<ApiResponse<()>, String> {
+pub fn delete_vehicle_overview(app: AppHandle, id: String) -> Result<ApiResponse<()>, String> {
     let app_dir = app
         .path()
         .app_data_dir()

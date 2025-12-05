@@ -119,11 +119,12 @@ export const getVehicles = async (
         vehicle_name: vehicle.vehicle_name || "",
         vehicle_name_en: vehicle.vehicle_name_en || "",
         feature: vehicle.feature || "",
+        vehicle_type: vehicle.vehicle_type || "",
       }));
 
       return {
         success: true,
-        data: transformedVehicles,
+        data: transformedVehicles as Vehicle[],
         error: null,
       };
     } else {
@@ -236,7 +237,7 @@ export const addVehicle = async (
 
       return {
         success: true,
-        data: transformedVehicle,
+        data: transformedVehicle as Vehicle,
         error: null,
       };
     } else {

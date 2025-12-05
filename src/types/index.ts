@@ -66,6 +66,7 @@ export interface Vehicle {
   vehicle_name: string;
   vehicle_name_en: string;
   feature: string;
+  vehicle_type: string;
 }
 
 export interface BrandWithVehicles extends Brand {
@@ -80,6 +81,7 @@ export interface GarageVehicle {
   brandNameEn: string;
   remarks: string;
   feature: string;
+  vehicle_type?: string;
   plate?: string;
   id?: string;
 }
@@ -91,4 +93,5 @@ export interface Garage {
   remarks?: string;
   vehicleList: GarageVehicle[];
   order?: number;
+  garage_type?: string;
 }

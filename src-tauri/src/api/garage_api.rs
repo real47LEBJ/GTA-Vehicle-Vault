@@ -16,7 +16,7 @@ pub fn get_garage_overviews(app: AppHandle) -> Result<ApiResponse<Vec<GarageOver
 
     match Connection::open(&db_path) {
         Ok(conn) => match conn.prepare(
-            "SELECT id, garage_name, garage_name_en, num, vehicle_list, remarks, `order` FROM garage_overview ORDER BY `order` ASC",
+            "SELECT id, garage_name, garage_name_en, num, vehicle_list, remarks, `order`, garage_type FROM garage_overview ORDER BY `order` ASC",
         ) {
             Ok(mut stmt) => {
                 match stmt.query_map([], |row| {
@@ -28,6 +28,7 @@ pub fn get_garage_overviews(app: AppHandle) -> Result<ApiResponse<Vec<GarageOver
                         vehicle_list: row.get(4)?,
                         remarks: row.get(5)?,
                         order: row.get(6)?,
+                        garage_type: row.get(7)?,
                     })
                 }) {
                     Ok(garage_iter) => match garage_iter.collect::<Result<_>>() {
@@ -75,15 +76,16 @@ pub fn add_garage_overview(
                     let new_order = max_order.map(|o| o + 1).unwrap_or(1);
                     
                     match tx.execute(
-                        "INSERT INTO garage_overview (garage_name, garage_name_en, num, vehicle_list, remarks, `order`) 
-                         VALUES (?1, ?2, ?3, ?4, ?5, ?6)",
+                        "INSERT INTO garage_overview (garage_name, garage_name_en, num, vehicle_list, remarks, `order`, garage_type) 
+                         VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7)",
                         params![
                             garage.garage_name,
                             garage.garage_name_en,
                             garage.num,
                             garage.vehicle_list,
                             garage.remarks,
-                            garage.order.unwrap_or(new_order)
+                            garage.order.unwrap_or(new_order),
+                            garage.garage_type
                         ],
                     ) {
                         Ok(_) => {
@@ -102,7 +104,8 @@ pub fn add_garage_overview(
                                 num: garage.num,
                                 vehicle_list: garage.vehicle_list,
                                 remarks: garage.remarks,
-                                order: Some(garage.order.unwrap_or(new_order))
+                                order: Some(garage.order.unwrap_or(new_order)),
+                                garage_type: garage.garage_type
                             };
                                     
                                     Ok(ApiResponse {
@@ -153,7 +156,7 @@ pub fn update_garage_overview(
             match conn.transaction() {
                 Ok(tx) => {
                     match tx.execute(
-                        "UPDATE garage_overview SET garage_name = ?1, garage_name_en = ?2, num = ?3, vehicle_list = ?4, remarks = ?5, `order` = ?6 WHERE id = ?7",
+                        "UPDATE garage_overview SET garage_name = ?1, garage_name_en = ?2, num = ?3, vehicle_list = ?4, remarks = ?5, `order` = ?6, garage_type = ?7 WHERE id = ?8",
                         params![
                             garage.garage_name,
                             garage.garage_name_en,
@@ -161,6 +164,7 @@ pub fn update_garage_overview(
                             garage.vehicle_list,
                             garage.remarks,
                             garage.order,
+                            garage.garage_type,
                             garage_id
                         ],
                     ) {
