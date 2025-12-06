@@ -5,7 +5,7 @@ use tauri::{command, AppHandle, Manager};
 // 导入数据模型
 use crate::models::{ApiResponse, VehicleBrand};
 
-// 获取所有车辆品牌
+// 获取所有载具品牌
 #[command]
 pub fn get_vehicle_brands(app: AppHandle) -> Result<ApiResponse<Vec<VehicleBrand>>, String> {
     let app_dir = app
@@ -56,7 +56,7 @@ pub fn get_vehicle_brands(app: AppHandle) -> Result<ApiResponse<Vec<VehicleBrand
     }
 }
 
-// 添加车辆品牌
+// 添加载具品牌
 #[command]
 pub fn add_vehicle_brand(
     app: AppHandle,
@@ -120,7 +120,7 @@ pub fn add_vehicle_brand(
     }
 }
 
-// 更新车辆品牌
+// 更新载具品牌
 #[command]
 pub fn update_vehicle_brand(
     app: AppHandle,
@@ -189,7 +189,7 @@ pub fn update_vehicle_brand(
     }
 }
 
-// 删除车辆品牌
+// 删除载具品牌
 #[command]
 pub fn delete_vehicle_brand(app: AppHandle, id: i32) -> Result<ApiResponse<()>, String> {
     let app_dir = app
@@ -202,7 +202,7 @@ pub fn delete_vehicle_brand(app: AppHandle, id: i32) -> Result<ApiResponse<()>, 
         Ok(mut conn) => {
             match conn.transaction() {
                 Ok(tx) => {
-                    // 先检查是否有车辆关联到该品牌
+                    // 先检查是否有载具关联到该品牌
                     let count: i64 = match tx.query_row(
                         "SELECT COUNT(*) FROM vehicle_overview WHERE brand_id = ?1",
                         params![id],
@@ -219,7 +219,7 @@ pub fn delete_vehicle_brand(app: AppHandle, id: i32) -> Result<ApiResponse<()>, 
                     };
 
                     if count > 0 {
-                        return Err("该品牌下存在车辆，无法删除".to_string());
+                        return Err("该品牌下存在载具，无法删除".to_string());
                     }
 
                     match tx.execute("DELETE FROM vehicle_brand WHERE id = ?1", params![id]) {

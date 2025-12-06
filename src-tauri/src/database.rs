@@ -14,7 +14,7 @@ pub fn init_db(app: &App) -> Result<()> {
         .expect("Failed to get app data directory");
 
     // 创建两个数据库文件路径
-    let common_db_path = app_dir.join("gtavm_common.db"); // 用于存储通用数据（车辆和品牌）
+    let common_db_path = app_dir.join("gtavm_common.db"); // 用于存储通用数据（载具和品牌）
     let user_db_path = app_dir.join("gtavm_user.db"); // 用于存储用户个性化数据（车库）
 
     // 确保目录存在
@@ -23,7 +23,7 @@ pub fn init_db(app: &App) -> Result<()> {
         std::fs::create_dir_all(&app_dir).expect("Failed to create app data directory");
     }
 
-    // 初始化通用数据库（车辆和品牌）
+    // 初始化通用数据库（载具和品牌）
     init_common_db(app, &common_db_path)?;
 
     // 初始化用户数据库（车库）
@@ -32,7 +32,7 @@ pub fn init_db(app: &App) -> Result<()> {
     Ok(())
 }
 
-// 初始化通用数据库（车辆和品牌）
+// 初始化通用数据库（载具和品牌）
 fn init_common_db(app: &App, db_path: &std::path::Path) -> Result<()> {
     println!("Initializing common database (vehicles and brands)...");
 
@@ -149,7 +149,7 @@ fn init_common_db(app: &App, db_path: &std::path::Path) -> Result<()> {
     // 强制创建所有表，无论它们是否已存在
     // 这样可以确保即使数据库文件存在但表结构不完整，也能被正确修复
 
-    // 创建车辆品牌表
+    // 创建载具品牌表
     println!("Creating or updating vehicle_brand table...");
     if let Err(e) = conn.execute(
         "CREATE TABLE IF NOT EXISTS vehicle_brand (
@@ -164,21 +164,54 @@ fn init_common_db(app: &App, db_path: &std::path::Path) -> Result<()> {
         return Err(e);
     }
 
-    // 创建车辆概览表
+    // 创建载具概览表
     println!("Creating or updating vehicle_overview table...");
     if let Err(e) = conn.execute(
         "CREATE TABLE IF NOT EXISTS vehicle_overview (
-            id INTEGER NOT NULL PRIMARY KEY,
-            brand_id INTEGER,
-            vehicle_name VARCHAR(255),
-            vehicle_name_en VARCHAR(255),
-            remarks VARCHAR(255),
-            feature VARCHAR(255),
-            FOREIGN KEY (brand_id) REFERENCES vehicle_brand (id)
+            id text NOT NULL,
+            brand_id integer,
+            vehicle_name text,
+            vehicle_name_en text,
+            vehicle_type text,
+            feature text,
+            price integer,
+            remarks text,
+            PRIMARY KEY (id),
+            FOREIGN KEY (brand_id) REFERENCES vehicle_brand (id) ON DELETE NO ACTION ON UPDATE NO ACTION
         )",
         [],
     ) {
         eprintln!("Failed to create vehicle_overview table: {:?}", e);
+        return Err(e);
+    }
+
+    // 创建特性类型字典表
+    println!("Creating or updating feature_type_dict table...");
+    if let Err(e) = conn.execute(
+        "CREATE TABLE IF NOT EXISTS feature_type_dict (
+            id integer NOT NULL,
+            dict_key text,
+            dict_value text,
+            PRIMARY KEY (id)
+        )",
+        [],
+    ) {
+        eprintln!("Failed to create feature_type_dict table: {:?}", e);
+        return Err(e);
+    }
+
+    // 创建载具类型字典表
+    println!("Creating or updating vehicle_type_dict table...");
+    if let Err(e) = conn.execute(
+        "CREATE TABLE IF NOT EXISTS vehicle_type_dict (
+            id integer NOT NULL,
+            dict_key text,
+            dict_value text,
+            PRIMARY KEY (id)
+        )",
+        [],
+    ) {
+        eprintln!("Failed to create vehicle_type_dict table: {:?}", e);
         return Err(e);
     }
 

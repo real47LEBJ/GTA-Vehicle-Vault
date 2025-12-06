@@ -5,17 +5,20 @@
     width: 100%;
     box-sizing: border-box;
     overflow: hidden;
+    background-color: #121212;
+    color: #ffffff;
 }
 
 /* 品牌列表容器 */
 .brandContainer {
     width: 220px;
     height: 100%;
-    border-right: 1px solid #e0e0e0;
+    border-right: 1px solid #333333;
     overflow-y: auto;
-    box-shadow: 2px 0 4px rgba(0, 0, 0, 0.05);
+    box-shadow: 2px 0 4px rgba(0, 0, 0, 0.3);
     box-sizing: border-box;
     position: relative;
+    background-color: #1e1e1e;
 }
 
 /* 自定义滚动条样式 */
@@ -29,7 +32,6 @@
 
 .brandContainer::-webkit-scrollbar-thumb {
     background: #ccc;
-    border-radius: 3px;
 }
 
 .brandContainer::-webkit-scrollbar-thumb:hover {
@@ -42,9 +44,9 @@
     box-sizing: border-box;
     position: sticky;
     top: 0;
-    background-color: #fff;
+    background-color: #1e1e1e;
     z-index: 10;
-    border-bottom: 1px solid #f0f0f0;
+    border-bottom: 1px solid #333333;
 }
 
 /* 搜索输入框容器 */
@@ -58,13 +60,14 @@
 /* 搜索输入框 */
 .searchInput {
     width: 100%;
-    padding: 8px 12px 8px 32px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
+    padding: 8px 12px 8px 27px;
+    border: 1px solid #444444;
     font-size: 14px;
     transition: border-color 0.2s ease;
     outline: none;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23666' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cline x1='21' y1='21' x2='16.65' y2='16.65'/%3E%3C/svg%3E");
+    background-color: #272727;
+    color: #ffffff;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cline x1='21' y1='21' x2='16.65' y2='16.65'/%3E%3C/svg%3E");
     background-repeat: no-repeat;
     background-position: 8px center;
     background-size: 16px;
@@ -75,20 +78,77 @@
     box-shadow: 0 0 0 2px rgba(33, 150, 243, 0.1);
 }
 
+/* 筛选下拉框样式 */
+.filterSelect {
+    padding: 8px 12px;
+    margin-right: 10px;
+    border: 1px solid #333;
+    background-color: #1a1a1a;
+    color: #ffffff;
+    font-size: 14px;
+    cursor: pointer;
+    width: 180px;
+    position: relative;
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 8px center;
+    background-size: 16px;
+}
+
+/* 模拟下拉框placeholder效果 */
+.filterSelect:invalid {
+    color: #999;
+}
+
+.filterSelect option {
+    color: #ffffff;
+    background-color: #1a1a1a;
+}
+
+.filterSelect:focus {
+    border-color: #007bff;
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+}
+
+/* 筛选复选框样式 */
+.filterCheckbox {
+    accent-color: #007bff;
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+}
+
+/* 重置按钮样式 */
+.resetButton {
+    padding: 4px 8px;
+    border: 1px solid #444;
+    font-size: 14px;
+    background-color: #333;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.resetButton:hover {
+    background-color: #444;
+}
+
 /* 清除搜索按钮 */
 .clearSearchButton {
     position: absolute;
     right: 4px;
     top: 50%;
     transform: translateY(-50%);
-    background: #fff;
+    background: #333333;
     border: none;
     border-radius: 50%;
     width: 24px;
     height: 24px;
     font-size: 18px;
     cursor: pointer;
-    color: #999;
+    color: #ffffff;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -101,11 +161,66 @@
     color: #666;
 }
 
+/* 下拉框容器 */
+.selectContainer {
+    position: relative;
+    display: inline-block;
+}
+
+/* 下拉框清除按钮 */
+.clearSelectButton {
+    position: absolute;
+    right: 38px;
+    top: 49%;
+    transform: translateY(-50%);
+    background: transparent;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+    color: #ffffff;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s ease;
+    line-height: 1;
+    z-index: 1;
+}
+
+.clearSelectButton:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+/* 复选框容器 */
+.checkboxContainer {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+}
+
+/* 自定义复选框 */
+.customCheckbox {
+    accent-color: #007bff;
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+}
+
+/* 复选框标签 */
+.checkboxContainer label {
+    color: #ffffff;
+    font-size: 14px;
+    cursor: pointer;
+    user-select: none;
+}
+
 /* 品牌名称 */
 .brandName {
     font-size: 14px;
     font-weight: 500;
-    color: #333;
+    color: #ffffff;
     margin-bottom: 2px;
     white-space: nowrap;
     overflow: hidden;
@@ -115,7 +230,7 @@
 /* 品牌英文名称 */
 .brandNameEn {
     font-size: 12px;
-    color: #757575;
+    color: #aaaaaa;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -141,97 +256,90 @@
 .brandItem {
     width: 100%;
     padding: 10px 16px;
-    transition: all 0.2s ease;
-    border-left: 3px solid transparent;
     margin-bottom: 0;
     cursor: pointer;
     box-sizing: border-box;
     display: flex;
     align-items: center;
     gap: 12px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-    background-color: #212529;
-}
-
-.brandItem:hover {
-    background-color: #f5f5f5;
-    transform: translateX(2px);
+    background-color: #121212;
+    border-bottom: 1px solid #3f3f3f3b;
 }
 
 .brandItem.active {
-    background-color: #e3f2fd;
-    border-left-color: #2196f3;
-    box-shadow: 0 2px 4px rgba(33, 150, 243, 0.1);
+
+    color: #000000;
 }
 
 /* 品牌名称 */
 .brandName {
     font-size: 16px;
-    color: #333333;
+    color: #ffffff;
     margin-bottom: 4px;
 }
 
 .brandNameEn {
     font-size: 12px;
-    color: #757575;
+    color: #aaaaaa;
     font-style: italic;
 }
 
-/* 车辆容器 */
+/* 载具容器 */
 .vehicleContainer {
     flex: 1;
     height: 100%;
-    overflow-y: auto;
     padding: 20px;
     box-sizing: border-box;
-
+    background-color: #121212;
+    overflow: hidden;
 }
 
-/* 品牌车辆部分 */
+/* 品牌载具部分 */
 .brandVehicleSection {
     margin-bottom: 32px;
 }
 
 .brandVehicleSection h2 {
     font-size: 24px;
-    color: #212121;
+    color: #ffffff;
     margin-bottom: 16px;
     padding-bottom: 8px;
-    border-bottom: 2px solid #e0e0e0;
+    border-bottom: 2px solid #333333;
     width: fit-content;
     padding-right: 10px;
 }
 
-/* 车辆列表 */
+/* 载具列表 */
 .vehicleList {
-    padding: 8px;
     display: flex;
     flex-wrap: wrap;
     gap: 7px;
     overflow-x: auto;
+    justify-content: flex-start;
+    background-color: #121212;
+    padding-left: 26px;
 }
 
-/* 车辆项 */
+/* 载具项 */
 .vehicleItem {
-    background-color: #f8f9fa;
-    border: 1px solid #e9ecef;
-    border-radius: 6px;
+    background-color: #1e1e1e;
+    border: 1px solid #333333;
     padding: 5px;
     min-width: 0;
     display: flex;
     flex-direction: column;
     position: relative;
-    transition: all 0.2s ease;
-    flex: 0 0 calc(10% - 9px);
+    transition: all 0.5s ease;
+    flex: 0 0 calc(11%);
     /* 10%宽度减去gap的影响，确保一行能容纳10个 */
 }
 
 .vehicleItem:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 4px rgba(255, 255, 255, 0.1);
+    border-color: #555555;
 }
 
-/* 车辆特性 */
+/* 载具特性 */
 .vehicleFeature {
     display: flex;
     flex-wrap: nowrap;
@@ -241,50 +349,27 @@
 }
 
 .featureItem {
-    font-size: 9px;
-    padding: 1px 3px;
-    border-radius: 2px;
+    font-size: 10px;
+    padding: 4px 4px;
     background-color: #ddd;
     color: #333;
+    font-weight: bold;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 1);
 }
 
-/* 特定特性的颜色样式 */
-.bennyFeature {
-    background-color: #8C2226;
-    color: #fff;
-    font-weight: 600;
-}
 
-.imaniFeature {
-    background-color: #9932cc;
-    color: white;
-    font-weight: 600;
-}
-
-.haoFeature {
-    background-color: #E06A30;
-    color: white;
-    font-weight: 600;
-}
-
-.policeFeature {
-    background-color: #050877;
-    color: white;
-    font-weight: 600;
-}
-
-/* 车辆信息 */
+/* 载具信息 */
 .vehicleInfo {
     display: flex;
     flex-direction: column;
     width: 100%;
 }
 
-/* 确保车辆信息在小空间内正确显示 */
+/* 确保载具信息在小空间内正确显示 */
 .vehicleName {
     font-size: 12px;
     font-weight: 600;
-    color: #333;
+    color: #ffffff;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -292,18 +377,18 @@
 
 .vehicleNameEn {
     font-size: 11px;
-    color: #6c757d;
+    color: #aaaaaa;
     font-style: italic;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 }
 
-/* 车辆名称 */
+/* 载具名称 */
 .vehicleName {
     font-size: 13px;
     font-weight: 600;
-    color: #333;
+    color: #ffffff;
     margin-bottom: 2px;
     white-space: nowrap;
     overflow: hidden;
@@ -312,9 +397,43 @@
 
 .vehicleNameEn {
     font-size: 11px;
-    color: #6c757d;
+    color: #aaaaaa;
     font-style: italic;
     margin-bottom: 4px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* 品牌名称样式 */
+.vehicleBrand {
+    font-size: 15px;
+    color: #ffffff;
+    margin-bottom: 2px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* 载具类型样式 */
+.vehicleType {
+    font-size: 10px;
+    color: #aaaaaa;
+    margin-top: 2px;
+    margin-bottom: 2px;
+    font-style: italic;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* 载具价格样式 */
+.vehiclePrice {
+    font-size: 11px;
+    font-weight: bold;
+    color: #4caf50;
+    margin-top: 2px;
+    margin-bottom: 2px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -328,18 +447,17 @@
 
 .brandContainer::-webkit-scrollbar-track,
 .vehicleContainer::-webkit-scrollbar-track {
-    background: #f1f1f1;
+    background: #1e1e1e;
 }
 
 .brandContainer::-webkit-scrollbar-thumb,
 .vehicleContainer::-webkit-scrollbar-thumb {
-    background: #c1c1c1;
-    border-radius: 3px;
+    background: #555555;
 }
 
 .brandContainer::-webkit-scrollbar-thumb:hover,
 .vehicleContainer::-webkit-scrollbar-thumb:hover {
-    background: #a8a8a8;
+    background: #777777;
 }
 
 /* 响应式设计 */
@@ -355,7 +473,7 @@
         flex-wrap: wrap;
         padding: 8px;
         border-right: none;
-        border-bottom: 1px solid #e0e0e0;
+        border-bottom: 1px solid #333333;
     }
 
     .brandItem {
@@ -375,7 +493,7 @@
     align-items: center;
     height: 100%;
     font-size: 18px;
-    color: #b8b8b8;
+    color: #aaaaaa;
 }
 
 .errorContainer {
@@ -384,18 +502,18 @@
     align-items: center;
     height: 100%;
     font-size: 18px;
-    color: #d32f2f;
+    color: #ff4444;
     padding: 20px;
     text-align: center;
 }
 
-/* 无车辆数据提示 */
+/* 无载具数据提示 */
 .noVehicles {
     display: flex;
     justify-content: center;
     align-items: center;
     font-size: 16px;
-    color: #757575;
+    color: #aaaaaa;
     text-align: center;
 }
 
@@ -406,25 +524,24 @@
     align-items: center;
     height: 100%;
     font-size: 18px;
-    color: #757575;
+    color: #aaaaaa;
     text-align: center;
 }
 
 .brandItem.active {
-    border-left-color: transparent;
-    border-bottom-color: #2196f3;
+    background-color: #424242;
 }
 
 .vehicleList {
     grid-template-columns: 1fr;
 }
 
-/* 购买/移动车辆按钮 */
+/* 购买/移动载具按钮 */
 .moveVehicleButton {
     position: absolute;
     top: 5px;
     right: 5px;
-    background-color: rgba(255, 255, 255, 0.7);
+    background-color: rgba(51, 51, 51, 0.7);
     border: none;
     border-radius: 50%;
     width: 24px;
@@ -439,7 +556,7 @@
 }
 
 .moveVehicleButton:hover {
-    background-color: rgba(255, 255, 255, 0.9);
+    background-color: rgba(78, 78, 78, 0.9);
 }
 
 /* 对话框样式 */
@@ -450,7 +567,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.7);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -459,13 +576,12 @@
 
 .moveDialog,
 .swapDialog {
-    background-color: white;
-    border-radius: 8px;
+    background-color: #1e1e1e;
     width: 90%;
     max-width: 800px;
     max-height: 90vh;
     overflow-y: auto;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 4px 12px rgba(255, 255, 255, 0.15);
 }
 
 .moveDialogHeader,
@@ -518,9 +634,8 @@
 }
 
 .garageOption {
-    background-color: #f8f9fa;
-    border: 1px solid #dee2e6;
-    border-radius: 8px;
+    background-color: #2a2a2a;
+    border: 1px solid #444444;
     padding: 12px;
     cursor: pointer;
     transition: all 0.2s;
@@ -528,18 +643,19 @@
 }
 
 .garageOption:hover {
-    background-color: #e9ecef;
-    border-color: #6c757d;
+    background-color: #3a3a3a;
+    border-color: #666666;
 }
 
 .garageOptionName {
     font-weight: bold;
     margin-bottom: 5px;
+    color: #ffffff;
 }
 
 .garageOptionCapacity {
     font-size: 12px;
-    color: #6c757d;
+    color: #aaaaaa;
 }
 
 /* 位置选择样式 */
@@ -553,7 +669,7 @@
 }
 
 .positionOption {
-    border: 1px solid #dee2e6;
+    border: 1px solid #444444;
     cursor: pointer;
     transition: all 0.2s;
     text-align: center;
@@ -563,34 +679,35 @@
 }
 
 .emptyPosition {
-    background-color: #d4edda;
-    border-color: #c3e6cb;
+    background-color: #2c3e50;
+    border-color: #34495e;
 }
 
 .occupiedPosition {
-    background-color: #f8d7da;
-    border-color: #f5c6cb;
+    background-color: #3c0000;
+    border-color: #5c0000;
 }
 
 .currentVehiclePosition {
     cursor: not-allowed;
-    background-color: #8ec3ff;
-    border-color: #0099ff;
+    background-color: #001c3c;
+    border-color: #004499;
 }
 
 .positionNumber {
     font-weight: bold;
     margin-bottom: 5px;
+    color: #ffffff;
 }
 
 .positionStatus {
     font-size: 14px;
-    color: #155724;
+    color: #3498db;
 }
 
 .positionVehicle {
     font-size: 12px;
-    color: #721c24;
+    color: #ff9999;
     word-break: break-word;
 }
 
@@ -608,7 +725,6 @@
     background-color: #6c757d;
     color: white;
     border: none;
-    border-radius: 4px;
     padding: 6px 12px;
     cursor: pointer;
     font-size: 12px;
@@ -631,8 +747,7 @@
     justify-content: space-around;
     margin-top: 15px;
     padding: 15px;
-    background-color: #f8f9fa;
-    border-radius: 8px;
+    background-color: #2a2a2a;
 }
 
 .swapVehicle {
@@ -644,11 +759,12 @@
     margin-top: 0;
     margin-bottom: 5px;
     font-size: 14px;
-    color: #495057;
+    color: #ffffff;
 }
 
 .swapVehicle p {
     margin: 5px 0;
+    color: #aaaaaa;
 }
 
 .swapArrow {
@@ -671,7 +787,6 @@
     background-color: #6c757d;
     color: white;
     border: none;
-    border-radius: 4px;
     padding: 8px 16px;
     cursor: pointer;
     font-size: 14px;
@@ -686,7 +801,6 @@
     background-color: #007bff;
     color: white;
     border: none;
-    border-radius: 4px;
     padding: 8px 16px;
     cursor: pointer;
     font-size: 14px;

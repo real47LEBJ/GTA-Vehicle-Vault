@@ -24,7 +24,7 @@ const StorageListPage: React.FC = () => {
   // 确认框状态
   const [showConfirmDialog, setShowConfirmDialog] = useState<boolean>(false);
 
-  // 车辆移动功能状态
+  // 载具移动功能状态
   const [showMoveDialog, setShowMoveDialog] = useState<boolean>(false);
   const [moveStep, setMoveStep] = useState<'selectGarage' | 'selectPosition'>('selectGarage');
   const [selectedVehicle, setSelectedVehicle] = useState<{
@@ -208,7 +208,7 @@ const StorageListPage: React.FC = () => {
     setEditRemarks('');
   };
 
-  // 车辆移动功能相关函数
+  // 载具移动功能相关函数
   const handleOpenMoveDialog = (garageId: number, vehicleIndex: number, vehicleData: GarageVehicle) => {
     setSelectedVehicle({
       garageId,
@@ -231,10 +231,10 @@ const StorageListPage: React.FC = () => {
     const isTargetEmpty = Object.keys(targetVehicle).length === 0;
 
     if (isTargetEmpty) {
-      // 直接移动车辆
+      // 直接移动载具
       await handleMoveVehicle(targetIndex);
     } else {
-      // 交换车辆
+      // 交换载具
       setSwapTarget({
         garageId: selectedTargetGarage.id,
         vehicleIndex: targetIndex,
@@ -257,7 +257,7 @@ const StorageListPage: React.FC = () => {
 
       if (sourceGarageIndex === -1 || targetGarageIndex === -1) return;
 
-      // 处理车辆移动
+      // 处理载具移动
       if (sourceGarageIndex === targetGarageIndex) {
         // 同一车库内移动
         const vehicleList = [...updatedGarages[sourceGarageIndex].vehicleList];
@@ -275,7 +275,7 @@ const StorageListPage: React.FC = () => {
         const sourceVehicleList = [...updatedGarages[sourceGarageIndex].vehicleList];
         const targetVehicleList = [...updatedGarages[targetGarageIndex].vehicleList];
 
-        // 移动车辆
+        // 移动载具
         const vehicleToMove = sourceVehicleList[selectedVehicle.vehicleIndex];
         sourceVehicleList[selectedVehicle.vehicleIndex] = {} as any; // 清空原位置
         targetVehicleList[targetIndex] = vehicleToMove; // 移动到新位置
@@ -304,7 +304,7 @@ const StorageListPage: React.FC = () => {
       // 关闭对话框
       handleCloseMoveDialog();
     } catch (err) {
-      setError('移动车辆时发生错误');
+      setError('移动载具时发生错误');
       console.error(err);
     }
   };
@@ -322,12 +322,12 @@ const StorageListPage: React.FC = () => {
 
       if (sourceGarageIndex === -1 || targetGarageIndex === -1) return;
 
-      // 处理车辆交换
+      // 处理载具交换
       if (sourceGarageIndex === targetGarageIndex) {
         // 同一车库内交换
         const vehicleList = [...updatedGarages[sourceGarageIndex].vehicleList];
 
-        // 交换车辆
+        // 交换载具
         const temp = vehicleList[selectedVehicle.vehicleIndex];
         vehicleList[selectedVehicle.vehicleIndex] = swapTarget.vehicleData;
         vehicleList[swapTarget.vehicleIndex] = temp;
@@ -342,7 +342,7 @@ const StorageListPage: React.FC = () => {
         const sourceVehicleList = [...updatedGarages[sourceGarageIndex].vehicleList];
         const targetVehicleList = [...updatedGarages[targetGarageIndex].vehicleList];
 
-        // 交换车辆
+        // 交换载具
         const temp = sourceVehicleList[selectedVehicle.vehicleIndex];
         sourceVehicleList[selectedVehicle.vehicleIndex] = swapTarget.vehicleData;
         targetVehicleList[swapTarget.vehicleIndex] = temp;
@@ -373,7 +373,7 @@ const StorageListPage: React.FC = () => {
       setShowSwapConfirm(false);
       setSwapTarget(null);
     } catch (err) {
-      setError('交换车辆时发生错误');
+      setError('交换载具时发生错误');
       console.error(err);
     }
   };
@@ -580,7 +580,7 @@ const StorageListPage: React.FC = () => {
                   </div>
                   <div className={styles.vehicleList}>
                     {item.vehicleList.map((vehicle: GarageVehicle, index: number) => {
-                      // 检查车辆是否为空对象
+                      // 检查载具是否为空对象
                       const isEmptyVehicle = Object.keys(vehicle).length === 0;
 
                       return (
@@ -589,17 +589,17 @@ const StorageListPage: React.FC = () => {
                             <button
                               className={styles.moveVehicleButton}
                               onClick={() => handleOpenMoveDialog(item.id, index, vehicle)}
-                              title="移动车辆"
+                              title="移动载具"
                             >
                               🚗
                             </button>
                           )}
                           <div className={styles.vehicleInfo}>
                             {isEmptyVehicle ? (
-                              // 空车辆显示"空"
+                              // 空载具显示"空"
                               <div className={styles.emptyVehicleText}>空</div>
                             ) : (
-                              // 有内容的车辆显示详细信息
+                              // 有内容的载具显示详细信息
                               <>
                                 <div className={styles.vehicleName}>{`${vehicle.brandName} ${vehicle.vehicleName}`}</div>
                                 <div className={styles.vehicleNameEn}>{`${vehicle.brandNameEn} ${vehicle.vehicleNameEn}`}</div>
@@ -672,12 +672,12 @@ const StorageListPage: React.FC = () => {
         </div>
       )}
 
-      {/* 移动车辆对话框 */}
+      {/* 移动载具对话框 */}
       {showMoveDialog && (
         <div className={styles.moveDialogOverlay}>
           <div className={styles.moveDialog}>
             <div className={styles.moveDialogHeader}>
-              <h3>移动车辆</h3>
+              <h3>移动载具</h3>
               <button className={styles.closeButton} onClick={handleCloseMoveDialog}>
                 ×
               </button>
@@ -737,7 +737,7 @@ const StorageListPage: React.FC = () => {
                             </div>
                           )}
                           {isCurrentVehicle && (
-                            <div className={styles.currentVehicleMarker}>正在移动的车辆</div>
+                            <div className={styles.currentVehicleMarker}>正在移动的载具</div>
                           )}
                         </div>
                       );
@@ -760,7 +760,7 @@ const StorageListPage: React.FC = () => {
         </div>
       )}
 
-      {/* 交换车辆确认对话框 */}
+      {/* 交换载具确认对话框 */}
       {showSwapConfirm && swapTarget && selectedVehicle && (
         <div className={styles.swapDialogOverlay}>
           <div className={styles.swapDialog}>
@@ -768,10 +768,10 @@ const StorageListPage: React.FC = () => {
               <h3>确认交换</h3>
             </div>
             <div className={styles.swapDialogContent}>
-              <p>确定要交换以下车辆吗？</p>
+              <p>确定要交换以下载具吗？</p>
               <div className={styles.swapInfo}>
                 <div className={styles.swapVehicle}>
-                  <h5>来源车辆：</h5>
+                  <h5>来源载具：</h5>
                   <p>{`${selectedVehicle.vehicleData.brandName} ${selectedVehicle.vehicleData.vehicleName}`}</p>
                   <p className={styles.swapVehicleLocation}>
                     位置：车库 {garages.find(g => g.id === selectedVehicle.garageId)?.storageName} 位置 {selectedVehicle.vehicleIndex + 1}
@@ -779,7 +779,7 @@ const StorageListPage: React.FC = () => {
                 </div>
                 <div className={styles.swapArrow}>↔️</div>
                 <div className={styles.swapVehicle}>
-                  <h5>目标车辆：</h5>
+                  <h5>目标载具：</h5>
                   <p>{`${swapTarget.vehicleData.brandName} ${swapTarget.vehicleData.vehicleName}`}</p>
                   <p className={styles.swapVehicleLocation}>
                     位置：车库 {garages.find(g => g.id === swapTarget.garageId)?.storageName} 位置 {swapTarget.vehicleIndex + 1}

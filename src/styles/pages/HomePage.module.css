@@ -198,7 +198,7 @@
      background-color: #5a6268;
  }
 
- /* 移动车辆对话框样式 */
+ /* 移动载具对话框样式 */
  .moveDialogOverlay {
      position: fixed;
      top: 0;
@@ -255,7 +255,7 @@
      gap: 12px;
  }
 
- /* 交换车辆对话框样式 */
+ /* 交换载具对话框样式 */
  .swapDialogOverlay {
      position: fixed;
      top: 0;
@@ -381,7 +381,7 @@
      background-color: #f3e5f5;
  }
 
- /* 空车辆列表样式 */
+ /* 空载具列表样式 */
  .emptyVehicleList {
      padding: 10px;
      text-align: center;
@@ -638,10 +638,10 @@
      background-color: #fff5f5;
  }
 
- /* 车辆编辑input的特殊样式 */
+ /* 载具编辑input的特殊样式 */
  .vehicleInfo .editRemarksInput {
      max-width: 120px;
-     /* 车辆input的宽度更窄 */
+     /* 载具input的宽度更窄 */
      font-size: 12px;
  }
 
@@ -1012,7 +1012,7 @@
      /* 允许内容收缩 */
  }
 
- /* 车辆特性样式 */
+ /* 载具特性样式 */
  .vehicleFeature {
      display: flex;
      flex-wrap: nowrap;
@@ -1029,7 +1029,7 @@
      color: #333;
  }
 
- /* 车辆移动功能样式 */
+ /* 载具移动功能样式 */
  .moveVehicleButton {
      position: absolute;
      top: 5px;
@@ -1128,7 +1128,7 @@
      padding-bottom: 10px;
  }
 
- /* 当前正在移动的车辆位置样式 */
+ /* 当前正在移动的载具位置样式 */
  .currentVehiclePosition {
      cursor: not-allowed;
      background-color: #8ec3ff;
@@ -1285,7 +1285,7 @@
      width: 100%;
  }
 
- /* 确保车辆信息在小空间内正确显示 */
+ /* 确保载具信息在小空间内正确显示 */
  .vehicleName {
      font-size: 12px;
      font-weight: 600;
@@ -1304,7 +1304,7 @@
      text-overflow: ellipsis;
  }
 
- /* 车辆备注样式已移至remarksContainer和storageRemarks类中 */
+ /* 载具备注样式已移至remarksContainer和storageRemarks类中 */
 
 
 
@@ -1315,7 +1315,7 @@
      margin-bottom: 4px;
  }
 
- /* 空车辆文本样式 */
+ /* 空载具文本样式 */
  .emptyVehicleText {
      font-size: 18px;
      font-weight: 500;

@@ -37,6 +37,102 @@ export const apiEndpoints = {
   addGarage: "add_garage_overview",
   updateGarage: "update_garage_overview",
   deleteGarage: "delete_garage_overview",
+  // Feature type dict endpoints
+  getFeatureTypeDicts: "get_feature_type_dicts",
+  getFeatureTypeDictByKey: "get_feature_type_dict_by_key",
+  // Vehicle type dict endpoints
+  getVehicleTypeDicts: "get_vehicle_type_dicts",
+  getVehicleTypeDictByKey: "get_vehicle_type_dict_by_key",
+};
+
+/**
+ * Feature type dict API functions
+ */
+
+/**
+ * Gets all feature type dicts
+ * @returns A promise that resolves with the list of feature type dicts
+ */
+export const getFeatureTypeDicts = async (): Promise<ApiResponse<Record<string, string>>> => {
+  try {
+    // 调用后端API获取原始数据
+    const response = await callBackend<ApiResponse<any[]>>(apiEndpoints.getFeatureTypeDicts);
+
+    // 转换数据格式为键值对映射
+    if (response.success && response.data) {
+      // 创建一个映射，键为英文单词，值为中文翻译
+      const featureDict: Record<string, string> = {};
+      response.data.forEach(dict => {
+        if (dict.dict_key && dict.dict_value) {
+          featureDict[dict.dict_key.trim()] = dict.dict_value.trim();
+        }
+      });
+
+      return {
+        success: true,
+        data: featureDict,
+        error: null,
+      };
+    } else {
+      return {
+        success: false,
+        data: null,
+        error: response.error || "获取特性类型字典失败",
+      };
+    }
+  } catch (error) {
+    console.error("Error fetching feature type dicts:", error);
+    return {
+      success: false,
+      data: null,
+      error: "获取数据时发生错误",
+    };
+  }
+};
+
+/**
+ * Vehicle type dict API functions
+ */
+
+/**
+ * Gets all vehicle type dicts
+ * @returns A promise that resolves with the list of vehicle type dicts
+ */
+export const getVehicleTypeDicts = async (): Promise<ApiResponse<Record<string, string>>> => {
+  try {
+    // 调用后端API获取原始数据
+    const response = await callBackend<ApiResponse<any[]>>(apiEndpoints.getVehicleTypeDicts);
+
+    // 转换数据格式为键值对映射
+    if (response.success && response.data) {
+      // 创建一个映射，键为英文单词，值为中文翻译
+      const vehicleTypeDict: Record<string, string> = {};
+      response.data.forEach(dict => {
+        if (dict.dict_key && dict.dict_value) {
+          vehicleTypeDict[dict.dict_key.trim()] = dict.dict_value.trim();
+        }
+      });
+
+      return {
+        success: true,
+        data: vehicleTypeDict,
+        error: null,
+      };
+    } else {
+      return {
+        success: false,
+        data: null,
+        error: response.error || "获取载具类型字典失败",
+      };
+    }
+  } catch (error) {
+    console.error("Error fetching vehicle type dicts:", error);
+    return {
+      success: false,
+      data: null,
+      error: "获取数据时发生错误",
+    };
+  }
 };
 
 /**
@@ -120,6 +216,7 @@ export const getVehicles = async (
         vehicle_name_en: vehicle.vehicle_name_en || "",
         feature: vehicle.feature || "",
         vehicle_type: vehicle.vehicle_type || "",
+        price: vehicle.price || 0,
       }));
 
       return {
@@ -131,7 +228,7 @@ export const getVehicles = async (
       return {
         success: false,
         data: null,
-        error: response.error || "获取车辆列表失败",
+        error: response.error || "获取载具列表失败",
       };
     }
   } catch (error) {
@@ -166,13 +263,15 @@ export const getAllVehicles = async (): Promise<
           brand: vehicle.brand_name || "",
           brand_en: vehicle.brand_name_en || "",
         },
-        // 车辆信息
+        // 载具信息
         {
           id: vehicle.id?.toString() || "",
           brand_id: vehicle.brand_id?.toString() || "",
           vehicle_name: vehicle.vehicle_name || "",
           vehicle_name_en: vehicle.vehicle_name_en || "",
           feature: vehicle.feature || "",
+          vehicle_type: vehicle.vehicle_type || "",
+          price: vehicle.price || 0,
         },
       ]);
 
@@ -185,7 +284,7 @@ export const getAllVehicles = async (): Promise<
       return {
         success: false,
         data: null,
-        error: response.error || "获取车辆列表失败",
+        error: response.error || "获取载具列表失败",
       };
     }
   } catch (error) {
@@ -244,7 +343,7 @@ export const addVehicle = async (
       return {
         success: false,
         data: null,
-        error: response.error || "添加车辆失败",
+        error: response.error || "添加载具失败",
       };
     }
   } catch (error) {

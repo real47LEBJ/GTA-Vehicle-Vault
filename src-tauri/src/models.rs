@@ -27,9 +27,17 @@ pub struct VehicleOverview {
     pub brand_id: Option<i32>,
     pub vehicle_name: Option<String>,
     pub vehicle_name_en: Option<String>,
-    pub remarks: Option<String>,
-    pub feature: Option<String>,
     pub vehicle_type: Option<String>,
+    pub feature: Option<String>,
+    pub price: Option<i32>,
+    pub remarks: Option<String>,
+}
+
+#[derive(Serialize, Deserialize, Debug)]
+pub struct FeatureTypeDict {
+    pub id: i32,
+    pub dict_key: Option<String>,
+    pub dict_value: Option<String>,
 }
 
 #[derive(Serialize, Deserialize, Debug)]

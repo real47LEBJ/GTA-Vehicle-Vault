@@ -7,7 +7,7 @@ import Button from './components/Button';
 // Import pages
 import HomePage from './pages/HomePage';
 import AboutPage from './pages/AboutPage';
-import VehicleListPage from './pages/VehicleListPage';
+import AddPage from './pages/AddPage';
 
 // Navigation item type
 type NavItem = {
@@ -35,7 +35,7 @@ function App() {
       case 'about':
         return <AboutPage />;
       case 'vehicleList':
-        return <VehicleListPage />;
+        return <AddPage />;
       default:
         return <HomePage />;
     }
