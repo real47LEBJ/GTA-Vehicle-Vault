@@ -70,3 +70,13 @@ export const truncateString = (str: string, maxLength: number): string => {
   if (str.length <= maxLength) return str;
   return str.slice(0, maxLength) + '...';
 };
+
+/**
+ * Formats a price with commas as thousands separators and adds currency symbol
+ * @param price - The price to format
+ * @param currency - The currency symbol to use (default: $)
+ * @returns The formatted price string
+ */
+export const formatPrice = (price: number, currency: string = '$'): string => {
+  return `${currency}${formatNumber(price)}`;
+};

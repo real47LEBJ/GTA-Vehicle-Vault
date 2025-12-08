@@ -298,6 +298,48 @@ export const getAllVehicles = async (): Promise<
 };
 
 /**
+ * Gets all vehicles with their id and feature
+ * @returns A promise that resolves with the list of vehicles id and feature
+ */
+export const getAllVehiclesFeature = async (): Promise<ApiResponse<Map<string, string>>> => {
+  try {
+    // 调用后端API获取原始数据
+    const response = await callBackend<ApiResponse<any[]>>(
+      apiEndpoints.getAllVehicles
+    );
+
+    // 转换数据格式以匹配前端类型定义
+    if (response.success && response.data) {
+      const featureMap = new Map<string, string>();
+      response.data.forEach((vehicle) => {
+        if (vehicle.id !== undefined) {
+          featureMap.set(vehicle.id.toString(), vehicle.feature || '');
+        }
+      });
+
+      return {
+        success: true,
+        data: featureMap,
+        error: null,
+      };
+    } else {
+      return {
+        success: false,
+        data: null,
+        error: response.error || "获取载具特性列表失败",
+      };
+    }
+  } catch (error) {
+    console.error("Error fetching all vehicles feature:", error);
+    return {
+      success: false,
+      data: null,
+      error: "获取数据时发生错误",
+    };
+  }
+};
+
+/**
  * Adds a new vehicle
  * @param vehicle - The vehicle to add
  * @returns A promise that resolves with the added vehicle

@@ -1,5 +1,6 @@
  * {
      overflow-x: hidden;
+     color: #ffffff;
  }
 
  .mainContainer {
@@ -11,7 +12,29 @@
      box-sizing: border-box;
      gap: 20px;
      overflow: hidden;
+     background-color: #121212;
  }
+
+/* 通知组件样式 */
+.notification {
+    position: fixed;
+    top: 80px;
+    right: -300px;
+    /* 初始位置在屏幕右侧外 */
+    background-color: #a75900;
+    color: white;
+    padding: 12px 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    font-size: 16px;
+    font-weight: 500;
+    z-index: 1000;
+    transition: right 0.5s ease-in-out;
+}
+
+.notificationVisible {
+    right: 20px;
+    /* 滑入到屏幕右侧 */
+}
 
  /* 控制容器样式 */
  .controlContainer {
@@ -19,13 +42,12 @@
      flex-wrap: wrap;
      gap: 15px;
      padding: 15px;
-     background-color: #f5f7fa;
-     border-radius: 8px;
-     border: 1px solid #e4e7ed;
+     background-color: #1e1e1e;
+     border: 1px solid #444444;
      position: sticky;
      top: 0;
      z-index: 100;
-     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
  }
 
  /* 控制项样式 */
@@ -50,7 +72,7 @@
  .controlLabel {
      font-size: 14px;
      font-weight: 500;
-     color: #495057;
+     color: #ffffff;
      padding: 0 4px;
      user-select: none;
  }
@@ -58,10 +80,12 @@
  /* 控制输入框样式 */
  .controlInput input {
      padding: 10px 12px;
-     border: 1px solid #ced4da;
+     border: 1px solid #444444;
      font-size: 16px;
      transition: border-color 0.2s ease, box-shadow 0.2s ease;
      box-sizing: border-box;
+     background-color: #272727;
+     color: #ffffff;
  }
 
  .controlInput input:focus {
@@ -72,17 +96,16 @@
  }
 
  .controlInput input::placeholder {
-     color: #adb5bd;
+     color: #aaaaaa;
      border-color: #007bff;
  }
 
  /* 控制按钮样式 */
  .controlButton button {
      padding: 8px 16px;
-     background-color: #3f51b5;
+     background-color: #0078d7;
      color: white;
      border: none;
-     border-radius: 4px;
      cursor: pointer;
      font-weight: 500;
      white-space: nowrap;
@@ -90,15 +113,12 @@
  }
 
  .controlButton button:hover {
-     background-color: #303f9f;
+     background-color: #0076d7c5;
  }
 
- .controlButton button:active {
-     background-color: #283593;
- }
 
  .controlButton button:disabled {
-     background-color: #cccccc;
+     background-color: #555555;
      cursor: not-allowed;
  }
 
@@ -121,7 +141,7 @@
      left: 0;
      right: 0;
      bottom: 0;
-     background-color: rgba(0, 0, 0, 0.5);
+     background-color: rgba(0, 0, 0, 0.7);
      display: flex;
      justify-content: center;
      align-items: center;
@@ -129,9 +149,8 @@
  }
 
  .confirmDialog {
-     background-color: #ffffff;
-     border-radius: 8px;
-     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+     background-color: #1e1e1e;
+     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
      width: 400px;
      max-width: 90%;
      overflow: hidden;
@@ -151,16 +170,16 @@
  }
 
  .confirmDialogHeader {
-     background-color: #f8f9fa;
+     background-color: #2a2a2a;
      padding: 16px;
-     border-bottom: 1px solid #e9ecef;
+     border-bottom: 1px solid #444444;
  }
 
  .confirmDialogHeader h3 {
      margin: 0;
      font-size: 18px;
      font-weight: 600;
-     color: #333;
+     color: #ffffff;
  }
 
  .confirmDialogContent {
@@ -170,14 +189,14 @@
  .confirmDialogContent p {
      margin: 0;
      font-size: 14px;
-     color: #495057;
+     color: #ffffff;
      line-height: 1.5;
  }
 
  .confirmDialogActions {
      padding: 16px;
-     background-color: #f8f9fa;
-     border-top: 1px solid #e9ecef;
+     background-color: #2a2a2a;
+     border-top: 1px solid #444444;
      display: flex;
      justify-content: flex-end;
      gap: 12px;
@@ -188,7 +207,6 @@
      background-color: #6c757d;
      color: white;
      border: none;
-     border-radius: 4px;
      cursor: pointer;
      font-weight: 500;
      transition: background-color 0.2s ease;
@@ -205,7 +223,7 @@
      left: 0;
      right: 0;
      bottom: 0;
-     background-color: rgba(0, 0, 0, 0.5);
+     background-color: rgba(0, 0, 0, 0.7);
      display: flex;
      justify-content: center;
      align-items: center;
@@ -213,9 +231,8 @@
  }
 
  .moveDialog {
-     background-color: #ffffff;
-     border-radius: 8px;
-     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+     background-color: #1e1e1e;
+     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
      width: 100vw;
      max-width: 90%;
      overflow: hidden;
@@ -223,16 +240,16 @@
  }
 
  .moveDialogHeader {
-     background-color: #f7f7f7;
+     background-color: #2a2a2a;
      padding: 16px;
-     border-bottom: 1px solid #bbdefb;
+     border-bottom: 1px solid #444444;
  }
 
  .moveDialogHeader h3 {
      margin: 0;
      font-size: 18px;
      font-weight: 600;
-     color: #000000;
+     color: #ffffff;
  }
 
  .moveDialogContent {
@@ -242,14 +259,14 @@
  .moveDialogContent p {
      margin: 0;
      font-size: 14px;
-     color: #495057;
+     color: #ffffff;
      line-height: 1.5;
  }
 
  .moveDialogActions {
      padding: 16px;
-     background-color: #F7F7F7;
-     border-top: 1px solid #bbdefb;
+     background-color: #2a2a2a;
+     border-top: 1px solid #444444;
      display: flex;
      justify-content: flex-end;
      gap: 12px;
@@ -262,7 +279,7 @@
      left: 0;
      right: 0;
      bottom: 0;
-     background-color: rgba(0, 0, 0, 0.5);
+     background-color: rgba(0, 0, 0, 0.7);
      display: flex;
      justify-content: center;
      align-items: center;
@@ -270,9 +287,8 @@
  }
 
  .swapDialog {
-     background-color: #ffffff;
-     border-radius: 8px;
-     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+     background-color: #1e1e1e;
+     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
      width: 550px;
      max-width: 90%;
      overflow: hidden;
@@ -280,16 +296,16 @@
  }
 
  .swapDialogHeader {
-     background-color: #e8f5e9;
+     background-color: #2a2a2a;
      padding: 16px;
-     border-bottom: 1px solid #c8e6c9;
+     border-bottom: 1px solid #444444;
  }
 
  .swapDialogHeader h3 {
      margin: 0;
      font-size: 18px;
      font-weight: 600;
-     color: #2e7d32;
+     color: #ffffff;
  }
 
  .swapDialogContent {
@@ -299,14 +315,14 @@
  .swapDialogContent p {
      margin: 0;
      font-size: 14px;
-     color: #495057;
+     color: #ffffff;
      line-height: 1.5;
  }
 
  .swapDialogActions {
      padding: 16px;
-     background-color: #e8f5e9;
-     border-top: 1px solid #c8e6c9;
+     background-color: #2a2a2a;
+     border-top: 1px solid #444444;
      display: flex;
      justify-content: flex-end;
      gap: 12px;
@@ -321,7 +337,6 @@
      background-color: #dc3545;
      color: white;
      border: none;
-     border-radius: 4px;
      cursor: pointer;
      font-weight: 500;
      transition: background-color 0.2s ease;
@@ -338,12 +353,12 @@
  /* 错误消息样式 */
  .errorMessage {
      padding: 12px;
-     background-color: #ffebee;
-     color: #c62828;
-     border-radius: 4px;
+     background-color: #442222;
+     color: #ff4444;
+
      margin-bottom: 16px;
      font-size: 14px;
-     border-left: 4px solid #c62828;
+     border-left: 4px solid #ff4444;
  }
 
  /* 加载状态样式 */
@@ -365,27 +380,28 @@
      justify-content: center;
      align-items: center;
      padding: 60px;
-     background-color: #f5f5f5;
-     border-radius: 8px;
+     background-color: #1e1e1e;
+
      margin-top: 16px;
+     border: 1px solid #444444;
  }
 
  .emptyText {
      font-size: 16px;
-     color: #999999;
+     color: #aaaaaa;
  }
 
  /* 选中状态样式 */
  .selectedStorageItem {
-     border: 2px solid #3f51b5;
-     background-color: #f3e5f5;
+     border: 2px solid #0078d7;
+     background-color: rgba(63, 81, 181, 0.2);
  }
 
  /* 空载具列表样式 */
  .emptyVehicleList {
      padding: 10px;
      text-align: center;
-     color: #999999;
+     color: #aaaaaa;
      font-style: italic;
      margin-left: -50px;
  }
@@ -407,26 +423,54 @@
  }
 
  .storageListContainer::-webkit-scrollbar-track {
-     background: #f1f1f1;
-     border-radius: 4px;
+     background: #1e1e1e;
+
  }
 
  .storageListContainer::-webkit-scrollbar-thumb {
-     background: #c1c1c1;
-     border-radius: 4px;
+     background: #555555;
+
  }
 
  .storageListContainer::-webkit-scrollbar-thumb:hover {
-     background: #a8a8a8;
+     background: #777777;
+ }
+
+ /* 其他容器的滚动条样式 */
+ .garageSelection::-webkit-scrollbar,
+ .positionSelection::-webkit-scrollbar,
+ .editModal::-webkit-scrollbar {
+     width: 8px;
+     height: 8px;
+ }
+
+ .garageSelection::-webkit-scrollbar-track,
+ .positionSelection::-webkit-scrollbar-track,
+ .editModal::-webkit-scrollbar-track {
+     background-color: #1e1e1e;
+
+ }
+
+ .garageSelection::-webkit-scrollbar-thumb,
+ .positionSelection::-webkit-scrollbar-thumb,
+ .editModal::-webkit-scrollbar-thumb {
+     background-color: #555;
+
+ }
+
+ .garageSelection::-webkit-scrollbar-thumb:hover,
+ .positionSelection::-webkit-scrollbar-thumb:hover,
+ .editModal::-webkit-scrollbar-thumb:hover {
+     background-color: #777;
  }
 
  .storageItem {
-     background-color: #ffffff;
-     border-radius: 8px;
-     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+     background-color: #1e1e1e;
+
+     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
      transition: transform 0.2s ease, box-shadow 0.2s ease;
      width: 99.5%;
-     border: 1px solid rgb(231, 231, 231);
+     border: 1px solid #444444;
      min-height: 120px;
      flex-shrink: 0;
  }
@@ -435,14 +479,15 @@
      display: flex;
      align-items: center;
      padding: 6px;
-     background-color: #f8f9fa;
-     border-bottom: 1px solid #e9ecef;
+     background-color: #2a2a2a;
+     border-bottom: 1px solid #444444;
  }
 
  .checkboxContainer {
      display: flex;
      align-items: center;
      margin-right: 12px;
+     margin-top: 3px;
      cursor: pointer;
      user-select: none;
  }
@@ -460,21 +505,20 @@
      display: block;
      width: 20px;
      height: 20px;
-     background-color: #ffffff;
-     border: 2px solid #ced4da;
-     border-radius: 4px;
+     background-color: #1e1e1e;
+     border: 2px solid #444444;
      cursor: pointer;
      transition: all 0.2s ease;
  }
 
  .checkboxLabel:hover {
      border-color: #007bff;
-     background-color: #f0f8ff;
+     background-color: rgba(0, 123, 255, 0.1);
  }
 
  .selectedStorageItem .checkboxLabel {
-     border-color: #3f51b5;
-     background-color: #3f51b5;
+     border-color: #0078d7;
+     background-color: #0078d7;
  }
 
  .checkboxLabel:after {
@@ -516,7 +560,7 @@
  .storageName {
      font-size: 18px;
      font-weight: 600;
-     color: #333;
+     color: #ffffff;
  }
 
 
@@ -528,11 +572,11 @@
  }
 
  .storageRemarks {
-     color: #888;
+     color: #d1d1d1;
      font-size: 15px;
      cursor: default;
      padding: 2px 8px;
-     border-radius: 4px;
+
      text-align: right;
  }
 
@@ -545,9 +589,8 @@
      width: 70vh;
      padding-right: 10px;
      border: 1px solid #ddd;
-     border-radius: 4px;
      font-size: 15px;
-     color: #888;
+     color: #b9b9b9;
      background-color: transparent;
      outline: none;
      text-align: right;
@@ -560,7 +603,7 @@
 
  .editRemarksInput:focus {
      border-color: #4a90e2;
-     color: #333;
+     color: #a3a3a3;
  }
 
  .editRemarksButton {
@@ -568,28 +611,25 @@
      border: none;
      cursor: pointer;
      font-size: 16px;
-     color: #888;
+     color: #c2c2c2;
      padding: 2px 6px;
-     border-radius: 4px;
+
      transition: all 0.2s;
      white-space: nowrap;
  }
 
- .editRemarksButton:hover {
-     background-color: #f0f0f0;
-     color: #333;
- }
 
  /* 编辑备注容器样式 */
  .editRemarksContainer {
      position: relative;
+     color: #c2c2c2;
  }
 
  /* 编辑备注输入框样式 - 优化为更像普通div */
  .editRemarksInput {
      /* 基础样式 - 完全像div */
      font-size: 15px;
-     color: #666;
+     color: #d1d1d1;
      white-space: nowrap;
      overflow: hidden;
      text-overflow: ellipsis;
@@ -613,29 +653,29 @@
 
  /* 占位符样式 */
  .editRemarksInput::placeholder {
-     color: #999;
+     color: #bebebe;
      font-style: italic;
  }
 
  /* 鼠标悬停时的微妙效果 */
  .editRemarksInput:hover {
-     background-color: #f9f9f9;
-     border-color: #e0e0e0;
-     border-radius: 3px;
+     background-color: #2a2a2a;
+     border-color: #444;
+
  }
 
  /* 聚焦时的编辑状态 */
  .editRemarksInput:focus {
-     background-color: #fff;
+     background-color: #1e1e1e;
      border-color: #007bff;
-     border-radius: 3px;
+
      outline: none;
  }
 
  /* 未保存状态的输入框样式 */
  .editRemarksInput.unsavedInput {
      border-color: #dc8635 !important;
-     background-color: #fff5f5;
+     background-color: #3c2c1d;
  }
 
  /* 载具编辑input的特殊样式 */
@@ -670,7 +710,7 @@
  .editIconContainer {
      cursor: pointer;
      padding: 4px;
-     border-radius: 4px;
+
      transition: background-color 0.2s ease;
  }
 
@@ -689,7 +729,7 @@
      align-items: center;
      cursor: pointer;
      padding: 4px;
-     border-radius: 4px;
+
      transition: background-color 0.2s ease;
  }
 
@@ -715,7 +755,7 @@
      left: 0;
      right: 0;
      bottom: 0;
-     background-color: rgba(0, 0, 0, 0.5);
+     background-color: rgba(0, 0, 0, 0.7);
      display: flex;
      justify-content: center;
      align-items: center;
@@ -723,9 +763,10 @@
  }
 
  .editModal {
-     background-color: #ffffff;
-     border-radius: 8px;
-     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+     background-color: #1e1e1e;
+     border: 1px solid #444;
+
+     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
      width: 600px;
      max-width: 90%;
      max-height: 90vh;
@@ -734,9 +775,9 @@
  }
 
  .editModalHeader {
-     background-color: #f8f9fa;
+     background-color: #2a2a2a;
      padding: 16px;
-     border-bottom: 1px solid #e9ecef;
+     border-bottom: 1px solid #444;
      display: flex;
      justify-content: space-between;
      align-items: center;
@@ -746,7 +787,7 @@
      margin: 0;
      font-size: 18px;
      font-weight: 600;
-     color: #333;
+     color: #fff;
  }
 
  .closeButton {
@@ -754,20 +795,20 @@
      border: none;
      font-size: 24px;
      cursor: pointer;
-     color: #6c757d;
+     color: #aaa;
      padding: 0;
      width: 30px;
      height: 30px;
      display: flex;
      align-items: center;
      justify-content: center;
-     border-radius: 4px;
+
      transition: background-color 0.2s ease, color 0.2s ease;
  }
 
  .closeButton:hover {
-     background-color: #e9ecef;
-     color: #495057;
+     background-color: #444;
+     color: #fff;
  }
 
  .editModalContent {
@@ -791,7 +832,7 @@
      width: 100%;
      padding: 10px 12px;
      border: 1px solid #ced4da;
-     border-radius: 4px;
+
      font-size: 14px;
      transition: border-color 0.2s ease, box-shadow 0.2s ease;
      box-sizing: border-box;
@@ -809,7 +850,7 @@
      width: 100%;
      padding: 12px;
      background-color: var(--color-background-light);
-     border-radius: 8px;
+
      margin-top: 8px;
      border: 1px solid var(--color-border);
  }
@@ -831,7 +872,7 @@
  .formTextarea {
      padding: 8px 12px;
      border: 1px solid var(--color-border);
-     border-radius: 4px;
+
      font-size: 14px;
      background-color: var(--color-background);
      color: var(--color-text-primary);
@@ -862,7 +903,7 @@
      gap: 12px;
      padding: 12px;
      border: 1px solid var(--color-border);
-     border-radius: 6px;
+
      background-color: var(--color-background);
      margin-bottom: 12px;
      align-items: flex-start;
@@ -891,7 +932,7 @@
  .vehicleFormInput {
      padding: 6px 8px;
      border: 1px solid var(--color-border);
-     border-radius: 4px;
+
      font-size: 14px;
      background-color: var(--color-background-light);
      color: var(--color-text-primary);
@@ -920,7 +961,7 @@
      border: 1px solid var(--color-border);
      color: var(--color-text-secondary);
      padding: 6px;
-     border-radius: 4px;
+
      cursor: pointer;
      transition: all 0.2s ease;
      width: 32px;
@@ -949,7 +990,7 @@
      text-align: center;
      padding: 16px;
      border: 1px dashed var(--color-border);
-     border-radius: 4px;
+
      margin: 16px 0;
  }
 
@@ -965,7 +1006,7 @@
  .cancelButton,
  .saveButton {
      padding: 8px 16px;
-     border-radius: 4px;
+
      font-size: 14px;
      cursor: pointer;
      transition: all 0.2s ease;
@@ -1001,9 +1042,9 @@
  }
 
  .vehicleItem {
-     background-color: #f8f9fa;
-     border: 1px solid #e9ecef;
-     border-radius: 6px;
+     background-color: #1e1e1e;
+     border: 1px solid #333;
+
      padding: 5px;
      min-width: 0;
      display: flex;
@@ -1024,9 +1065,8 @@
  .featureItem {
      font-size: 9px;
      padding: 1px 3px;
-     border-radius: 2px;
-     background-color: #ddd;
-     color: #333;
+     background-color: #333;
+     color: #fff;
  }
 
  /* 载具移动功能样式 */
@@ -1034,7 +1074,7 @@
      position: absolute;
      top: 5px;
      right: 5px;
-     background-color: rgba(255, 255, 255, 0.7);
+     background-color: rgba(30, 30, 30, 0.7);
      border: none;
      border-radius: 50%;
      width: 24px;
@@ -1046,10 +1086,11 @@
      justify-content: center;
      transition: background-color 0.2s;
      z-index: 10;
+     color: #fff;
  }
 
  .moveVehicleButton:hover {
-     background-color: rgba(255, 255, 255, 0.9);
+     background-color: rgba(50, 50, 50, 0.9);
  }
 
  /* 车库选择对话框样式 */
@@ -1060,12 +1101,13 @@
      max-height: 300px;
      overflow-y: auto;
      margin-top: 15px;
+     background-color: #121212;
  }
 
  .garageOption {
-     background-color: #f8f9fa;
-     border: 1px solid #dee2e6;
-     border-radius: 8px;
+     background-color: #1e1e1e;
+     border: 1px solid #444;
+
      padding: 12px;
      cursor: pointer;
      transition: all 0.2s;
@@ -1073,8 +1115,8 @@
  }
 
  .garageOption:hover {
-     background-color: #e9ecef;
-     border-color: #6c757d;
+     background-color: #2a2a2a;
+     border-color: #666;
  }
 
  .garageOption.disabledOption {
@@ -1085,11 +1127,12 @@
  .garageOptionName {
      font-weight: bold;
      margin-bottom: 5px;
+     color: #fff;
  }
 
  .garageOptionCapacity {
      font-size: 12px;
-     color: #6c757d;
+     color: #aaa;
  }
 
  /* 位置选择对话框样式 */
@@ -1100,10 +1143,11 @@
      max-height: 300px;
      overflow-y: auto;
      margin-top: 15px;
+     background-color: #121212;
  }
 
  .positionOption {
-     border: 1px solid #dee2e6;
+     border: 1px solid #444;
      cursor: pointer;
      transition: all 0.2s;
      text-align: center;
@@ -1114,49 +1158,53 @@
 
 
  .emptyPosition {
-     background-color: #d4edda;
-     border-color: #c3e6cb;
+     background-color: #2c3e2e;
+     border-color: #3a5a3d;
      padding-top: 10px;
      padding-bottom: 10px;
+     color: #fff;
 
  }
 
  .occupiedPosition {
-     background-color: #f8d7da;
-     border-color: #f5c6cb;
+     background-color: #4c2c2e;
+     border-color: #6a4a4d;
      padding-top: 10px;
      padding-bottom: 10px;
+     color: #fff;
  }
 
  /* 当前正在移动的载具位置样式 */
  .currentVehiclePosition {
      cursor: not-allowed;
-     background-color: #8ec3ff;
-     border-color: #0099ff;
+     background-color: #1c3e6c;
+     border-color: #2c5e9c;
+     color: #fff;
  }
 
  .currentVehicleMarker {
      margin-top: 8px;
      font-size: 10px;
-     color: #856404;
-     background-color: rgba(255, 255, 255, 0.7);
+     color: #f5c6cb;
+     background-color: rgba(30, 30, 30, 0.7);
      padding: 2px 6px;
-     border-radius: 4px;
+
  }
 
  .positionNumber {
      font-weight: bold;
      margin-bottom: 5px;
+     color: #fff;
  }
 
  .positionStatus {
      font-size: 14px;
-     color: #155724;
+     color: #3d8b40;
  }
 
  .positionVehicle {
      font-size: 12px;
-     color: #721c24;
+     color: #d86a70;
      word-break: break-word;
  }
 
@@ -1167,14 +1215,14 @@
      align-items: center;
      margin-bottom: 15px;
      padding-bottom: 10px;
-     border-bottom: 1px solid #dee2e6;
+     border-bottom: 1px solid #444;
  }
 
  .backButton {
-     background-color: #6c757d;
+     background-color: #444;
      color: white;
      border: none;
-     border-radius: 4px;
+
      padding: 6px 12px;
      cursor: pointer;
      font-size: 12px;
@@ -1182,12 +1230,12 @@
  }
 
  .backButton:hover {
-     background-color: #5a6268;
+     background-color: #555;
  }
 
  .targetGarageInfo {
      font-weight: bold;
-     color: #495057;
+     color: #fff;
  }
 
  /* 交换信息样式 */
@@ -1197,35 +1245,38 @@
      justify-content: space-around;
      margin-top: 15px;
      padding: 15px;
-     background-color: #f8f9fa;
-     border-radius: 8px;
+     background-color: #1e1e1e;
+
+     border: 1px solid #444;
  }
 
  .swapVehicle {
      text-align: center;
      flex: 1;
+     color: #fff;
  }
 
  .swapVehicle h5 {
      margin-top: 0;
      margin-bottom: 5px;
      font-size: 14px;
-     color: #495057;
+     color: #fff;
  }
 
  .swapVehicle p {
      margin: 5px 0;
+     color: #fff;
  }
 
  .swapVehicleLocation {
      font-size: 12px;
-     color: #6c757d;
+     color: #aaa;
  }
 
  .swapArrow {
      font-size: 24px;
      margin: 0 20px;
-     color: #6c757d;
+     color: #fff;
  }
 
  /* 关闭按钮样式 */
@@ -1237,7 +1288,7 @@
      border: none;
      font-size: 20px;
      cursor: pointer;
-     color: #6c757d;
+     color: #aaa;
      padding: 0;
      width: 24px;
      height: 24px;
@@ -1247,13 +1298,13 @@
  }
 
  .closeButton:hover {
-     color: #495057;
+     color: #fff;
  }
 
  /* 特定特性的颜色样式 */
  .bennyFeature {
      background-color: #8C2226;
-     /* 黄色 */
+     /* 红色 */
      color: #fff;
      font-weight: 600;
  }
@@ -1267,7 +1318,7 @@
 
  .haoFeature {
      background-color: #E06A30;
-     /* 绿色 */
+     /* 橙色 */
      color: white;
      font-weight: 600;
  }
@@ -1289,7 +1340,7 @@
  .vehicleName {
      font-size: 12px;
      font-weight: 600;
-     color: #333;
+     color: #fff;
      white-space: nowrap;
      overflow: hidden;
      text-overflow: ellipsis;
@@ -1297,7 +1348,7 @@
 
  .vehicleNameEn {
      font-size: 11px;
-     color: #6c757d;
+     color: #aaa;
      font-style: italic;
      white-space: nowrap;
      overflow: hidden;
@@ -1309,9 +1360,9 @@
 
 
  .vehicleName {
-     font-size: 16px;
+     font-size: 13px;
      font-weight: 600;
-     color: #333;
+     color: #fff;
      margin-bottom: 4px;
  }
 
@@ -1319,31 +1370,49 @@
  .emptyVehicleText {
      font-size: 18px;
      font-weight: 500;
-     color: #999999;
+     color: #aaa;
      display: flex;
      justify-content: center;
      align-items: center;
      height: 100%;
      text-align: center;
-     background-color: #f5f5f5;
-     border-radius: 4px;
-     padding: 16px;
+     background-color: #1e1e1e;
  }
 
  .vehicleNameEn {
      font-size: 14px;
-     color: #6c757d;
+     color: #aaa;
      font-style: italic;
      margin-bottom: 8px;
  }
 
+ /* 新增的载具信息样式 */
+ .vehicleBrand {
+     font-size: 12px;
+     color: #aaa;
+     margin-bottom: 2px;
+ }
+
+ .vehicleType {
+     font-size: 12px;
+     color: #888;
+     margin-bottom: 4px;
+ }
+
+ .vehiclePrice {
+     font-size: 12px;
+     color: #4CAF50;
+     margin-bottom: 4px;
+     font-weight: 500;
+ }
+
  .vehicleRemarks {
      font-size: 13px;
-     color: #495057;
-     background-color: #fff3cd;
+     color: #fff;
+     background-color: #3c2c1d;
      padding: 6px 8px;
-     border-radius: 4px;
-     border: 1px solid #ffeaa7;
+
+     border: 1px solid #6a4a2d;
      min-height: 24px;
      display: flex;
      align-items: center;

@@ -96,14 +96,28 @@
     background-size: 16px;
 }
 
-/* 模拟下拉框placeholder效果 */
-.filterSelect:invalid {
-    color: #999;
-}
 
 .filterSelect option {
     color: #ffffff;
     background-color: #1a1a1a;
+}
+
+
+/* 自定义滚动条样式 */
+.filterSelect::-webkit-scrollbar {
+    width: 8px;
+}
+
+.filterSelect::-webkit-scrollbar-track {
+    background: #121212;
+}
+
+.filterSelect::-webkit-scrollbar-thumb {
+    background: #333;
+}
+
+.filterSelect::-webkit-scrollbar-thumb:hover {
+    background: #555;
 }
 
 .filterSelect:focus {
@@ -188,6 +202,27 @@
     z-index: 1;
 }
 
+/* 通知组件样式 */
+.notification {
+    position: fixed;
+    top: 80px;
+    right: -300px;
+    /* 初始位置在屏幕右侧外 */
+    background-color: #5a5a5a;
+    color: white;
+    padding: 12px 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    font-size: 16px;
+    font-weight: 500;
+    z-index: 1000;
+    transition: right 0.5s ease-in-out;
+}
+
+.notificationVisible {
+    right: 20px;
+    /* 滑入到屏幕右侧 */
+}
+
 .clearSelectButton:hover {
     background-color: rgba(255, 255, 255, 0.2);
 }
@@ -198,18 +233,71 @@
     align-items: center;
     gap: 8px;
     cursor: pointer;
+    user-select: none;
 }
 
 /* 自定义复选框 */
 .customCheckbox {
-    accent-color: #007bff;
-    width: 18px;
-    height: 18px;
+    position: absolute;
+    opacity: 0;
     cursor: pointer;
+    height: 0;
+    width: 0;
 }
 
-/* 复选框标签 */
-.checkboxContainer label {
+/* 复选框样式 */
+.checkboxContainer .checkboxStyle {
+    position: relative;
+    display: block;
+    width: 20px;
+    height: 20px;
+    background-color: #1e1e1e;
+    border: 2px solid #444444;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.checkboxContainer:hover .checkboxStyle {
+    border-color: #007bff;
+    background-color: rgba(0, 123, 255, 0.1);
+}
+
+.checkboxContainer input:checked + .checkboxStyle {
+    border-color: #0078d7;
+    background-color: #0078d7;
+}
+
+.checkboxContainer .checkboxStyle:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+.checkboxContainer input:checked + .checkboxStyle:after {
+    display: block;
+}
+
+.checkboxContainer .checkboxStyle:after {
+    left: 7px;
+    top: 3px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+
+/* 复选框包装器 */
+.checkboxWrapper {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    user-select: none;
+}
+
+/* 复选框文本标签 */
+.checkboxLabelText {
     color: #ffffff;
     font-size: 14px;
     cursor: pointer;
@@ -350,7 +438,7 @@
 
 .featureItem {
     font-size: 10px;
-    padding: 4px 4px;
+    padding: 2px 2px 2px 2px;
     background-color: #ddd;
     color: #333;
     font-weight: bold;
@@ -408,7 +496,7 @@
 /* 品牌名称样式 */
 .vehicleBrand {
     font-size: 15px;
-    color: #ffffff;
+    color: #b1b1b1;
     margin-bottom: 2px;
     white-space: nowrap;
     overflow: hidden;
@@ -417,11 +505,10 @@
 
 /* 载具类型样式 */
 .vehicleType {
-    font-size: 10px;
+    font-size: 11px;
     color: #aaaaaa;
     margin-top: 2px;
     margin-bottom: 2px;
-    font-style: italic;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -431,7 +518,7 @@
 .vehiclePrice {
     font-size: 11px;
     font-weight: bold;
-    color: #4caf50;
+    color: #73ff7a;
     margin-top: 2px;
     margin-bottom: 2px;
     white-space: nowrap;
@@ -577,17 +664,22 @@
 .moveDialog,
 .swapDialog {
     background-color: #1e1e1e;
-    width: 90%;
-    max-width: 800px;
     max-height: 90vh;
     overflow-y: auto;
-    box-shadow: 0 4px 12px rgba(255, 255, 255, 0.15);
+}
+
+.moveDialog {
+    width: 95vw;
+}
+
+.swapDialog {
+    width: 40vw;
 }
 
 .moveDialogHeader,
 .swapDialogHeader {
     padding: 16px 20px;
-    border-bottom: 1px solid #dee2e6;
+    border-bottom: 1px solid #444444;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -597,7 +689,6 @@
 .swapDialogHeader h3 {
     margin: 0;
     font-size: 18px;
-    color: #212529;
 }
 
 .closeButton {
@@ -608,15 +699,11 @@
     color: #6c757d;
     padding: 0;
     width: 24px;
-    height: 24px;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-.closeButton:hover {
-    color: #495057;
-}
 
 .moveDialogContent,
 .swapDialogContent {
@@ -663,7 +750,6 @@
     display: flex;
     flex-wrap: wrap;
     gap: 7px;
-    max-height: 300px;
     overflow-y: auto;
     margin-top: 15px;
 }
@@ -678,14 +764,14 @@
     padding-bottom: 10px;
 }
 
-.emptyPosition {
-    background-color: #2c3e50;
-    border-color: #34495e;
+.occupiedPosition {
+    background-color: #696969;
+    border-color: #646464;
 }
 
-.occupiedPosition {
-    background-color: #3c0000;
-    border-color: #5c0000;
+.emptyPosition {
+    background-color: #3f3f3f;
+    border-color: #b6b6b69d;
 }
 
 .currentVehiclePosition {
@@ -697,18 +783,21 @@
 .positionNumber {
     font-weight: bold;
     margin-bottom: 5px;
-    color: #ffffff;
+    color: #c0c0c0;
+    font-size: 12px;
 }
 
 .positionStatus {
     font-size: 14px;
-    color: #3498db;
+    color: #d8d8d8;
+    font-weight: bold;
 }
 
 .positionVehicle {
     font-size: 12px;
-    color: #ff9999;
+    color: #e6e6e6;
     word-break: break-word;
+    font-weight: bold;
 }
 
 /* 对话框步骤导航样式 */
@@ -716,13 +805,12 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
     padding-bottom: 10px;
-    border-bottom: 1px solid #dee2e6;
 }
 
 .backButton {
-    background-color: #6c757d;
+    background-color: #7a7a7a;
     color: white;
     border: none;
     padding: 6px 12px;
@@ -732,12 +820,12 @@
 }
 
 .backButton:hover {
-    background-color: #5a6268;
+    background-color: #666666;
 }
 
 .targetGarageInfo {
     font-weight: bold;
-    color: #495057;
+    color: #ffffff;
 }
 
 /* 交换信息样式 */
@@ -759,12 +847,14 @@
     margin-top: 0;
     margin-bottom: 5px;
     font-size: 14px;
-    color: #ffffff;
+    color: #aaaaaa;
+
 }
 
 .swapVehicle p {
     margin: 5px 0;
-    color: #aaaaaa;
+    color: #ffffff;
+    font-weight: bold;
 }
 
 .swapArrow {
@@ -777,7 +867,6 @@
 .moveDialogActions,
 .swapDialogActions {
     padding: 16px 20px;
-    border-top: 1px solid #dee2e6;
     display: flex;
     justify-content: flex-end;
     gap: 10px;
