@@ -2,42 +2,15 @@ import React, { useState, useEffect, useRef } from 'react';
 import styles from '../styles/pages/HomePage.module.css';
 import { Garage, GarageVehicle } from '../types';
 import { getGarages, addGarage, deleteGarage, updateGarage, getAllVehiclesFeature, getFeatureTypeDicts } from '../utils/api';
+import Notification from '../components/HomePage/Notification';
+import ControlPanel from '../components/HomePage/ControlPanel';
+import Loading from '../components/HomePage/Loading';
+import GarageItem from '../components/HomePage/GarageItem';
 
-// 格式化价格函数
-const formatPrice = (price: number | null | undefined): string => {
-  if (price === null || price === undefined) return '未知';
-  if (price === 0) return '免费获取';
-  if (price === -1) return '无法获取';
-  return '$' + new Intl.NumberFormat('zh-CN').format(price);
-};
-
-// 特性配置数组 - 存储每个特性的文本、背景颜色和字体颜色
-const featureConfig = [
-  { text: 'BENNY', bgColor: '#CC5555', textColor: '#FFFFFF' },
-  { text: 'IMANI', bgColor: '#3D9992', textColor: '#FFFFFF' },
-  { text: 'HAO', bgColor: '#3499B2', textColor: '#FFFFFF' },
-  { text: 'POLICE', bgColor: '#229954', textColor: '#FFFFFF' },
-  { text: 'ARENA', bgColor: '#7D4693', textColor: '#FFFFFF' },
-  { text: 'PEGASUS', bgColor: '#D35400', textColor: '#FFFFFF' },
-  { text: 'DRIFT', bgColor: '#C0392B', textColor: '#FFFFFF' },
-  { text: 'WEAPONIZED', bgColor: '#3f6d99ff', textColor: '#FFFFFF' },
-  { text: 'NIGHTCLUB', bgColor: '#703688', textColor: '#FFFFFF' },
-  { text: 'BUNKER', bgColor: '#6C7A7D', textColor: '#FFFFFF' },
-  { text: 'WAREHOUSE', bgColor: '#A93226', textColor: '#FFFFFF' },
-  { text: 'FACILITY', bgColor: '#138D75', textColor: '#FFFFFF' },
-  { text: 'HANGAR', bgColor: '#6d2299ff', textColor: '#FFFFFF' },
-  { text: 'SALVAGE YARDS', bgColor: '#228799ff', textColor: '#FFFFFF' },
-  { text: 'FREAKSHOP', bgColor: '#999722ff', textColor: '#FFFFFF' },
-  { text: 'KOSATKA', bgColor: '#99227fff', textColor: '#FFFFFF' },
-  { text: 'ELECTRIC', bgColor: '#91a82cff', textColor: '#FFFFFF' },
-  { text: 'ARMED', bgColor: '#99227fff', textColor: '#FFFFFF' },
-  { text: 'ARMORED', bgColor: '#91a82cff', textColor: '#FFFFFF' }
-];
-
-// 创建特性映射以快速查找配置
-const featureConfigMap = Object.fromEntries(
-  featureConfig.map(feature => [feature.text, feature])
-);
+import ConfirmDialog from '../components/HomePage/ConfirmDialog';
+import VehicleDeleteConfirmDialog from '../components/HomePage/VehicleDeleteConfirmDialog';
+import MoveDialog from '../components/HomePage/MoveDialog';
+import SwapConfirmDialog from '../components/HomePage/SwapConfirmDialog';
 
 interface HomePageProps {
   className?: string;
@@ -252,7 +225,7 @@ const StorageListPage: React.FC<HomePageProps> = ({ className }) => {
 
       // 重新获取车库列表
       await fetchGarages();
-      showNotificationMessage(`成功更新了 ${updatedCount} 个车库的载具特性信息`);
+      showNotificationMessage('载具特性信息已更新');
     } catch (error) {
       console.error('更新载具特性信息失败:', error);
       showNotificationMessage('更新载具特性信息失败');
@@ -277,6 +250,8 @@ const StorageListPage: React.FC<HomePageProps> = ({ className }) => {
           fetchGarages();
           // 清除选中状态
           setSelectedGarageIds([]);
+          // 显示成功提示
+          showNotificationMessage('已选车库已删除');
         } else {
           showNotificationMessage('部分车库删除失败');
         }
@@ -500,6 +475,9 @@ const StorageListPage: React.FC<HomePageProps> = ({ className }) => {
         updateGarage(updatedGarages[targetGarageIndex])
       ]);
 
+      // 显示成功通知
+      showNotificationMessage('已移动载具');
+
       // 关闭对话框
       handleCloseMoveDialog();
     } catch (err) {
@@ -567,6 +545,9 @@ const StorageListPage: React.FC<HomePageProps> = ({ className }) => {
         updateGarage(updatedGarages[targetGarageIndex])
       ]);
 
+      // 显示成功通知
+      showNotificationMessage('已移动载具');
+
       // 关闭对话框
       handleCloseMoveDialog();
       setShowSwapConfirm(false);
@@ -584,10 +565,7 @@ const StorageListPage: React.FC<HomePageProps> = ({ className }) => {
     setMoveStep('selectGarage');
   };
 
-  const handleBackToGarageSelection = () => {
-    setMoveStep('selectGarage');
-    setSelectedTargetGarage(null);
-  };
+
 
   // 处理车库选择
   const handleSelectGarage = (id: number) => {
@@ -616,76 +594,27 @@ const StorageListPage: React.FC<HomePageProps> = ({ className }) => {
   return (
     <div className={`${styles.mainContainer} ${className}`}>
       {/* 通知组件 */}
-      <div className={`${styles.notification} ${showNotification ? styles.notificationVisible : ''}`}>
-        {notificationMessage}
-      </div>
+      <Notification showNotification={showNotification} notificationMessage={notificationMessage} />
 
-      <div className={styles.controlContainer}>
-        <div className={styles.controlItem}>
-          <div className={styles.controlLabel}>车库名称</div>
-          <div className={styles.controlInput}>
-            <input
-              type="text"
-              placeholder="请输入车库名称"
-              value={garageName}
-              onChange={(e) => setGarageName(e.target.value)}
-            />
-          </div>
-        </div>
-        <div className={styles.controlItem}>
-          <div className={styles.controlLabel}>车库容量</div>
-          <div className={styles.controlInput}>
-            <input
-              type="text"
-              placeholder="请输入车库容量"
-              value={garageCapacity}
-              onChange={handleCapacityChange}
-            />
-          </div>
-        </div>
-        <div className={styles.controlItem}>
-          <div className={styles.controlLabel}>车库备注</div>
-          <div className={styles.controlInput}>
-            <input
-              type="text"
-              placeholder="请输入车库备注（可选）"
-              value={garageRemarks}
-              onChange={(e) => setGarageRemarks(e.target.value)}
-            />
-          </div>
-        </div>
-        <div className={styles.controlItem}>
-          <div className={styles.controlButton}>
-            <button onClick={handleAddGarage} disabled={loading}>
-              {loading ? '添加中...' : '新增'}
-            </button>
-          </div>
-          <div className={styles.controlButton}>
-            <button onClick={handleSelectAll} disabled={loading || garages.length === 0}>
-              {selectedGarageIds.length === garages.length ? '取消全选' : '全选'}
-            </button>
-          </div>
-          <div className={styles.controlButton}>
-            <button
-              onClick={handleOpenConfirmDialog}
-              disabled={selectedGarageIds.length === 0}
-              className={selectedGarageIds.length === 0 ? '' : styles.deleteButton}
-            >
-              删除 ({selectedGarageIds.length})
-            </button>
-          </div>
-          <div className={styles.controlButton}>
-            <button onClick={handleUpdateVehicleFeatures} disabled={loading}>
-              {loading ? '更新中...' : '更新数据'}
-            </button>
-          </div>
-        </div>
-      </div>
+      <ControlPanel
+        garageName={garageName}
+        setGarageName={setGarageName}
+        garageCapacity={garageCapacity}
+        setGarageCapacity={(capacity) => setGarageCapacity(capacity)}
+        handleCapacityChange={handleCapacityChange}
+        garageRemarks={garageRemarks}
+        setGarageRemarks={setGarageRemarks}
+        loading={loading}
+        handleAddGarage={handleAddGarage}
+        handleSelectAll={handleSelectAll}
+        selectedGarageIds={selectedGarageIds}
+        handleOpenConfirmDialog={handleOpenConfirmDialog}
+        handleUpdateVehicleFeatures={handleUpdateVehicleFeatures}
+        garages={garages}
+      />
 
       {loading ? (
-        <div className={styles.loadingContainer}>
-          <div className={styles.loading}>加载中...</div>
-        </div>
+        <Loading loading={loading} />
       ) : (
         <div className={styles.storageListContainer}>
           {garages.length === 0 ? (
@@ -696,369 +625,72 @@ const StorageListPage: React.FC<HomePageProps> = ({ className }) => {
             garages.map((item) => {
               const isSelected = selectedGarageIds.includes(item.id);
               return (
-                <div
-                  className={`${styles.storageItem} ${isSelected ? styles.selectedStorageItem : ''}`}
+                <GarageItem
                   key={item.id}
-                >
-                  <div className={styles.storageItemHeader}>
-                    <div
-                      className={styles.checkboxContainer}
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleSelectGarage(item.id);
-                      }}
-                    >
-                      <input
-                        type="checkbox"
-                        className={styles.checkbox}
-                        checked={isSelected}
-                        onChange={(e) => {
-                          e.stopPropagation();
-                          handleSelectGarage(item.id);
-                        }}
-                      />
-                      <label className={styles.checkboxLabel}></label>
-                    </div>
-                    <div className={styles.storageInfo}>
-                      <div className={styles.storageDetails}>
-                        <div className={styles.storageName}>{item.storageName}</div>
-                      </div>
-                      <div className={styles.remarksContainer}>
-                        {editingRemarksId === item.id ? (
-                          <div className={styles.editRemarksContainer}>
-                            <input
-                              ref={editInputRef}
-                              type="text"
-                              className={`${styles.editRemarksInput} ${isUnsaved ? styles.unsavedInput : ''}`}
-                              value={editRemarks}
-                              onChange={(e) => {
-                                setEditRemarks(e.target.value);
-                                setIsUnsaved(true);
-                              }}
-                              onBlur={() => setIsUnsaved(true)}
-                              onFocus={() => setIsUnsaved(false)}
-                              onKeyDown={(e) => {
-                                if (e.key === 'Enter') {
-                                  handleSaveRemarks(item.id);
-                                } else if (e.key === 'Escape') {
-                                  handleCancelEditRemarks();
-                                }
-                              }}
-                              onClick={(e) => e.stopPropagation()}
-                              autoFocus
-                            />
-                          </div>
-                        ) : (
-                          <div className={styles.storageRemarks} onClick={(e) => e.stopPropagation()}>
-                            {item.remarks || '暂无备注'}
-                          </div>
-                        )}
-                        <button
-                          className={styles.editRemarksButton}
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            if (editingRemarksId === item.id) {
-                              handleSaveRemarks(item.id);
-                            } else {
-                              handleOpenEditRemarks(item);
-                            }
-                          }}
-                        >
-                          <img
-                            src={editingRemarksId === item.id ? '/save.png' : '/edit.png'}
-                            alt={editingRemarksId === item.id ? '保存' : '编辑'}
-                            style={{ width: '25px', height: '25px', display: 'block', cursor: 'pointer' }}
-                          />
-                        </button>
-                      </div>
-                      <div className={styles.storageNumContainer}>
-                        <div className={styles.storageNum}>
-                          {item.vehicleList.filter(vehicle => Object.keys(vehicle).length > 0).length}/{item.num}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className={styles.vehicleList}>
-                    {item.vehicleList.map((vehicle: GarageVehicle, index: number) => {
-                      // 检查载具是否为空对象
-                      const isEmptyVehicle = Object.keys(vehicle).length === 0;
-
-                      return (
-                        <div className={styles.vehicleItem} key={index}>
-                          {!isEmptyVehicle && (
-                            <div className={styles.vehicleButtons}>
-                              <button
-                                className={styles.moveVehicleButton}
-                                onClick={() => handleOpenMoveDialog(item.id, index, vehicle)}
-                              >
-                                <img
-                                  src="/move.png"
-                                  style={{ display: 'block', cursor: 'pointer' }}
-                                />
-                              </button>
-                              <button
-                                className={styles.deleteVehicleButton}
-                                onClick={() => handleOpenDeleteConfirmDialog(item.id, index, vehicle)}
-                              >
-                                <img
-                                  src="/delete.png"
-                                  style={{ display: 'block', cursor: 'pointer' }}
-                                />
-                              </button>
-                            </div>
-                          )}
-                          <div className={styles.vehicleInfo}>
-                            {isEmptyVehicle ? (
-                              // 空载具显示"空"
-                              <div className={styles.emptyVehicleText}></div>
-                            ) : (
-                              // 有内容的载具显示详细信息
-                              <>
-                                <div className={styles.vehicleBrand}>{vehicle.brandName}</div>
-                                <div className={styles.vehicleName}>{vehicle.vehicleName}</div>
-                                <div className={styles.vehicleType}>{vehicle.vehicle_type}</div>
-                                <div className={styles.vehiclePrice}>
-                                  {formatPrice(vehicle.price)}
-                                </div>
-                                {/* 只有当feature不为null且不为空时才显示特性列表 */}
-                                {vehicle.feature && vehicle.feature.trim() !== '' && (
-                                  <div className={styles.vehicleFeature}>
-                                    {vehicle.feature.split(',').map((featureText, index) => {
-                                      // 移除可能的空格
-                                      const cleanFeatureText = featureText.trim();
-                                      // 如果清理后的文本为空，跳过渲染
-                                      if (!cleanFeatureText) return null;
-
-                                      // 获取特性配置
-                                      const featureInfo = featureConfigMap[cleanFeatureText];
-
-                                      // 如果找到配置，使用配置的样式；否则使用默认样式
-                                      const style = featureInfo ? {
-                                        backgroundColor: featureInfo.bgColor,
-                                        color: featureInfo.textColor
-                                      } : {};
-
-                                      // 获取中文特性名称
-                                      const translatedFeature = featureDict[cleanFeatureText] || cleanFeatureText;
-
-                                      return (
-                                        <div
-                                          className={styles.featureItem}
-                                          style={style}
-                                          key={index}
-                                        >
-                                          {translatedFeature}
-                                        </div>
-                                      );
-                                    })}
-                                  </div>
-                                )}
-                              </>
-                            )}
-                          </div>
-                        </div>
-                      );
-                    })}
-                  </div>
-                </div>
+                  garage={item}
+                  isSelected={isSelected}
+                  editingRemarksId={editingRemarksId}
+                  editRemarks={editRemarks}
+                  isUnsaved={isUnsaved}
+                  editInputRef={editInputRef as React.RefObject<HTMLInputElement>}
+                  handleSelectGarage={handleSelectGarage}
+                  handleOpenEditRemarks={handleOpenEditRemarks}
+                  handleSaveRemarks={handleSaveRemarks}
+                  handleCancelEditRemarks={handleCancelEditRemarks}
+                  handleOpenMoveDialog={handleOpenMoveDialog}
+                  handleOpenDeleteConfirmDialog={handleOpenDeleteConfirmDialog}
+                  featureDict={featureDict}
+                />
               );
             })
           )}
         </div>
       )}
 
-      {/* 自定义确认删除对话框 */}
-      {showConfirmDialog && (
-        <div className={styles.confirmDialogOverlay}>
-          <div className={styles.confirmDialog}>
-            <div className={styles.confirmDialogHeader}>
-              <h3>确认</h3>
-            </div>
-            <div className={styles.confirmDialogContent}>
-              <p>确定删除选中的 {selectedGarageIds.length} 个车库？</p>
-              <p>Are you sure you want to delete the selected {selectedGarageIds.length} garages?</p>
-            </div>
-            <div className={styles.confirmDialogActions}>
-              <button
-                className={styles.confirmDialogCancel}
-                onClick={handleCancelDelete}
-              >
-                取消
-              </button>
-              <button
-                className={styles.confirmDialogConfirm}
-                onClick={handleConfirmDelete}
-              >
-                删除
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+      {/* 确认删除对话框 */}
+      <ConfirmDialog
+        showConfirmDialog={showConfirmDialog}
+        selectedGarageIds={selectedGarageIds}
+        handleCancelDelete={handleCancelDelete}
+        handleConfirmDelete={handleConfirmDelete}
+      />
 
       {/* 载具删除确认对话框 */}
-      {showDeleteConfirmDialog && selectedVehicleToDelete && (
-        <div className={styles.confirmDialogOverlay}>
-          <div className={styles.confirmDialog}>
-            <div className={styles.confirmDialogHeader}>
-              <h3>确认删除</h3>
-            </div>
-            <div className={styles.confirmDialogContent}>
-              <p>确定从车库 <span style={{ fontSize: '22px' }}>{garages.find(g => g.id === selectedVehicleToDelete.garageId)?.storageName || '未知车库'}</span> 删除 <span style={{ fontSize: '22px', color: '#ffffff' }}>{selectedVehicleToDelete.vehicleData.brandName} {selectedVehicleToDelete.vehicleData.vehicleName}</span></p>
-            </div>
-            <div className={styles.confirmDialogActions}>
-              <button
-                className={styles.confirmDialogCancel}
-                onClick={handleCancelDeleteVehicle}
-              >
-                取消
-              </button>
-              <button
-                className={styles.confirmDialogConfirm}
-                onClick={handleConfirmDeleteVehicle}
-              >
-                删除
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+      <VehicleDeleteConfirmDialog
+        showDeleteConfirmDialog={showDeleteConfirmDialog}
+        selectedVehicleToDelete={selectedVehicleToDelete}
+        garages={garages}
+        handleCancelDeleteVehicle={handleCancelDeleteVehicle}
+        handleConfirmDeleteVehicle={handleConfirmDeleteVehicle}
+      />
 
       {/* 移动载具对话框 */}
-      {showMoveDialog && (
-        <div className={styles.moveDialogOverlay}>
-          <div className={styles.moveDialog}>
-            <div className={styles.moveDialogHeader}>
-              <h3>移动载具</h3>
-              <button className={styles.closeButton} onClick={handleCloseMoveDialog}>
-                ×
-              </button>
-            </div>
-            <div className={styles.moveDialogContent}>
-              {moveStep === 'selectGarage' && (
-                <>
-                  <h4>选择目标车库</h4>
-                  <div className={styles.garageSelection}>
-                    {garages.map(garage => (
-                      <div
-                        key={garage.id}
-                        className={styles.garageOption}
-                        onClick={() => handleSelectTargetGarage(garage)}
-                      >
-                        <div className={styles.garageOptionName}>{garage.storageName}</div>
-                        <div className={styles.garageOptionCapacity}>{garage.vehicleList.filter(vehicle => Object.keys(vehicle).length > 0).length}/{garage.num} 位置</div>
-                      </div>
-                    ))}
-                  </div>
-                </>
-              )}
-
-              {moveStep === 'selectPosition' && selectedTargetGarage && (
-                <>
-                  <div className={styles.dialogStepNavigation}>
-                    <button
-                      className={styles.backButton}
-                      onClick={handleBackToGarageSelection}
-                    >
-                      ←返回选择车库
-                    </button>
-                    <div className={styles.targetGarageInfo}>
-                      目标车库：{selectedTargetGarage.storageName}
-                    </div>
-                  </div>
-                  <h4>选择目标位置</h4>
-                  <div className={styles.positionSelection}>
-                    {selectedTargetGarage.vehicleList.map((vehicle, index) => {
-                      const isEmpty = Object.keys(vehicle).length === 0;
-                      const isCurrentVehicle = selectedVehicle?.garageId === selectedTargetGarage.id &&
-                        selectedVehicle?.vehicleIndex === index;
-                      return (
-                        <div
-                          key={index}
-                          className={`${styles.positionOption} 
-                            ${isEmpty ? styles.emptyPosition : styles.occupiedPosition} 
-                            ${isCurrentVehicle ? styles.currentVehiclePosition : ''}`}
-                          onClick={() => !isCurrentVehicle && handleSelectTargetPosition(index)}
-                        >
-                          <div className={styles.positionNumber}>位置 {index + 1}</div>
-                          {isEmpty ? (
-                            <div className={styles.positionStatus}>空</div>
-                          ) : (
-                            <div className={styles.positionVehicle}>
-                              {`${vehicle.brandName} ${vehicle.vehicleName}`}
-                            </div>
-                          )}
-                          {isCurrentVehicle && (
-                            <div className={styles.currentVehicleMarker}>正在移动的载具</div>
-                          )}
-                        </div>
-                      );
-                    })}
-                  </div>
-                </>
-              )}
-            </div>
-            <div className={styles.moveDialogActions}>
-              {moveStep === 'selectGarage' && (
-                <button
-                  className={styles.confirmDialogCancel}
-                  onClick={handleCloseMoveDialog}
-                >
-                  取消
-                </button>
-              )}
-            </div>
-          </div>
-        </div>
-      )}
+      <MoveDialog
+        showMoveDialog={showMoveDialog}
+        moveStep={moveStep === 'selectGarage' ? 1 : 2}
+        selectedVehicleToMove={selectedVehicle}
+        garages={garages}
+        targetGarageId={selectedTargetGarage?.id || 0}
+        targetVehicleIndex={selectedTargetGarage ? 0 : 0}
+        handleSelectTargetGarage={(garageId) => handleSelectTargetGarage(garages.find(g => g.id === garageId)!)}
+        handleSelectTargetPosition={handleSelectTargetPosition}
+        handleCancelMove={handleCloseMoveDialog}
+        handleMoveVehicle={() => setMoveStep('selectPosition')}
+        handleBackToSelectGarage={() => setMoveStep('selectGarage')}
+      />
 
       {/* 交换载具确认对话框 */}
-      {showSwapConfirm && swapTarget && selectedVehicle && (
-        <div className={styles.swapDialogOverlay}>
-          <div className={styles.swapDialog}>
-            <div className={styles.swapDialogHeader}>
-              <h3>确认交换</h3>
-            </div>
-            <div className={styles.swapDialogContent}>
-              <p>确定要交换以下载具吗？</p>
-              <div className={styles.swapInfo}>
-                <div className={styles.swapVehicle}>
-                  <h5>来源载具：</h5>
-                  <p>{`${selectedVehicle.vehicleData.brandName} ${selectedVehicle.vehicleData.vehicleName}`}</p>
-                  <p className={styles.swapVehicleLocation}>
-                    位置：车库 {garages.find(g => g.id === selectedVehicle.garageId)?.storageName} 位置 {selectedVehicle.vehicleIndex + 1}
-                  </p>
-                </div>
-                <div className={styles.swapArrow}>↔️</div>
-                <div className={styles.swapVehicle}>
-                  <h5>目标载具：</h5>
-                  <p>{`${swapTarget.vehicleData.brandName} ${swapTarget.vehicleData.vehicleName}`}</p>
-                  <p className={styles.swapVehicleLocation}>
-                    位置：车库 {garages.find(g => g.id === swapTarget.garageId)?.storageName} 位置 {swapTarget.vehicleIndex + 1}
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div className={styles.swapDialogActions}>
-              <button
-                className={styles.confirmDialogCancel}
-                onClick={() => {
-                  setShowSwapConfirm(false);
-                  setSwapTarget(null);
-                }}
-              >
-                取消
-              </button>
-              <button
-                className={styles.confirmDialogConfirm}
-                onClick={handleSwapVehicles}
-              >
-                确认交换
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+      <SwapConfirmDialog
+        showSwapConfirmDialog={showSwapConfirm}
+        swapSource={selectedVehicle}
+        swapTarget={swapTarget}
+        garages={garages}
+        handleCancelSwap={() => {
+          setShowSwapConfirm(false);
+          setSwapTarget(null);
+        }}
+        handleSwapVehicles={handleSwapVehicles}
+      />
     </div>
   );
 };

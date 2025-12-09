@@ -21,7 +21,7 @@
      top: 80px;
      right: -300px;
      /* 初始位置在屏幕右侧外 */
-     background-color: #a75900;
+     background-color: #0078d7;
      color: white;
      padding: 12px 16px;
      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
@@ -205,17 +205,32 @@
  }
 
  .confirmDialogCancel {
-     padding: 8px 16px;
-     background-color: #6c757d;
+     background-color: #7a7a7a;
      color: white;
      border: none;
+     padding: 6px 12px;
      cursor: pointer;
-     font-weight: 500;
+     font-size: 12px;
      transition: background-color 0.2s ease;
  }
 
  .confirmDialogCancel:hover {
-     background-color: #5a6268;
+     background-color: #a1a1a1;
+ }
+
+ .confirmDialogBack {
+     background-color: #7a7a7a;
+     color: white;
+     border: none;
+     padding: 6px 12px;
+     cursor: pointer;
+     font-size: 12px;
+     transition: background-color 0.2s ease;
+     margin-bottom: 5px;
+ }
+
+ .confirmDialogBack:hover {
+     background-color: #a1a1a1;
  }
 
  /* 移动载具对话框样式 */
@@ -268,11 +283,141 @@
 
  .moveDialogActions {
      padding: 16px 20px;
-     background-color: #2a2a2a;
-     border-top: 1px solid #444444;
      display: flex;
      justify-content: flex-end;
      gap: 10px;
+ }
+
+ /* 关闭按钮样式 */
+ .closeButton {
+     background: none;
+     border: none;
+     font-size: 24px;
+     cursor: pointer;
+     color: #6c757d;
+     padding: 0;
+     width: 24px;
+     display: flex;
+     align-items: center;
+     justify-content: center;
+ }
+
+ .closeButton:hover {
+     color: #ffffff;
+ }
+
+ /* 车库列表样式 */
+ .garageList {
+     display: flex;
+     flex-wrap: wrap;
+     gap: 10px;
+     max-height: 300px;
+     overflow-y: auto;
+     margin-top: 15px;
+ }
+
+ .garageItem {
+     background-color: #2a2a2a;
+     border: 1px solid #444444;
+     padding: 12px;
+     cursor: pointer;
+     transition: all 0.2s;
+     min-width: 150px;
+ }
+
+ .garageItem:hover {
+     background-color: #3a3a3a;
+     border-color: #666666;
+ }
+
+ .garageItemSelected {
+     background-color: #3a3a3a;
+     border: 2px solid #0078d7;
+ }
+
+ .garageName {
+     font-weight: bold;
+     margin-bottom: 5px;
+     color: #ffffff;
+ }
+
+ .garageCapacity {
+     font-size: 12px;
+     color: #aaaaaa;
+ }
+
+ /* 位置列表样式 */
+ .positionList {
+     display: flex;
+     flex-wrap: wrap;
+     gap: 7px;
+     max-height: 300px;
+     overflow-y: auto;
+     margin-top: 15px;
+ }
+
+ .positionItem {
+     border: 1px solid #444444;
+     cursor: pointer;
+     transition: all 0.2s;
+     text-align: center;
+     flex: 0 0 calc(10% - 9px);
+ }
+
+
+ .positionItemSelected {
+     background-color: #3a3a3a;
+     border: 2px solid #0078d7;
+ }
+
+ /* 正在移动的载具车位 */
+ .currentVehiclePosition {
+     cursor: not-allowed;
+     background-color: #444444;
+     border-color: #004499;
+ }
+
+ /* 空车位 */
+ .emptyPosition {
+     background-color: #3f3f3f;
+     border-color: #b6b6b69d;
+ }
+
+ /* 非空车位 */
+ .occupiedPosition {
+     background-color: #696969;
+     border-color: #646464;
+     min-height: 70px;
+ }
+
+ .positionIndex {
+     font-weight: bold;
+     margin-bottom: 5px;
+     color: #ffffff;
+ }
+
+ .positionVehicle {
+     font-size: 12px;
+     color: #cccccc;
+ }
+
+ .emptyPosition {
+     font-size: 12px;
+     color: #666666;
+ }
+
+ .movingVehicleLabel {
+     background-color: #9e9e9e;
+     color: #333333;
+     font-size: 11px;
+     border: 1px solid #3f3f3f;
+     text-align: center;
+     width: 99%;
+     margin-top: 13px;
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     box-shadow: 0 2px 4px rgba(0, 0, 0, 1);
  }
 
  /* 交换载具对话框样式 */
@@ -405,7 +550,6 @@
      padding: 10px;
      text-align: center;
      color: #aaaaaa;
-     font-style: italic;
      margin-left: -50px;
  }
 
@@ -657,7 +801,6 @@
  /* 占位符样式 */
  .editRemarksInput::placeholder {
      color: #bebebe;
-     font-style: italic;
  }
 
  /* 鼠标悬停时的微妙效果 */
@@ -1089,8 +1232,8 @@
      background-color: rgba(30, 30, 30, 0.7);
      border: none;
      border-radius: 50%;
-     width: 24px;
-     height: 24px;
+     width: 18px;
+     height: 18px;
      font-size: 14px;
      cursor: pointer;
      display: flex;
@@ -1098,6 +1241,13 @@
      justify-content: center;
      transition: background-color 0.2s;
      color: #fff;
+ }
+
+ .moveVehicleButton img,
+ .deleteVehicleButton img {
+     width: 18px;
+     height: 18px;
+     object-fit: contain;
  }
 
  .moveVehicleButton:hover,
@@ -1166,19 +1316,15 @@
  .emptyPosition {
      background-color: #3f3f3f;
      border-color: #b6b6b69d;
-     min-height: 68px;
+     min-height: 55px;
  }
 
- .occupiedPosition {
-     background-color: #696969;
-     border-color: #646464;
- }
 
  /* 当前正在移动的载具位置样式 */
  .currentVehiclePosition {
      cursor: not-allowed;
-     background-color: #1c3e6c;
-     border-color: #2c5e9c;
+     background-color: #696969;
+     border-color: #646464;
      color: #fff;
  }
 
@@ -1277,7 +1423,7 @@
 
  .swapArrow {
      font-size: 24px;
-     margin: 0 20px;
+     margin: 10px 10px 10px 10px;
      color: #fff;
  }
 

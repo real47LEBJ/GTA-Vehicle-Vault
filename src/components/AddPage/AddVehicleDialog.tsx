@@ -32,9 +32,6 @@ const AddVehicleDialog: React.FC<AddVehicleDialogProps> = ({
       <div className={styles.moveDialog}>
         <div className={styles.moveDialogHeader}>
           <h3>添加载具</h3>
-          <button className={styles.closeButton} onClick={onClose}>
-            ×
-          </button>
         </div>
         <div className={styles.moveDialogContent}>
           {purchaseStep === 'selectGarage' && (
@@ -95,14 +92,12 @@ const AddVehicleDialog: React.FC<AddVehicleDialogProps> = ({
           )}
         </div>
         <div className={styles.moveDialogActions}>
-          {purchaseStep === 'selectGarage' && (
-            <button
-              className={styles.confirmDialogCancel}
-              onClick={onClose}
-            >
-              取消
-            </button>
-          )}
+          <button
+            className={styles.confirmDialogCancel}
+            onClick={onClose}
+          >
+            取消
+          </button>
         </div>
       </div>
     </div>

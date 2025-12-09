@@ -18,7 +18,7 @@
 
 /* Primary Button */
 .btn-primary {
-    border-top: 4px solid #4a90e2;
+    border-top: 4px solid #0078d7;
     color: white;
     background-color: #474747;
 }
@@ -28,7 +28,7 @@
 .btn-secondary {
     background-color: #333333;
     color: white;
-    border-top: 4px solid #333333;
+    border-top: 4px solid #727272;
 }
 
 .btn-secondary:hover:not(:disabled) {

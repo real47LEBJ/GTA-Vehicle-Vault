@@ -34,7 +34,7 @@ function App() {
   // Navigation items including About
   const navItems: NavItem[] = [
     { id: 'home', label: '载具管理' },
-    { id: 'vehicleList', label: '载具购买' },
+    { id: 'vehicleList', label: '载具添加' },
     { id: 'about', label: '关于' }
   ];
 

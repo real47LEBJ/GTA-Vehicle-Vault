@@ -7,8 +7,7 @@ interface NotificationProps {
 }
 
 const Notification: React.FC<NotificationProps> = ({ isVisible, message }) => {
-  if (!isVisible) return null;
-
+  // 始终渲染组件，通过CSS类控制显示/隐藏和动画
   return (
     <div className={`${styles.notification} ${isVisible ? styles.notificationVisible : ''}`}>
       {message}

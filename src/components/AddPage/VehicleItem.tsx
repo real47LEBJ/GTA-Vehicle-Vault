@@ -28,7 +28,7 @@ const VehicleItem: React.FC<VehicleItemProps> = ({ vehicle, brands, onAddVehicle
         className={styles.moveVehicleButton}
         onClick={() => onAddVehicle(vehicle)}
       >
-        <img src="/add.png" style={{ width: '20px', height: '20px' }} />
+        <img src="/add.png" />
       </button>
       <div className={styles.vehicleInfo}>
         {/* 查找载具对应的品牌信息 */}

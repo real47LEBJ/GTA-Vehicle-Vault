@@ -116,20 +116,21 @@ const AddPage: React.FC<AddPageProps> = ({ className }) => {
   }, [selectedBrand]);
 
   // 获取车库列表
-  useEffect(() => {
-    const fetchGarages = async () => {
-      try {
-        const response = await getGarages();
-        if (response.success && response.data) {
-          setGarages(response.data || []);
-        } else {
-          console.error('获取车库列表失败:', response.error);
-        }
-      } catch (err) {
-        console.error('获取车库数据时发生错误:', err);
+  const fetchGarages = async () => {
+    try {
+      const response = await getGarages();
+      if (response.success && response.data) {
+        setGarages(response.data || []);
+      } else {
+        console.error('获取车库列表失败:', response.error);
       }
-    };
+    } catch (err) {
+      console.error('获取车库数据时发生错误:', err);
+    }
+  };
 
+  // 组件初始化时获取车库列表
+  useEffect(() => {
     fetchGarages();
   }, []);
 
@@ -229,7 +230,9 @@ const AddPage: React.FC<AddPageProps> = ({ className }) => {
   const currentBrand = brands.find(brand => brand.id === selectedBrand) || null;
 
   // 添加功能相关函数
-  const handleOpenPurchaseDialog = (vehicle: VehicleType) => {
+  const handleOpenPurchaseDialog = async (vehicle: VehicleType) => {
+    // 打开对话框前先获取最新的车库列表
+    await fetchGarages();
     setSelectedVehicle(vehicle);
     setPurchaseStep('selectGarage');
     setShowPurchaseDialog(true);
@@ -321,7 +324,7 @@ const AddPage: React.FC<AddPageProps> = ({ className }) => {
       await updateGarage(updatedGarages[targetGarageIndex]);
 
       // 显示成功通知
-      setNotificationMessage('载具已新增');
+      setNotificationMessage('已新增车库');
       setShowNotification(true);
 
       // 3秒后自动隐藏通知
@@ -331,6 +334,9 @@ const AddPage: React.FC<AddPageProps> = ({ className }) => {
 
       // 刷新HomePage以显示更新后的车库数据
       refreshHomePage();
+
+      // 重新获取车库列表，确保数据最新
+      fetchGarages();
 
       // 关闭对话框
       handleClosePurchaseDialog();
