@@ -312,8 +312,8 @@ export const getAllVehiclesFeature = async (): Promise<ApiResponse<Map<string, s
     if (response.success && response.data) {
       const featureMap = new Map<string, string>();
       response.data.forEach((vehicle) => {
-        if (vehicle.id !== undefined) {
-          featureMap.set(vehicle.id.toString(), vehicle.feature || '');
+        if (vehicle.id) {
+          featureMap.set(vehicle.id.toString(), vehicle.feature || "");
         }
       });
 

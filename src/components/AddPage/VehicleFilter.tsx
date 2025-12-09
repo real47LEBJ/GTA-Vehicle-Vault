@@ -98,12 +98,18 @@ const VehicleFilter: React.FC<VehicleFilterProps> = ({
           className={styles.searchInput}
           placeholder="搜索载具"
           value={vehicleSearchTerm}
-          onChange={(e) => onVehicleSearchChange(e.target.value)}
+          onChange={(e) => {
+            onPageChange(1); // 先重置页码
+            onVehicleSearchChange(e.target.value);
+          }}
         />
         {vehicleSearchTerm && (
           <button
             className={styles.clearSearchButton}
-            onClick={() => onVehicleSearchChange('')}
+            onClick={() => {
+              onPageChange(1); // 先重置页码
+              onVehicleSearchChange('');
+            }}
             title="清空搜索"
           >
             ×
@@ -115,7 +121,10 @@ const VehicleFilter: React.FC<VehicleFilterProps> = ({
       <select
         className={styles.filterSelect}
         value={priceSort || ''}
-        onChange={(e) => onPriceSortChange(e.target.value as 'asc' | 'desc' | null)}
+        onChange={(e) => {
+          onPageChange(1); // 先重置页码
+          onPriceSortChange(e.target.value as 'asc' | 'desc' | null);
+        }}
       >
         <option value="">价格排序</option>
         <option value="asc">价格升序</option>
@@ -127,7 +136,10 @@ const VehicleFilter: React.FC<VehicleFilterProps> = ({
         <select
           className={`${styles.filterSelect} ${!selectedVehicleType ? styles.selectPlaceholder : ''}`}
           value={selectedVehicleType || ''}
-          onChange={(e) => onVehicleTypeChange(e.target.value || null)}
+          onChange={(e) => {
+            onPageChange(1); // 先重置页码
+            onVehicleTypeChange(e.target.value || null);
+          }}
         >
           <option value="" disabled style={{ display: 'none' }}>请选择载具类型</option>
           {Object.entries(vehicleTypeDict).map(([typeEn]) => (
@@ -137,7 +149,10 @@ const VehicleFilter: React.FC<VehicleFilterProps> = ({
         {selectedVehicleType && (
           <button
             className={styles.clearSelectButton}
-            onClick={() => onVehicleTypeChange(null)}
+            onClick={() => {
+              onPageChange(1); // 先重置页码
+              onVehicleTypeChange(null);
+            }}
           >
             ×
           </button>
@@ -149,7 +164,10 @@ const VehicleFilter: React.FC<VehicleFilterProps> = ({
         <select
           className={`${styles.filterSelect} ${!selectedFeature ? styles.selectPlaceholder : ''}`}
           value={selectedFeature || ''}
-          onChange={(e) => onFeatureChange(e.target.value || null)}
+          onChange={(e) => {
+            onPageChange(1); // 先重置页码
+            onFeatureChange(e.target.value || null);
+          }}
         >
           <option value="" disabled style={{ display: 'none' }}>请选择特性</option>
           {Object.entries(featureDict).map(([featureEn, featureZh]) => (
@@ -159,7 +177,10 @@ const VehicleFilter: React.FC<VehicleFilterProps> = ({
         {selectedFeature && (
           <button
             className={styles.clearSelectButton}
-            onClick={() => onFeatureChange(null)}
+            onClick={() => {
+              onPageChange(1); // 先重置页码
+              onFeatureChange(null);
+            }}
           >
             ×
           </button>
@@ -173,7 +194,10 @@ const VehicleFilter: React.FC<VehicleFilterProps> = ({
             type="checkbox"
             id="showUnavailable"
             checked={showUnavailableVehicles}
-            onChange={(e) => onShowUnavailableChange(e.target.checked)}
+            onChange={(e) => {
+              onPageChange(1); // 先重置页码
+              onShowUnavailableChange(e.target.checked);
+            }}
             className={styles.customCheckbox}
           />
           <span className={styles.checkboxStyle}></span>

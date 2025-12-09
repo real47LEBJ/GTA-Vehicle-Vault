@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useCallback, useRef, createContext } from 'react';
 import styles from './App.module.css';
 
 // Import components
@@ -13,56 +13,69 @@ import AddPage from './pages/AddPage';
 type NavItem = {
   id: string;
   label: string;
-  icon: string;
 };
+
+// Create a context for refresh functions
+export const RefreshContext = createContext<{
+  refreshHomePage: () => void;
+}>({
+  refreshHomePage: () => {}
+});
 
 function App() {
   // Simple routing
   const [currentPage, setCurrentPage] = useState<string>('home');
+  
+  // Create a ref to store page refresh triggers
+  const refreshTriggers = useRef({
+    home: 0
+  });
 
   // Navigation items including About
   const navItems: NavItem[] = [
-    { id: 'home', label: '载具管理', icon: '🏠' },
-    { id: 'vehicleList', label: '载具购买', icon: '🚗' },
-    { id: 'about', label: '关于', icon: 'ℹ️' },
+    { id: 'home', label: '载具管理' },
+    { id: 'vehicleList', label: '载具购买' },
+    { id: 'about', label: '关于' }
   ];
 
-  // Render current page
-  const renderCurrentPage = () => {
-    switch (currentPage) {
-      case 'home':
-        return <HomePage />;
-      case 'about':
-        return <AboutPage />;
-      case 'vehicleList':
-        return <AddPage />;
-      default:
-        return <HomePage />;
-    }
-  };
+  // Function to trigger HomePage refresh (can be called when garage_overview changes)
+  const refreshHomePage = useCallback(() => {
+    refreshTriggers.current.home += 1;
+  }, []);
 
   return (
-    <div className={styles.app}>
-      <nav className={styles.appNav}>
-        {navItems.map((item) => (
-          <Button
-            className={styles.navButton}
-            key={item.id}
-            variant={currentPage === item.id ? 'primary' : 'secondary'}
-            size="small"
-            onClick={() => setCurrentPage(item.id)}
-          >
-            <span>{item.icon}</span>
-            <span>{item.label}</span>
-          </Button>
-        ))}
-      </nav>
+    <RefreshContext.Provider value={{ refreshHomePage }}>
+      <div className={styles.app}>
+        <nav className={styles.appNav}>
+          {navItems.map((item) => (
+            <Button
+              className={styles.navButton}
+              key={item.id}
+              variant={currentPage === item.id ? 'primary' : 'secondary'}
+              size="small"
+              onClick={() => setCurrentPage(item.id)}
+            >
+              <span>{item.label}</span>
+            </Button>
+          ))}
+        </nav>
 
-      {/* Main Content - No sidebar */}
-      <main className={styles.mainContent}>
-        {renderCurrentPage()}
-      </main>
-    </div>
+        {/* Main Content - No sidebar */}
+        <main className={styles.mainContent}>
+          {/* Keep all pages rendered but show/hide based on currentPage */}
+          <HomePage 
+            key={refreshTriggers.current.home} // Only refresh when explicitly triggered
+            className={currentPage === 'home' ? styles.pageVisible : styles.pageHidden} 
+          />
+          <AddPage 
+            className={currentPage === 'vehicleList' ? styles.pageVisible : styles.pageHidden} 
+          />
+          <AboutPage 
+            className={currentPage === 'about' ? styles.pageVisible : styles.pageHidden} 
+          />
+        </main>
+      </div>
+    </RefreshContext.Provider>
   );
 }
 

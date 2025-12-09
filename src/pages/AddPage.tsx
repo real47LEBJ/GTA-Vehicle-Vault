@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import { RefreshContext } from '../App';
 import styles from '../styles/pages/AddPage.module.css';
 import { getBrands, getVehicles, getGarages, updateGarage, getAllVehicles, getFeatureTypeDicts, getVehicleTypeDicts } from '../utils/api';
 import { Brand, Garage, GarageVehicle, Vehicle as VehicleType } from '../types';
@@ -9,7 +10,14 @@ import AddVehicleDialog from '../components/AddPage/AddVehicleDialog';
 import ConfirmReplaceDialog from '../components/AddPage/ConfirmReplaceDialog';
 import Notification from '../components/AddPage/Notification';
 
-const AddPage: React.FC = () => {
+interface AddPageProps {
+  className?: string;
+}
+
+const AddPage: React.FC<AddPageProps> = ({ className }) => {
+  // Get refresh function from context
+  const { refreshHomePage } = useContext(RefreshContext);
+  
   const [brands, setBrands] = useState<Brand[]>([]);
   const [vehicles, setVehicles] = useState<VehicleType[]>([]);
   // 选择的品牌ID，默认值为'all'表示显示全部载具
@@ -212,6 +220,8 @@ const AddPage: React.FC = () => {
     return filteredVehicles.slice(startIndex, endIndex);
   }, [filteredVehicles, currentPage, itemsPerPage]);
 
+  // 页码重置逻辑已移到VehicleFilter.tsx和BrandSelector.tsx组件中
+
   // 总页数
   const totalPages = Math.ceil(filteredVehicles.length / itemsPerPage);
 
@@ -319,6 +329,9 @@ const AddPage: React.FC = () => {
         setShowNotification(false);
       }, 3000);
 
+      // 刷新HomePage以显示更新后的车库数据
+      refreshHomePage();
+
       // 关闭对话框
       handleClosePurchaseDialog();
     } catch (err) {
@@ -337,7 +350,7 @@ const AddPage: React.FC = () => {
   }
 
   return (
-    <div className={styles.pageContainer}>
+    <div className={`${styles.pageContainer} ${className}`}>
       {/* 通知组件 */}
       <Notification
         isVisible={showNotification}
@@ -351,6 +364,7 @@ const AddPage: React.FC = () => {
           searchTerm={searchTerm}
           onBrandSelect={setSelectedBrand}
           onSearchChange={setSearchTerm}
+          onPageChange={setCurrentPage}
         />
       </div>
 

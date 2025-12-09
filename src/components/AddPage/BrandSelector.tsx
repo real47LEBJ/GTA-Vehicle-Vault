@@ -8,6 +8,7 @@ interface BrandSelectorProps {
   searchTerm: string;
   onBrandSelect: (brandId: string) => void;
   onSearchChange: (term: string) => void;
+  onPageChange: (page: number) => void;
 }
 
 const BrandSelector: React.FC<BrandSelectorProps> = ({
@@ -15,7 +16,8 @@ const BrandSelector: React.FC<BrandSelectorProps> = ({
   selectedBrand,
   searchTerm,
   onBrandSelect,
-  onSearchChange
+  onSearchChange,
+  onPageChange
 }) => {
   // 过滤品牌列表（支持中英文搜索）
   const filteredBrands = brands.filter(brand =>
@@ -49,7 +51,10 @@ const BrandSelector: React.FC<BrandSelectorProps> = ({
       <div
         className={`${styles.brandItem} ${selectedBrand === 'all' ? styles.active : ''}`}
         key="all"
-        onClick={() => onBrandSelect('all')}
+        onClick={() => {
+          onPageChange(1); // 先重置页码
+          onBrandSelect('all');
+        }}
       >
         <div className={styles.brandInfo}>
           <div className={styles.brandName}>全部</div>
@@ -63,7 +68,10 @@ const BrandSelector: React.FC<BrandSelectorProps> = ({
           <div
             className={`${styles.brandItem} ${selectedBrand === brand.id ? styles.active : ''}`}
             key={brand.id}
-            onClick={() => onBrandSelect(brand.id)}
+            onClick={() => {
+              onPageChange(1); // 先重置页码
+              onBrandSelect(brand.id);
+            }}
           >
             <img
               src={logoPath}

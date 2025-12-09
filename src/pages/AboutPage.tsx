@@ -2,9 +2,13 @@ import React from 'react';
 import Header from '../components/Header';
 
 
-const AboutPage: React.FC = () => {
+interface AboutPageProps {
+  className?: string;
+}
+
+const AboutPage: React.FC<AboutPageProps> = ({ className }) => {
   return (
-    <div>
+    <div className={className}>
       <div>
         <Header
           title="关于"

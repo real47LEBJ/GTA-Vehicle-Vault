@@ -1,5 +1,5 @@
 .app {
-    background-color: rgb(231, 231, 231);
+    background-color: #121212;
     height: 100vh;
     width: 100vw;
     overflow: hidden;
@@ -7,6 +7,7 @@
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
+    color: #ffffff;
 }
 
 .appNav {
@@ -15,6 +16,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    background-color: #1e1e1e;
+    border-bottom: 1px solid #444444;
 }
 
 .navButton {
@@ -24,5 +27,38 @@
 .mainContent {
     height: 95%;
     width: 100%;
-    background-color: rgb(255, 255, 255);
+    background-color: #121212;
+    position: relative;
+}
+
+/* Page visibility styles */
+.pageVisible {
+    display: block;
+    position: relative;
+    z-index: 1;
+    height: 100%;
+    width: 100%;
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.1s ease;
+}
+
+.pageHidden {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    opacity: 0;
+    visibility: hidden;
+    z-index: -1;
+    pointer-events: none;
+}
+
+/* Ensure all child elements are also hidden */
+.pageHidden * {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
 }
