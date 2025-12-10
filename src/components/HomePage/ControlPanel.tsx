@@ -44,6 +44,7 @@ const ControlPanel: React.FC<ControlPanelProps> = ({
             placeholder="请输入车库名称"
             value={garageName}
             onChange={(e) => setGarageName(e.target.value)}
+            className={styles.garageNameInput}
           />
         </div>
       </div>
@@ -55,6 +56,7 @@ const ControlPanel: React.FC<ControlPanelProps> = ({
             placeholder="请输入车库容量"
             value={garageCapacity}
             onChange={handleCapacityChange}
+            className={styles.garageCapacityInput}
           />
         </div>
       </div>
@@ -66,6 +68,7 @@ const ControlPanel: React.FC<ControlPanelProps> = ({
             placeholder="请输入车库备注（可选）"
             value={garageRemarks}
             onChange={(e) => setGarageRemarks(e.target.value)}
+            className={styles.garageRemarksInput}
           />
         </div>
       </div>

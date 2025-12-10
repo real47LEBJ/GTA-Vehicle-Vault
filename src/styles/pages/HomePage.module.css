@@ -39,9 +39,8 @@
  /* 控制容器样式 */
  .controlContainer {
      display: flex;
-     flex-wrap: wrap;
-     gap: 15px;
-     padding: 15px;
+     gap: 10px;
+     padding: 10px;
      background-color: #1e1e1e;
      border: 1px solid #444444;
      position: sticky;
@@ -87,6 +86,22 @@
      box-sizing: border-box;
      background-color: #272727;
      color: #ffffff;
+     width: 200px
+ }
+
+ /* 车库名称输入框样式 - 稍微增大宽度 */
+ .controlInput input.garageNameInput {
+     width: 220px;
+ }
+
+ /* 车库容量输入框样式 - 缩小宽度 */
+ .controlInput input.garageCapacityInput {
+     width: 140px;
+ }
+
+ /* 车库备注输入框样式 - 稍微增大宽度 */
+ .controlInput input.garageRemarksInput {
+     width: 220px;
  }
 
  .controlInput input:focus {
@@ -1197,24 +1212,24 @@
 
  /* 载具特性样式 */
  .vehicleFeature {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 2px;
-    margin-bottom: 2px;
-    width: 100%;
-}
+     display: flex;
+     flex-wrap: wrap;
+     gap: 2px;
+     margin-bottom: 2px;
+     width: 100%;
+ }
 
-.featureItem {
-    font-size: 9px;
-    padding: 1px 3px;
-    background-color: #333;
-    color: #fff;
-    font-weight: bold;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 1);
-    box-sizing: border-box;
-    flex: 0 0 auto;
-    width: fit-content;
-}
+ .featureItem {
+     font-size: 9px;
+     padding: 1px 3px;
+     background-color: #333;
+     color: #fff;
+     font-weight: bold;
+     text-shadow: 1px 1px 2px rgba(0, 0, 0, 1);
+     box-sizing: border-box;
+     flex: 0 0 auto;
+     width: fit-content;
+ }
 
  /* 载具按钮容器样式 */
  .vehicleButtons {

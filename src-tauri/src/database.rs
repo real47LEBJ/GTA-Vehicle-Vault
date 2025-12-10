@@ -212,24 +212,13 @@ fn init_user_db(_app: &App, db_path: &std::path::Path) -> Result<()> {
         Err(e) => return Err(e),
     };
 
-    // 强制创建车库概览表，无论它是否已存在
-    // 首先检查是否需要添加remarks字段
-    let has_remarks_column =
-        match conn.execute("ALTER TABLE garage_overview ADD COLUMN remarks TEXT", []) {
-            Ok(_) => true,
-            Err(e) => {
-                // 如果错误是"duplicate column name"，说明字段已存在，忽略错误
-                if e.to_string().contains("duplicate column name") {
-                    true
-                } else {
-                    eprintln!("Failed to add remarks column: {:?}", e);
-                    false
-                }
-            }
-        };
+    // 首先检查表是否存在
+    let table_exists: bool = conn.prepare("SELECT name FROM sqlite_master WHERE type='table' AND name='garage_overview'")
+        .and_then(|mut stmt| stmt.query_row([], |row| row.get::<usize, String>(0)))
+        .is_ok();
 
-    if !has_remarks_column {
-        // 如果添加字段失败且不是因为重复，重新创建表（仅用于初始化）
+    if !table_exists {
+        // 如果表不存在，直接创建表
         let result = conn.execute(
             "CREATE TABLE IF NOT EXISTS garage_overview (
                 id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
@@ -238,13 +227,58 @@ fn init_user_db(_app: &App, db_path: &std::path::Path) -> Result<()> {
                 num INTEGER,
                 vehicle_list TEXT,
                 remarks TEXT,
-                order INTEGER
+                garage_order INTEGER,
+                garage_type VARCHAR(255)
             )",
             [],
         );
         if let Err(e) = result {
             eprintln!("Failed to create garage_overview table: {:?}", e);
             return Err(e);
+        }
+    } else {
+        // 如果表存在，检查是否需要添加remarks字段
+        let mut has_remarks_column = false;
+        if let Ok(mut stmt) = conn.prepare("PRAGMA table_info(garage_overview)") {
+            if let Ok(rows) = stmt.query_map([], |row| row.get::<usize, String>(1)) {
+                for row_result in rows {
+                    if let Ok(name) = row_result {
+                        if name == "remarks" {
+                            has_remarks_column = true;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
+        if !has_remarks_column {
+            // 添加remarks字段
+            if let Err(e) = conn.execute("ALTER TABLE garage_overview ADD COLUMN remarks TEXT", []) {
+                eprintln!("Failed to add remarks column: {:?}", e);
+            }
+        }
+
+        // 检查是否需要添加garage_order字段
+        let mut has_garage_order_column = false;
+        if let Ok(mut stmt) = conn.prepare("PRAGMA table_info(garage_overview)") {
+            if let Ok(rows) = stmt.query_map([], |row| row.get::<usize, String>(1)) {
+                for row_result in rows {
+                    if let Ok(name) = row_result {
+                        if name == "garage_order" {
+                            has_garage_order_column = true;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
+        if !has_garage_order_column {
+            // 添加garage_order字段
+            if let Err(e) = conn.execute("ALTER TABLE garage_overview ADD COLUMN garage_order INTEGER", []) {
+                eprintln!("Failed to add garage_order column: {:?}", e);
+            }
         }
     }
 

@@ -28,8 +28,9 @@ const BrandSelector: React.FC<BrandSelectorProps> = ({
   return (
     <div className={styles.brandContainer}>
       <div className={styles.filterContainer}>
-        <div className={styles.searchInputWrapper}>
+        <div className={styles.searchInputWrapper} >
           <input
+            style={{ width: '15vw' }}
             type="text"
             className={styles.searchInput}
             placeholder="搜索品牌"
@@ -40,7 +41,6 @@ const BrandSelector: React.FC<BrandSelectorProps> = ({
             <button
               className={styles.clearSearchButton}
               onClick={() => onSearchChange('')}
-              title="清空搜索"
             >
               ×
             </button>

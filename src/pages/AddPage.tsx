@@ -17,7 +17,7 @@ interface AddPageProps {
 const AddPage: React.FC<AddPageProps> = ({ className }) => {
   // Get refresh function from context
   const { refreshHomePage } = useContext(RefreshContext);
-  
+
   const [brands, setBrands] = useState<Brand[]>([]);
   const [vehicles, setVehicles] = useState<VehicleType[]>([]);
   // 选择的品牌ID，默认值为'all'表示显示全部载具
@@ -381,7 +381,7 @@ const AddPage: React.FC<AddPageProps> = ({ className }) => {
           <div className={styles.errorContainer}>错误: {error}</div>
         ) : (currentBrand || selectedBrand === 'all') ? (
           <div className={styles.brandVehicleSection}>
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '16px', alignItems: 'center', marginLeft: '26px' }}>
+            <div style={{ display: 'flex', alignItems: 'center' }}>
               <VehicleFilter
                 vehicleSearchTerm={vehicleSearchTerm}
                 priceSort={priceSort}

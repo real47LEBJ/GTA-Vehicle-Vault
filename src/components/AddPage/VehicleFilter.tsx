@@ -42,57 +42,34 @@ const VehicleFilter: React.FC<VehicleFilterProps> = ({
   onPageChange
 }) => {
   return (
-    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '16px', alignItems: 'center', marginBottom: '16px', marginLeft: '26px' }}>
+    <div className={styles.vehicleFilterContainer}>
       {/* 数量展示 */}
-      <div style={{ fontSize: '18px', color: '#ffffff' }}>
-        {totalVehicles}
+      <div className={styles.totalVehiclesContainer}>
+        <div className={styles.totalLabel}>总计</div>
+        <div>{totalVehicles}</div>
       </div>
 
       {/* 分页组件 */}
-      <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+      <div className={styles.paginationContainer}>
         <button
           onClick={() => onPageChange(Math.max(currentPage - 1, 1))}
           disabled={currentPage === 1}
-          style={{
-            width: '32px',
-            height: '32px',
-            backgroundColor: 'transparent',
-            color: 'white',
-            border: 'none',
-            borderRadius: '50%',
-            cursor: currentPage === 1 ? 'not-allowed' : 'pointer',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            padding: 0
-          }}
+          className={styles.paginationButton}
         >
-          <img src="/previous.png" style={{ width: '20px', height: '20px' }} />
+          <img src="/previous.png" className={styles.paginationImage} />
         </button>
-        <span style={{ fontSize: '20px', color: '#ffffff', paddingBottom: '3px' }}>
+        <span className={styles.paginationText}>
           {currentPage} / {totalPages}
         </span>
         <button
           onClick={() => onPageChange(Math.min(currentPage + 1, totalPages))}
           disabled={currentPage === totalPages}
-          style={{
-            width: '32px',
-            height: '32px',
-            backgroundColor: 'transparent',
-            color: 'white',
-            border: 'none',
-            borderRadius: '50%',
-            cursor: currentPage === totalPages ? 'not-allowed' : 'pointer',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            padding: 0
-          }}
+          className={styles.paginationButton}
         >
-          <img src="/next.png" style={{ width: '20px', height: '20px' }} />
+          <img src="/next.png" className={styles.paginationImage} />
         </button>
       </div>
-      <div className={styles.searchInputWrapper} style={{ width: '250px' }}>
+      <div className={`${styles.searchInputWrapper} ${styles.vehicleSearchInputWrapper}`}>
         <input
           type="text"
           className={styles.searchInput}
@@ -141,7 +118,7 @@ const VehicleFilter: React.FC<VehicleFilterProps> = ({
             onVehicleTypeChange(e.target.value || null);
           }}
         >
-          <option value="" disabled style={{ display: 'none' }}>请选择载具类型</option>
+          <option value="" disabled className={styles.hiddenOption}>请选择载具类型</option>
           {Object.entries(vehicleTypeDict).map(([typeEn]) => (
             <option key={typeEn} value={typeEn}>{typeEn}</option>
           ))}
@@ -169,7 +146,7 @@ const VehicleFilter: React.FC<VehicleFilterProps> = ({
             onFeatureChange(e.target.value || null);
           }}
         >
-          <option value="" disabled style={{ display: 'none' }}>请选择特性</option>
+          <option value="" disabled className={styles.hiddenOption}>请选择特性</option>
           {Object.entries(featureDict).map(([featureEn, featureZh]) => (
             <option key={featureEn} value={featureEn}>{featureZh}</option>
           ))}
@@ -217,3 +194,5 @@ const VehicleFilter: React.FC<VehicleFilterProps> = ({
 };
 
 export default VehicleFilter;
+
+

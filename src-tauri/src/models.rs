@@ -9,7 +9,7 @@ pub struct GarageOverview {
     pub num: Option<i32>,
     pub vehicle_list: Option<String>,
     pub remarks: Option<String>,
-    pub order: Option<i32>,
+    pub garage_order: Option<i32>,
     pub garage_type: Option<String>,
 }
 

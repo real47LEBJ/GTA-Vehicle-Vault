@@ -49,28 +49,95 @@
     border-bottom: 1px solid #333333;
 }
 
+/* VehicleFilter组件样式 */
+.vehicleFilterContainer {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.totalVehiclesContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 13px;
+    font-weight: bold;
+    color: #ffffff;
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 4px 6px;
+}
+
+.totalLabel {
+    font-size: 11px;
+    font-weight: bold;
+    color: #b1b1b1ff;
+
+}
+
+.paginationContainer {
+    display: flex;
+    align-items: center;
+    margin-left: -0.5vw;
+    margin-right: 0.5vw;
+}
+
+.paginationButton {
+    width: 32px;
+    height: 32px;
+    background-color: transparent;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+}
+
+.paginationButton:disabled {
+    cursor: not-allowed;
+}
+
+.paginationImage {
+    width: 20px;
+    height: 20px;
+}
+
+.paginationText {
+    font-size: 20px;
+    color: #ffffff;
+    padding-bottom: 3px;
+}
+
+.vehicleSearchInputWrapper {
+    width: 14.5vw;
+    margin-left: -1vw;
+}
+
+.hiddenOption {
+    display: none;
+}
+
 /* 搜索输入框容器 */
 .searchInputWrapper {
     position: relative;
     display: flex;
     align-items: center;
-    width: 100%;
 }
 
 /* 搜索输入框 */
 .searchInput {
-    width: 100%;
-    padding: 8px 12px 8px 27px;
+    padding: 8px 12px 8px 12px;
     border: 1px solid #444444;
     font-size: 14px;
     transition: border-color 0.2s ease;
     outline: none;
     background-color: #272727;
     color: #ffffff;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cline x1='21' y1='21' x2='16.65' y2='16.65'/%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: 8px center;
-    background-size: 16px;
 }
 
 .searchInput:focus {
@@ -81,7 +148,6 @@
 /* 筛选下拉框样式 */
 .filterSelect {
     padding: 8px 12px;
-    margin-right: 10px;
     border: 1px solid #333;
     background-color: #1a1a1a;
     color: #ffffff;
@@ -94,6 +160,7 @@
     background-repeat: no-repeat;
     background-position: right 8px center;
     background-size: 16px;
+    width: 10vw;
 }
 
 
@@ -152,7 +219,7 @@
 /* 清除搜索按钮 */
 .clearSearchButton {
     position: absolute;
-    right: 4px;
+    right: 0.3vw;
     top: 50%;
     transform: translateY(-50%);
     background: #333333;
@@ -184,11 +251,12 @@
 /* 下拉框清除按钮 */
 .clearSelectButton {
     position: absolute;
-    right: 38px;
+    right: 2vw;
     top: 49%;
     transform: translateY(-50%);
     background: transparent;
     border: none;
+    border-radius: 50%;
     font-size: 18px;
     cursor: pointer;
     color: #ffffff;
@@ -379,7 +447,8 @@
     padding: 20px;
     box-sizing: border-box;
     background-color: #121212;
-    overflow: hidden;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 /* 品牌载具部分 */
@@ -401,11 +470,10 @@
 .vehicleList {
     display: flex;
     flex-wrap: wrap;
-    gap: 7px;
+    gap: 5px;
     overflow-x: auto;
     justify-content: flex-start;
     background-color: #121212;
-    padding-left: 26px;
 }
 
 /* 载具项 */
@@ -550,7 +618,17 @@
     background: #777777;
 }
 
-/* 响应式设计 */
+/* 响应式设计 - 中等屏幕 (992px以下) */
+@media (max-width: 992px) {
+
+    /* 调整载具项宽度，减少每行显示数量 */
+    .vehicleItem {
+        flex: 0 0 calc(14.28% - 7px);
+        /* 7个/行 */
+    }
+}
+
+/* 响应式设计 - 小屏幕 (768px以下) */
 @media (max-width: 768px) {
     .pageContainer {
         flex-direction: column;
@@ -573,6 +651,27 @@
         border-left: none;
         border-bottom: 3px solid transparent;
         padding: 8px 12px;
+    }
+
+    /* 调整载具项宽度，减少每行显示数量 */
+    .vehicleItem {
+        flex: 0 0 calc(20% - 7px);
+        /* 5个/行 */
+    }
+
+    /* 调整载具列表内边距 */
+    .vehicleList {
+        padding-left: 10px;
+    }
+}
+
+/* 响应式设计 - 超小屏幕 (576px以下) */
+@media (max-width: 576px) {
+
+    /* 进一步调整载具项宽度 */
+    .vehicleItem {
+        flex: 0 0 calc(25% - 7px);
+        /* 4个/行 */
     }
 }
 

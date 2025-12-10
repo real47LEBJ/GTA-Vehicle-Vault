@@ -16,7 +16,7 @@ pub fn get_garage_overviews(app: AppHandle) -> Result<ApiResponse<Vec<GarageOver
 
     match Connection::open(&db_path) {
         Ok(conn) => match conn.prepare(
-            "SELECT id, garage_name, garage_name_en, num, vehicle_list, remarks, `order`, garage_type FROM garage_overview ORDER BY `order` ASC",
+            "SELECT id, garage_name, garage_name_en, num, vehicle_list, remarks, garage_order, garage_type FROM garage_overview ORDER BY garage_order ASC",
         ) {
             Ok(mut stmt) => {
                 match stmt.query_map([], |row| {
@@ -27,7 +27,7 @@ pub fn get_garage_overviews(app: AppHandle) -> Result<ApiResponse<Vec<GarageOver
                         num: row.get(3)?,
                         vehicle_list: row.get(4)?,
                         remarks: row.get(5)?,
-                        order: row.get(6)?,
+                        garage_order: row.get(6)?,
                         garage_type: row.get(7)?,
                     })
                 }) {
@@ -37,14 +37,30 @@ pub fn get_garage_overviews(app: AppHandle) -> Result<ApiResponse<Vec<GarageOver
                             data: Some(garages),
                             error: None,
                         }),
-                        Err(e) => Err(e.to_string()),
+                        Err(e) => Ok(ApiResponse {
+                            success: false,
+                            data: None,
+                            error: Some(e.to_string()),
+                        }),
                     },
-                    Err(e) => Err(e.to_string()),
+                    Err(e) => Ok(ApiResponse {
+                        success: false,
+                        data: None,
+                        error: Some(e.to_string()),
+                    }),
                 }
             }
-            Err(e) => Err(e.to_string()),
+            Err(e) => Ok(ApiResponse {
+                success: false,
+                data: None,
+                error: Some(e.to_string()),
+            }),
         },
-        Err(e) => Err(e.to_string()),
+        Err(e) => Ok(ApiResponse {
+            success: false,
+            data: None,
+            error: Some(e.to_string()),
+        }),
     }
 }
 
@@ -65,18 +81,18 @@ pub fn add_garage_overview(
             match conn.transaction() {
                 Ok(tx) => {
                     // 插入新记录，不指定ID，让SQLite自动生成
-                    // 获取当前最大order值，用于设置新车库的默认order
+                    // 获取当前最大garage_order值，用于设置新车库的默认garage_order
                     let max_order: Option<i32> = tx.query_row(
-                        "SELECT MAX(`order`) FROM garage_overview",
+                        "SELECT MAX(garage_order) FROM garage_overview",
                         [],
                         |row| row.get(0)
                     ).unwrap_or(None);
                     
-                    // 新车库的默认order为当前最大order值+1，若没有车库则为1
+                    // 新车库的默认garage_order为当前最大garage_order值+1，若没有车库则为1
                     let new_order = max_order.map(|o| o + 1).unwrap_or(1);
                     
                     match tx.execute(
-                        "INSERT INTO garage_overview (garage_name, garage_name_en, num, vehicle_list, remarks, `order`, garage_type) 
+                        "INSERT INTO garage_overview (garage_name, garage_name_en, num, vehicle_list, remarks, garage_order, garage_type) 
                          VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7)",
                         params![
                             garage.garage_name,
@@ -84,7 +100,7 @@ pub fn add_garage_overview(
                             garage.num,
                             garage.vehicle_list,
                             garage.remarks,
-                            garage.order.unwrap_or(new_order),
+                            garage.garage_order.unwrap_or(new_order),
                             garage.garage_type
                         ],
                     ) {
@@ -104,7 +120,7 @@ pub fn add_garage_overview(
                                 num: garage.num,
                                 vehicle_list: garage.vehicle_list,
                                 remarks: garage.remarks,
-                                order: Some(garage.order.unwrap_or(new_order)),
+                                garage_order: Some(garage.garage_order.unwrap_or(new_order)),
                                 garage_type: garage.garage_type
                             };
                                     
@@ -156,14 +172,14 @@ pub fn update_garage_overview(
             match conn.transaction() {
                 Ok(tx) => {
                     match tx.execute(
-                        "UPDATE garage_overview SET garage_name = ?1, garage_name_en = ?2, num = ?3, vehicle_list = ?4, remarks = ?5, `order` = ?6, garage_type = ?7 WHERE id = ?8",
+                        "UPDATE garage_overview SET garage_name = ?1, garage_name_en = ?2, num = ?3, vehicle_list = ?4, remarks = ?5, garage_order = ?6, garage_type = ?7 WHERE id = ?8",
                         params![
                             garage.garage_name,
                             garage.garage_name_en,
                             garage.num,
                             garage.vehicle_list,
                             garage.remarks,
-                            garage.order,
+                            garage.garage_order,
                             garage.garage_type,
                             garage_id
                         ],

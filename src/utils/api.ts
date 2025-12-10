@@ -59,10 +59,12 @@ export const getFeatureTypeDicts = async (): Promise<ApiResponse<Record<string, 
     const response = await callBackend<ApiResponse<any[]>>(apiEndpoints.getFeatureTypeDicts);
 
     // 转换数据格式为键值对映射
-    if (response.success && response.data) {
+    if (response.success) {
+      // 确保data是数组，即使后端返回null
+      const data = response.data || [];
       // 创建一个映射，键为英文单词，值为中文翻译
       const featureDict: Record<string, string> = {};
-      response.data.forEach(dict => {
+      data.forEach(dict => {
         if (dict.dict_key && dict.dict_value) {
           featureDict[dict.dict_key.trim()] = dict.dict_value.trim();
         }
@@ -104,10 +106,12 @@ export const getVehicleTypeDicts = async (): Promise<ApiResponse<Record<string, 
     const response = await callBackend<ApiResponse<any[]>>(apiEndpoints.getVehicleTypeDicts);
 
     // 转换数据格式为键值对映射
-    if (response.success && response.data) {
+    if (response.success) {
+      // 确保data是数组，即使后端返回null
+      const data = response.data || [];
       // 创建一个映射，键为英文单词，值为中文翻译
       const vehicleTypeDict: Record<string, string> = {};
-      response.data.forEach(dict => {
+      data.forEach(dict => {
         if (dict.dict_key && dict.dict_value) {
           vehicleTypeDict[dict.dict_key.trim()] = dict.dict_value.trim();
         }
@@ -414,9 +418,11 @@ export const getGarages = async (): Promise<ApiResponse<Garage[]>> => {
     );
 
     // 转换数据格式以匹配前端类型定义
-    if (response.success && response.data) {
+    if (response.success) {
+      // 确保data是数组，即使后端返回null
+      const data = response.data || [];
       // 将后端的GarageOverview转换为前端的Garage格式
-      const transformedGarages = response.data.map((garage) => {
+      const transformedGarages = data.map((garage) => {
         let vehicleList = [];
 
         // 解析vehicle_list JSON字符串
@@ -435,7 +441,7 @@ export const getGarages = async (): Promise<ApiResponse<Garage[]>> => {
           num: garage.num || 0,
           remarks: garage.remarks || undefined,
           vehicleList: vehicleList,
-          order: garage.order || undefined,
+          order: garage.garage_order || undefined,
         };
       });
 
@@ -477,7 +483,7 @@ export const addGarage = async (
       num: garage.num,
       remarks: garage.remarks || null,
       vehicle_list: JSON.stringify(garage.vehicleList),
-      order: garage.order,
+      garage_order: garage.order,
     };
 
     // 调用后端API
@@ -508,7 +514,7 @@ export const addGarage = async (
         num: response.data.num || 0,
         remarks: response.data.remarks || undefined,
         vehicleList: vehicleList,
-        order: response.data.order || undefined,
+        order: response.data.garage_order || undefined,
       };
 
       return {
@@ -550,7 +556,7 @@ export const updateGarage = async (
       num: garage.num,
       remarks: garage.remarks || null,
       vehicle_list: JSON.stringify(garage.vehicleList),
-      order: garage.order,
+      garage_order: garage.order,
     };
 
     // 调用后端API
