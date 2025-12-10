@@ -14,9 +14,25 @@
     height: 5%;
     width: 100%;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
     border-bottom: 1px solid #444444;
+    padding: 0 20px;
+    box-sizing: border-box;
+}
+
+.appNavCenter {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.appInfo {
+    display: flex;
+    gap: 20px;
+    font-size: 11px;
+    color: #686868;
+    align-items: center;
 }
 
 .navButton {

@@ -43,6 +43,8 @@ export const apiEndpoints = {
   // Vehicle type dict endpoints
   getVehicleTypeDicts: "get_vehicle_type_dicts",
   getVehicleTypeDictByKey: "get_vehicle_type_dict_by_key",
+  // Data info endpoints
+  getDataInfo: "get_data_info",
 };
 
 /**
@@ -638,6 +640,26 @@ export const deleteGarage = async (id: number): Promise<ApiResponse<void>> => {
       success: false,
       data: null,
       error: "删除数据时发生错误",
+    };
+  }
+};
+
+/**
+ * Gets data info
+ * @returns A promise that resolves with the data info
+ */
+export const getDataInfo = async (): Promise<ApiResponse<any>> => {
+  try {
+    // 调用后端API获取原始数据
+    const response = await callBackend<ApiResponse<any>>(apiEndpoints.getDataInfo);
+
+    return response;
+  } catch (error) {
+    console.error("Error fetching data info:", error);
+    return {
+      success: false,
+      data: null,
+      error: "获取数据信息时发生错误",
     };
   }
 };

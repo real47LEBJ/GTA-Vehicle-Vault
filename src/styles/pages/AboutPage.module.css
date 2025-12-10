@@ -1,0 +1,47 @@
+.container {
+  max-width: 1600px;
+  padding: 20px;
+  color: #333;
+  height: 89vh;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+.contentSection {
+  flex: 1;
+}
+
+h2 {
+  color: #ffffff;
+  font-size: 28px;
+  margin-top: 30px;
+}
+
+h3 {
+  color: #ffffff;
+  font-size: 22px;
+  margin-top: 25px;
+  margin-bottom: 15px;
+}
+
+ul {
+  list-style-type: disc;
+  margin-bottom: 20px;
+}
+
+ul ul {
+  list-style-type: circle;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+li {
+  margin-bottom: 8px;
+  line-height: 1.6;
+}
+
+li li {
+  font-size: 14px;
+}

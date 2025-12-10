@@ -44,7 +44,9 @@ pub fn run() {
             get_feature_type_dict_by_key,
             // 载具类型字典管理
             get_vehicle_type_dicts,
-            get_vehicle_type_dict_by_key
+            get_vehicle_type_dict_by_key,
+            // 数据信息管理
+            get_data_info
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

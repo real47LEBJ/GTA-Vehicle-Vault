@@ -41,6 +41,13 @@ pub struct FeatureTypeDict {
 }
 
 #[derive(Serialize, Deserialize, Debug)]
+pub struct DataInfo {
+    pub dlc_name: Option<String>,
+    pub dlc_name_en: Option<String>,
+    pub update_time: Option<String>,
+}
+
+#[derive(Serialize, Deserialize, Debug)]
 pub struct ApiResponse<T> {
     pub success: bool,
     pub data: Option<T>,
