@@ -324,7 +324,7 @@ const AddPage: React.FC<AddPageProps> = ({ className }) => {
       await updateGarage(updatedGarages[targetGarageIndex]);
 
       // 显示成功通知
-      setNotificationMessage('已新增车库');
+      setNotificationMessage('已新增载具');
       setShowNotification(true);
 
       // 3秒后自动隐藏通知

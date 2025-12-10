@@ -160,6 +160,8 @@ const StorageListPage: React.FC<HomePageProps> = ({ className }) => {
         setGarageName('');
         setGarageCapacity('');
         setGarageRemarks('');
+        // 显示成功提示
+        showNotificationMessage('已新增车库');
       } else {
         showNotificationMessage(response.error || '添加车库失败');
       }
@@ -251,7 +253,7 @@ const StorageListPage: React.FC<HomePageProps> = ({ className }) => {
           // 清除选中状态
           setSelectedGarageIds([]);
           // 显示成功提示
-          showNotificationMessage('已选车库已删除');
+          showNotificationMessage('已删除车库');
         } else {
           showNotificationMessage('部分车库删除失败');
         }

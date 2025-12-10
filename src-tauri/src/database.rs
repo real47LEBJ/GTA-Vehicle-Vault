@@ -34,8 +34,6 @@ pub fn init_db(app: &App) -> Result<()> {
 
 // 初始化通用数据库（载具和品牌）
 fn init_common_db(app: &App, db_path: &std::path::Path) -> Result<()> {
-    println!("Initializing common database (vehicles and brands)...");
-
     // 检查是否存在外部SQL文件，如果存在则使用它初始化数据库
     // 按优先级顺序检查：
     // 1. 开发阶段：当前工作目录
@@ -47,7 +45,6 @@ fn init_common_db(app: &App, db_path: &std::path::Path) -> Result<()> {
     let dev_sql_init_file = current_dir.join("init.sql");
 
     if dev_sql_init_file.exists() {
-        println!("Found init.sql file in current directory, using it to initialize common database (development mode)");
         let conn = match Connection::open(db_path) {
             Ok(conn) => conn,
             Err(e) => return Err(e),
@@ -59,7 +56,6 @@ fn init_common_db(app: &App, db_path: &std::path::Path) -> Result<()> {
                     eprintln!("Failed to execute SQL commands from dev init.sql: {:?}", e);
                     // 如果执行失败，继续使用默认初始化
                 } else {
-                    println!("Common database initialized successfully from dev init.sql");
                     return Ok(());
                 }
             }
@@ -78,7 +74,6 @@ fn init_common_db(app: &App, db_path: &std::path::Path) -> Result<()> {
     let prod_sql_init_file = exe_dir.join("init.sql");
 
     if prod_sql_init_file.exists() {
-        println!("Found init.sql file in executable directory, using it to initialize common database (production mode)");
         let conn = match Connection::open(db_path) {
             Ok(conn) => conn,
             Err(e) => return Err(e),
@@ -93,7 +88,6 @@ fn init_common_db(app: &App, db_path: &std::path::Path) -> Result<()> {
                     );
                     // 如果执行失败，继续使用默认初始化
                 } else {
-                    println!("Common database initialized successfully from prod exe dir init.sql");
                     return Ok(());
                 }
             }
@@ -112,9 +106,6 @@ fn init_common_db(app: &App, db_path: &std::path::Path) -> Result<()> {
         .expect("Failed to get app data directory");
     let sql_init_file = app_dir.join("init.sql");
     if sql_init_file.exists() {
-        println!(
-            "Found init.sql file in app data directory, using it to initialize common database"
-        );
         let conn = match Connection::open(db_path) {
             Ok(conn) => conn,
             Err(e) => return Err(e),
@@ -129,7 +120,6 @@ fn init_common_db(app: &App, db_path: &std::path::Path) -> Result<()> {
                     );
                     // 如果执行失败，继续使用默认初始化
                 } else {
-                    println!("Common database initialized successfully from app data init.sql");
                     return Ok(());
                 }
             }
@@ -150,7 +140,6 @@ fn init_common_db(app: &App, db_path: &std::path::Path) -> Result<()> {
     // 这样可以确保即使数据库文件存在但表结构不完整，也能被正确修复
 
     // 创建载具品牌表
-    println!("Creating or updating vehicle_brand table...");
     if let Err(e) = conn.execute(
         "CREATE TABLE IF NOT EXISTS vehicle_brand (
             id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
@@ -165,7 +154,6 @@ fn init_common_db(app: &App, db_path: &std::path::Path) -> Result<()> {
     }
 
     // 创建载具概览表
-    println!("Creating or updating vehicle_overview table...");
     if let Err(e) = conn.execute(
         "CREATE TABLE IF NOT EXISTS vehicle_overview (
             id text NOT NULL,
@@ -186,7 +174,6 @@ fn init_common_db(app: &App, db_path: &std::path::Path) -> Result<()> {
     }
 
     // 创建特性类型字典表
-    println!("Creating or updating feature_type_dict table...");
     if let Err(e) = conn.execute(
         "CREATE TABLE IF NOT EXISTS feature_type_dict (
             id integer NOT NULL,
@@ -201,7 +188,6 @@ fn init_common_db(app: &App, db_path: &std::path::Path) -> Result<()> {
     }
 
     // 创建载具类型字典表
-    println!("Creating or updating vehicle_type_dict table...");
     if let Err(e) = conn.execute(
         "CREATE TABLE IF NOT EXISTS vehicle_type_dict (
             id integer NOT NULL,
@@ -220,8 +206,6 @@ fn init_common_db(app: &App, db_path: &std::path::Path) -> Result<()> {
 
 // 初始化用户数据库（车库）
 fn init_user_db(_app: &App, db_path: &std::path::Path) -> Result<()> {
-    println!("Initializing user database (garages)...");
-
     // 打开数据库连接
     let conn = match Connection::open(db_path) {
         Ok(conn) => conn,
@@ -229,7 +213,6 @@ fn init_user_db(_app: &App, db_path: &std::path::Path) -> Result<()> {
     };
 
     // 强制创建车库概览表，无论它是否已存在
-    println!("Creating or updating garage_overview table...");
     // 首先检查是否需要添加remarks字段
     let has_remarks_column =
         match conn.execute("ALTER TABLE garage_overview ADD COLUMN remarks TEXT", []) {
@@ -237,7 +220,6 @@ fn init_user_db(_app: &App, db_path: &std::path::Path) -> Result<()> {
             Err(e) => {
                 // 如果错误是"duplicate column name"，说明字段已存在，忽略错误
                 if e.to_string().contains("duplicate column name") {
-                    println!("remarks column already exists in garage_overview table");
                     true
                 } else {
                     eprintln!("Failed to add remarks column: {:?}", e);
