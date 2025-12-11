@@ -231,8 +231,22 @@ const AddPage: React.FC<AddPageProps> = ({ className }) => {
 
   // 添加功能相关函数
   const handleOpenPurchaseDialog = async (vehicle: VehicleType) => {
-    // 打开对话框前先获取最新的车库列表
-    await fetchGarages();
+    try {
+      // 获取当前最新的车库列表，用于检查是否有新添加的车库
+      const latestGaragesResponse = await getGarages();
+      if (latestGaragesResponse.success && latestGaragesResponse.data) {
+        const latestGarages = latestGaragesResponse.data || [];
+        
+        // 只有当最新车库列表与当前车库列表数量不同时，才更新车库列表
+        // 这样可以确保添加新车库后能看到，同时避免不必要的重新获取
+        if (latestGarages.length !== garages.length) {
+          setGarages(latestGarages);
+        }
+      }
+    } catch (err) {
+      console.error('检查车库更新时发生错误:', err);
+    }
+    
     setSelectedVehicle(vehicle);
     setPurchaseStep('selectGarage');
     setShowPurchaseDialog(true);

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import styles from '../../styles/pages/AddPage.module.css';
 import { Garage, Vehicle as VehicleType } from '../../types';
 
@@ -27,25 +27,62 @@ const AddVehicleDialog: React.FC<AddVehicleDialogProps> = ({
 }) => {
   if (!isOpen || !selectedVehicle) return null;
 
+  // 使用useMemo缓存车库容量计算结果，减少每次渲染时的重复计算
+  const garagesWithCapacity = useMemo(() => {
+    return garages.map(garage => {
+      const usedCapacity = garage.vehicleList.filter(vehicle => Object.keys(vehicle).length > 0).length;
+      return {
+        ...garage,
+        usedCapacity
+      };
+    });
+  }, [garages]);
+
+  // 缓存目标车库的位置列表渲染结果
+  const targetGaragePositions = useMemo(() => {
+    if (!selectedTargetGarage) return null;
+    
+    return selectedTargetGarage.vehicleList.map((vehicle, index) => {
+      const isEmpty = Object.keys(vehicle).length === 0;
+      return (
+        <div
+          key={index}
+          className={`${styles.positionOption} 
+            ${isEmpty ? styles.emptyPosition : styles.occupiedPosition}`}
+          onClick={() => onSelectPosition(index)}
+        >
+          <div className={styles.positionNumber}>位置 {index + 1}</div>
+          {isEmpty ? (
+            <div className={styles.positionStatus}>空</div>
+          ) : (
+            <div className={styles.positionVehicle}>
+              {`${vehicle.vehicleName}`}
+            </div>
+          )}
+        </div>
+      );
+    });
+  }, [selectedTargetGarage, onSelectPosition]);
+
   return (
     <div className={styles.moveDialogOverlay}>
       <div className={styles.moveDialog}>
         <div className={styles.moveDialogHeader}>
-          <h3>添加载具</h3>
+          <h3>添加载具：{selectedVehicle.vehicle_name}</h3>
         </div>
         <div className={styles.moveDialogContent}>
           {purchaseStep === 'selectGarage' && (
             <>
               <h4>选择车库</h4>
               <div className={styles.garageSelection}>
-                {garages.map(garage => (
+                {garagesWithCapacity.map(garage => (
                   <div
                     key={garage.id}
                     className={styles.garageOption}
                     onClick={() => onSelectGarage(garage)}
                   >
                     <div className={styles.garageOptionName}>{garage.storageName}</div>
-                    <div className={styles.garageOptionCapacity}>{garage.vehicleList.filter(vehicle => Object.keys(vehicle).length > 0).length}/{garage.num} 位置</div>
+                    <div className={styles.garageOptionCapacity}>{garage.usedCapacity}/{garage.num} 位置</div>
                   </div>
                 ))}
               </div>
@@ -67,26 +104,7 @@ const AddVehicleDialog: React.FC<AddVehicleDialogProps> = ({
               </div>
               <h4>选择目标位置</h4>
               <div className={styles.positionSelection}>
-                {selectedTargetGarage.vehicleList.map((vehicle, index) => {
-                  const isEmpty = Object.keys(vehicle).length === 0;
-                  return (
-                    <div
-                      key={index}
-                      className={`${styles.positionOption} 
-                        ${isEmpty ? styles.emptyPosition : styles.occupiedPosition}`}
-                      onClick={() => onSelectPosition(index)}
-                    >
-                      <div className={styles.positionNumber}>位置 {index + 1}</div>
-                      {isEmpty ? (
-                        <div className={styles.positionStatus}>空</div>
-                      ) : (
-                        <div className={styles.positionVehicle}>
-                          {`${vehicle.vehicleName}`}
-                        </div>
-                      )}
-                    </div>
-                  );
-                })}
+                {targetGaragePositions}
               </div>
             </>
           )}
@@ -104,4 +122,4 @@ const AddVehicleDialog: React.FC<AddVehicleDialogProps> = ({
   );
 };
 
-export default AddVehicleDialog;
+export default React.memo(AddVehicleDialog);

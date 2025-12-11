@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import styles from '../styles/pages/HomePage.module.css';
 import { Garage, GarageVehicle } from '../types';
-import { getGarages, addGarage, deleteGarage, updateGarage, getAllVehiclesFeature, getFeatureTypeDicts } from '../utils/api';
+import { getGarages, addGarage, deleteGarage, updateGarage, getAllVehicles, getFeatureTypeDicts } from '../utils/api';
 import Notification from '../components/HomePage/Notification';
 import ControlPanel from '../components/HomePage/ControlPanel';
 import Loading from '../components/HomePage/Loading';
@@ -179,34 +179,51 @@ const StorageListPage: React.FC<HomePageProps> = ({ className }) => {
     }
   };
 
-  // 更新车库中所有载具的feature信息
+  // 更新车库中所有载具的信息（vehicle_name, vehicle_name_en, vehicle_type, feature, price）
   const handleUpdateVehicleFeatures = async () => {
     setLoading(true);
     try {
-      // 获取所有载具的feature信息
-      const vehiclesFeatureResponse = await getAllVehiclesFeature();
-      if (!vehiclesFeatureResponse.success || !vehiclesFeatureResponse.data) {
-        showNotificationMessage('获取载具特性信息失败');
+      // 获取所有载具的完整信息
+      const allVehiclesResponse = await getAllVehicles();
+      if (!allVehiclesResponse.success || !allVehiclesResponse.data) {
+        showNotificationMessage('获取载具信息失败');
         return;
       }
 
-      const featureMap = vehiclesFeatureResponse.data;
+      // 创建一个映射，键为载具ID，值为包含所有需要更新字段的对象
+      // 注意：GarageVehicle类型使用驼峰命名法，所以需要转换字段名称
+      const vehicleInfoMap = new Map<string, { price: number; vehicleName: string; vehicleNameEn: string; vehicle_type: string; feature: string }>();
+      
+      // 遍历所有载具数据，构建映射
+      allVehiclesResponse.data.forEach(([brand, vehicle]) => {
+        if (vehicle.id) {
+          vehicleInfoMap.set(vehicle.id, {
+            price: vehicle.price || 0,
+            vehicleName: vehicle.vehicle_name || '',
+            vehicleNameEn: vehicle.vehicle_name_en || '',
+            vehicle_type: vehicle.vehicle_type || '',
+            feature: vehicle.feature || ''
+          });
+        }
+      });
+
       let updatedCount = 0;
 
       // 遍历所有车库
       for (const garage of garages) {
         // 检查是否有需要更新的载具
         const hasVehiclesToUpdate = garage.vehicleList.some(vehicle =>
-          vehicle.id && featureMap.has(vehicle.id)
+          vehicle.id && vehicleInfoMap.has(vehicle.id)
         );
 
         if (hasVehiclesToUpdate) {
-          // 更新车库中的载具feature
+          // 更新车库中的载具信息
           const updatedVehicleList = garage.vehicleList.map(vehicle => {
-            if (vehicle.id && featureMap.has(vehicle.id)) {
+            if (vehicle.id && vehicleInfoMap.has(vehicle.id)) {
+              const updatedInfo = vehicleInfoMap.get(vehicle.id)!;
               return {
                 ...vehicle,
-                feature: featureMap.get(vehicle.id) || ''
+                ...updatedInfo
               };
             }
             return vehicle;
@@ -227,10 +244,10 @@ const StorageListPage: React.FC<HomePageProps> = ({ className }) => {
 
       // 重新获取车库列表
       await fetchGarages();
-      showNotificationMessage('载具特性信息已更新');
+      showNotificationMessage('已更新载具数据');
     } catch (error) {
-      console.error('更新载具特性信息失败:', error);
-      showNotificationMessage('更新载具特性信息失败');
+      console.error('更新载具信息失败:', error);
+      showNotificationMessage('更新载具信息失败');
     } finally {
       setLoading(false);
     }
@@ -284,6 +301,12 @@ const StorageListPage: React.FC<HomePageProps> = ({ className }) => {
         editInputRef.current.focus();
       }
     }, 0);
+  };
+
+  // 处理备注内容变化
+  const handleChangeRemarks = (value: string) => {
+    setEditRemarks(value);
+    setIsUnsaved(true);
   };
 
   // 处理保存备注
@@ -628,21 +651,22 @@ const StorageListPage: React.FC<HomePageProps> = ({ className }) => {
               const isSelected = selectedGarageIds.includes(item.id);
               return (
                 <GarageItem
-                  key={item.id}
-                  garage={item}
-                  isSelected={isSelected}
-                  editingRemarksId={editingRemarksId}
-                  editRemarks={editRemarks}
-                  isUnsaved={isUnsaved}
-                  editInputRef={editInputRef as React.RefObject<HTMLInputElement>}
-                  handleSelectGarage={handleSelectGarage}
-                  handleOpenEditRemarks={handleOpenEditRemarks}
-                  handleSaveRemarks={handleSaveRemarks}
-                  handleCancelEditRemarks={handleCancelEditRemarks}
-                  handleOpenMoveDialog={handleOpenMoveDialog}
-                  handleOpenDeleteConfirmDialog={handleOpenDeleteConfirmDialog}
-                  featureDict={featureDict}
-                />
+                key={item.id}
+                garage={item}
+                isSelected={isSelected}
+                editingRemarksId={editingRemarksId}
+                editRemarks={editRemarks}
+                isUnsaved={isUnsaved}
+                editInputRef={editInputRef as React.RefObject<HTMLInputElement>}
+                handleSelectGarage={handleSelectGarage}
+                handleOpenEditRemarks={handleOpenEditRemarks}
+                handleSaveRemarks={handleSaveRemarks}
+                handleCancelEditRemarks={handleCancelEditRemarks}
+                handleChangeRemarks={handleChangeRemarks}
+                handleOpenMoveDialog={handleOpenMoveDialog}
+                handleOpenDeleteConfirmDialog={handleOpenDeleteConfirmDialog}
+                featureDict={featureDict}
+              />
               );
             })
           )}

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import styles from '../../styles/pages/HomePage.module.css';
 import { Garage, GarageVehicle } from '../../types';
 
@@ -29,6 +29,64 @@ const MoveDialog: React.FC<MoveDialogProps> = ({
 }) => {
   if (!showMoveDialog || !selectedVehicleToMove) return null;
 
+  // 使用useMemo缓存查找结果，减少每次渲染时的重复查找
+  const sourceGarage = useMemo(() => {
+    return garages.find(g => g.id === selectedVehicleToMove.garageId);
+  }, [garages, selectedVehicleToMove.garageId]);
+
+  const targetGarage = useMemo(() => {
+    return garages.find(g => g.id === targetGarageId);
+  }, [garages, targetGarageId]);
+
+  // 缓存目标车库的位置列表渲染结果
+  const targetGaragePositions = useMemo(() => {
+    if (!targetGarage) return null;
+    
+    return targetGarage.vehicleList.map((vehicle: GarageVehicle, index: number) => {
+      // 检查是否是正在移动的载具的原始位置
+      const isMovingVehicle =
+        selectedVehicleToMove.garageId === targetGarageId &&
+        selectedVehicleToMove.vehicleIndex === index;
+
+      // 检查是否为空车位
+      const isEmpty = !vehicle || Object.keys(vehicle).length === 0;
+
+      // 根据状态确定样式类
+      let positionClass = styles.positionItem;
+      if (isMovingVehicle) {
+        positionClass += ` ${styles.currentVehiclePosition}`;
+      } else if (isEmpty) {
+        positionClass += ` ${styles.emptyPosition}`;
+      } else {
+        positionClass += ` ${styles.occupiedPosition}`;
+      }
+
+      return (
+        <div
+          key={index}
+          className={positionClass}
+          onClick={isMovingVehicle ? undefined : () => handleSelectTargetPosition(index)}
+        >
+          <div className={styles.positionIndex}>{index + 1}</div>
+          <div className={styles.positionVehicle}>
+            {isEmpty ? (
+              <div className={styles.emptyPosition}></div>
+            ) : (
+              <>
+                <div>{vehicle.brandName} {vehicle.vehicleName}</div>
+                {isMovingVehicle && (
+                  <div className={styles.movingVehicleLabel}>
+                    正在移动的载具
+                  </div>
+                )}
+              </>
+            )}
+          </div>
+        </div>
+      );
+    });
+  }, [targetGarage, targetGarageId, selectedVehicleToMove.garageId, selectedVehicleToMove.vehicleIndex, handleSelectTargetPosition]);
+
   return (
     <div className={styles.moveDialogOverlay}>
       <div className={styles.moveDialog}>
@@ -46,7 +104,7 @@ const MoveDialog: React.FC<MoveDialogProps> = ({
           )}
           {moveStep === 1 ? (
             <>
-              <p>从 <span style={{ fontSize: '22px' }}>{garages.find(g => g.id === selectedVehicleToMove.garageId)?.storageName || '未知车库'}</span> 移动 <span style={{ fontSize: '22px', color: '#ffffff' }}>{selectedVehicleToMove.vehicleData.brandName} {selectedVehicleToMove.vehicleData.vehicleName}</span></p>
+              <p>从 <span style={{ fontSize: '22px' }}>{sourceGarage?.storageName || '未知车库'}</span> 移动 <span style={{ fontSize: '22px', color: '#ffffff' }}>{selectedVehicleToMove.vehicleData.brandName} {selectedVehicleToMove.vehicleData.vehicleName}</span></p>
               <p>选择目标车库:</p>
               <div className={styles.garageList}>
                 {garages.map((garage) => (
@@ -63,56 +121,11 @@ const MoveDialog: React.FC<MoveDialogProps> = ({
             </>
           ) : (
             <>
-              <p>从 <span style={{ fontSize: '22px' }}>{garages.find(g => g.id === selectedVehicleToMove.garageId)?.storageName || '未知车库'}</span> 移动 <span style={{ fontSize: '22px', color: '#ffffff' }}>{selectedVehicleToMove.vehicleData.brandName} {selectedVehicleToMove.vehicleData.vehicleName}</span></p>
-              <p>到 <span style={{ fontSize: '22px' }}>{garages.find(g => g.id === targetGarageId)?.storageName || '未知车库'}</span></p>
+              <p>从 <span style={{ fontSize: '22px' }}>{sourceGarage?.storageName || '未知车库'}</span> 移动 <span style={{ fontSize: '22px', color: '#ffffff' }}>{selectedVehicleToMove.vehicleData.brandName} {selectedVehicleToMove.vehicleData.vehicleName}</span></p>
+              <p>到 <span style={{ fontSize: '22px' }}>{targetGarage?.storageName || '未知车库'}</span></p>
               <p>选择目标位置:</p>
               <div className={styles.positionList}>
-                {garages
-                  .find(g => g.id === targetGarageId)
-                  ?.vehicleList.map((vehicle: GarageVehicle, index: number) => {
-                    // 检查是否是正在移动的载具的原始位置
-                    const isMovingVehicle =
-                      selectedVehicleToMove.garageId === targetGarageId &&
-                      selectedVehicleToMove.vehicleIndex === index;
-
-                    // 检查是否为空车位
-                    const isEmpty = !vehicle || Object.keys(vehicle).length === 0;
-
-                    // 根据状态确定样式类
-                    let positionClass = styles.positionItem;
-                    if (isMovingVehicle) {
-                      positionClass += ` ${styles.currentVehiclePosition}`;
-                    } else if (isEmpty) {
-                      positionClass += ` ${styles.emptyPosition}`;
-                    } else {
-                      positionClass += ` ${styles.occupiedPosition}`;
-                    }
-
-                    return (
-                      <div
-                        key={index}
-                        className={positionClass}
-                        onClick={isMovingVehicle ? undefined : () => handleSelectTargetPosition(index)}
-                      >
-                        <div className={styles.positionIndex}>{index + 1}</div>
-                        <div className={styles.positionVehicle}>
-                          {isEmpty ? (
-                            <div className={styles.emptyPosition}></div>
-                          ) : (
-                            <>
-                              <div>{vehicle.brandName} {vehicle.vehicleName}</div>
-                              {isMovingVehicle && (
-                                <div className={styles.movingVehicleLabel}>
-                                  正在移动的载具
-                                </div>
-                              )}
-                            </>
-                          )}
-                        </div>
-                      </div>
-                    );
-                  })
-                }
+                {targetGaragePositions}
               </div>
             </>
           )}
@@ -130,4 +143,4 @@ const MoveDialog: React.FC<MoveDialogProps> = ({
   );
 };
 
-export default MoveDialog;
+export default React.memo(MoveDialog);

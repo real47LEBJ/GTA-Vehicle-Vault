@@ -15,6 +15,7 @@ interface GarageItemProps {
   handleOpenEditRemarks: (garage: Garage) => void;
   handleSaveRemarks: (garageId: number) => void;
   handleCancelEditRemarks: () => void;
+  handleChangeRemarks: (value: string) => void;
   handleOpenMoveDialog: (garageId: number, vehicleIndex: number, vehicleData: GarageVehicle) => void;
   handleOpenDeleteConfirmDialog: (garageId: number, vehicleIndex: number, vehicleData: GarageVehicle) => void;
 }
@@ -31,6 +32,7 @@ const GarageItem: React.FC<GarageItemProps> = ({
   handleOpenEditRemarks,
   handleSaveRemarks,
   handleCancelEditRemarks,
+  handleChangeRemarks,
   handleOpenMoveDialog,
   handleOpenDeleteConfirmDialog
 }) => {
@@ -70,14 +72,14 @@ const GarageItem: React.FC<GarageItemProps> = ({
                   type="text"
                   className={`${styles.editRemarksInput} ${isUnsaved ? styles.unsavedInput : ''}`}
                   value={editRemarks}
-                  onChange={(_) => {
-                    // 在子组件中不处理状态更新，由父组件通过回调处理
+                  onChange={(e) => {
+                    handleChangeRemarks(e.target.value);
                   }}
                   onBlur={() => {
-                    // 在子组件中不处理状态更新，由父组件通过回调处理
+                    handleSaveRemarks(garage.id);
                   }}
                   onFocus={() => {
-                    // 在子组件中不处理状态更新，由父组件通过回调处理
+                    // 聚焦时不做特殊处理
                   }}
                   onKeyDown={(e) => {
                     if (e.key === 'Enter') {

@@ -72,7 +72,7 @@ const VehicleFilter: React.FC<VehicleFilterProps> = ({
       <div className={`${styles.searchInputWrapper} ${styles.vehicleSearchInputWrapper}`}>
         <input
           type="text"
-          className={styles.searchInput}
+          className={`${styles.searchInput} ${styles.vehicleSpecificSearchInput}`}
           placeholder="搜索载具"
           value={vehicleSearchTerm}
           onChange={(e) => {
@@ -80,18 +80,6 @@ const VehicleFilter: React.FC<VehicleFilterProps> = ({
             onVehicleSearchChange(e.target.value);
           }}
         />
-        {vehicleSearchTerm && (
-          <button
-            className={styles.clearSearchButton}
-            onClick={() => {
-              onPageChange(1); // 先重置页码
-              onVehicleSearchChange('');
-            }}
-            title="清空搜索"
-          >
-            ×
-          </button>
-        )}
       </div>
 
       {/* 价格排序 */}

@@ -1,4 +1,4 @@
-import { useState, useCallback, useRef, createContext, useEffect } from 'react';
+import { useState, useCallback, useRef, createContext, useEffect, memo } from 'react';
 import styles from './App.module.css';
 
 // Import components
@@ -11,6 +11,10 @@ import { getDataInfo } from './utils/api';
 import HomePage from './pages/HomePage';
 import AboutPage from './pages/AboutPage';
 import AddPage from './pages/AddPage';
+
+// 使用memo包装页面组件，避免页面切换时的不必要重新渲染
+const MemoizedHomePage = memo(HomePage);
+const MemoizedAddPage = memo(AddPage);
 
 // Navigation item type
 type NavItem = {
@@ -52,7 +56,7 @@ function App() {
   const navItems: NavItem[] = [
     { id: 'home', label: '载具管理' },
     { id: 'vehicleList', label: '载具添加' },
-    { id: 'about', label: '关于' }
+    // { id: 'about', label: '关于' }
   ];
 
   // Function to trigger HomePage refresh (can be called when garage_overview changes)
@@ -77,27 +81,28 @@ function App() {
               </Button>
             ))}
           </div>
-          <div className={styles.appInfo}>
-            <div>数据更新至：<span style={{ color: '#ffffff', fontSize: '15px' }}>{dataInfo?.dlc_name || ''}</span></div>
-            {dataInfo?.update_time && (
-              <div>数据更新时间：<span style={{ color: '#ffffff', fontSize: '15px' }}>{dataInfo.update_time.substring(0, 10)}</span></div>
-            )}
-            <div>v1.0.0</div>
-          </div>
+          {currentPage === 'vehicleList' && (
+            <div className={styles.appInfo}>
+              <div>数据更新至：<span style={{ color: '#ffffff', fontSize: '15px' }}>{dataInfo?.dlc_name || ''}</span></div>
+              {dataInfo?.update_time && (
+                <div>数据更新时间：<span style={{ color: '#ffffff', fontSize: '15px' }}>{dataInfo.update_time.substring(0, 10)}</span></div>
+              )}
+            </div>
+          )}
         </nav>
 
         {/* Main Content - No sidebar */}
         <main className={styles.mainContent}>
-          {/* Keep all pages rendered but show/hide based on currentPage */}
-          <HomePage
+          {/* 使用动态显示控制，保持组件挂载状态，避免不必要的重新渲染 */}
+          <MemoizedHomePage 
+            className={currentPage === 'home' ? styles.pageVisible : styles.pageHidden} 
             key={refreshTriggers.current.home} // Only refresh when explicitly triggered
-            className={currentPage === 'home' ? styles.pageVisible : styles.pageHidden}
           />
-          <AddPage
-            className={currentPage === 'vehicleList' ? styles.pageVisible : styles.pageHidden}
+          <MemoizedAddPage 
+            className={currentPage === 'vehicleList' ? styles.pageVisible : styles.pageHidden} 
           />
-          <AboutPage
-            className={currentPage === 'about' ? styles.pageVisible : styles.pageHidden}
+          <AboutPage 
+            className={currentPage === 'about' ? styles.pageVisible : styles.pageHidden} 
           />
         </main>
       </div>

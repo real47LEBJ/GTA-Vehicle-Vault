@@ -57,23 +57,22 @@
      align-items: center;
      justify-content: flex-start;
      gap: 5px;
-     min-width: 200px;
      margin-right: 30px;
  }
 
  /* 按钮控制项特殊样式 */
  .controlItem:last-child {
      flex-direction: row;
-     align-items: flex-end;
+     align-items: center;
      gap: 10px;
  }
 
  /* 控制标签样式 */
  .controlLabel {
-     font-size: 14px;
+     font-size: 11px;
      font-weight: 500;
      color: #ffffff;
-     padding: 0 4px;
+     padding: 0 2px;
      user-select: none;
  }
 
@@ -325,7 +324,7 @@
      display: flex;
      flex-wrap: wrap;
      gap: 10px;
-     max-height: 300px;
+     max-height: 500px;
      overflow-y: auto;
      margin-top: 15px;
  }
@@ -365,7 +364,7 @@
      display: flex;
      flex-wrap: wrap;
      gap: 7px;
-     max-height: 300px;
+     max-height: 500px;
      overflow-y: auto;
      margin-top: 15px;
  }
@@ -598,6 +597,8 @@
  }
 
  /* 其他容器的滚动条样式 */
+ .garageList::-webkit-scrollbar,
+ .positionList::-webkit-scrollbar,
  .garageSelection::-webkit-scrollbar,
  .positionSelection::-webkit-scrollbar,
  .editModal::-webkit-scrollbar {
@@ -605,6 +606,8 @@
      height: 8px;
  }
 
+ .garageList::-webkit-scrollbar-track,
+ .positionList::-webkit-scrollbar-track,
  .garageSelection::-webkit-scrollbar-track,
  .positionSelection::-webkit-scrollbar-track,
  .editModal::-webkit-scrollbar-track {
@@ -612,6 +615,8 @@
 
  }
 
+ .garageList::-webkit-scrollbar-thumb,
+ .positionList::-webkit-scrollbar-thumb,
  .garageSelection::-webkit-scrollbar-thumb,
  .positionSelection::-webkit-scrollbar-thumb,
  .editModal::-webkit-scrollbar-thumb {
@@ -619,6 +624,8 @@
 
  }
 
+ .garageList::-webkit-scrollbar-thumb:hover,
+ .positionList::-webkit-scrollbar-thumb:hover,
  .garageSelection::-webkit-scrollbar-thumb:hover,
  .positionSelection::-webkit-scrollbar-thumb:hover,
  .editModal::-webkit-scrollbar-thumb:hover {
