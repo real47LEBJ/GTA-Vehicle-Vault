@@ -17,10 +17,10 @@ const Button: React.FC<ButtonProps> = ({
   const combinedClasses = `btn btn-${variant} btn-${size} ${className}`;
 
   return (
-      <button className={combinedClasses} {...props}>
-        {children}
-      </button>
-    );
+    <button className={combinedClasses} disabled={disabled} {...props}>
+      {children}
+    </button>
+  );
 };
 
 export default Button;

@@ -1,7 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react';
 import styles from '../styles/pages/HomePage.module.css';
 import { Garage, GarageVehicle } from '../types';
-import { getGarages, addGarage, deleteGarage, updateGarage, getAllVehicles, getFeatureTypeDicts } from '../utils/api';
+import {
+  getGarages,
+  addGarage,
+  deleteGarage,
+  updateGarage,
+  getAllVehicles,
+  getFeatureTypeDicts,
+} from '../utils/api';
 import Notification from '../components/HomePage/Notification';
 import ControlPanel from '../components/HomePage/ControlPanel';
 import Loading from '../components/HomePage/Loading';
@@ -149,7 +156,7 @@ const StorageListPage: React.FC<HomePageProps> = ({ className }) => {
         storageName: garageName.trim(),
         num: capacity,
         remarks: garageRemarks.trim() || undefined,
-        vehicleList: emptyVehicles
+        vehicleList: emptyVehicles,
       };
 
       const response = await addGarage(newGarage);
@@ -192,17 +199,26 @@ const StorageListPage: React.FC<HomePageProps> = ({ className }) => {
 
       // 创建一个映射，键为载具ID，值为包含所有需要更新字段的对象
       // 注意：GarageVehicle类型使用驼峰命名法，所以需要转换字段名称
-      const vehicleInfoMap = new Map<string, { price: number; vehicleName: string; vehicleNameEn: string; vehicle_type: string; feature: string }>();
-      
+      const vehicleInfoMap = new Map<
+        string,
+        {
+          price: number;
+          vehicleName: string;
+          vehicleNameEn: string;
+          vehicle_type: string;
+          feature: string;
+        }
+      >();
+
       // 遍历所有载具数据，构建映射
-      allVehiclesResponse.data.forEach(([brand, vehicle]) => {
+      allVehiclesResponse.data.forEach(([, vehicle]) => {
         if (vehicle.id) {
           vehicleInfoMap.set(vehicle.id, {
             price: vehicle.price || 0,
             vehicleName: vehicle.vehicle_name || '',
             vehicleNameEn: vehicle.vehicle_name_en || '',
             vehicle_type: vehicle.vehicle_type || '',
-            feature: vehicle.feature || ''
+            feature: vehicle.feature || '',
           });
         }
       });
@@ -212,18 +228,18 @@ const StorageListPage: React.FC<HomePageProps> = ({ className }) => {
       // 遍历所有车库
       for (const garage of garages) {
         // 检查是否有需要更新的载具
-        const hasVehiclesToUpdate = garage.vehicleList.some(vehicle =>
-          vehicle.id && vehicleInfoMap.has(vehicle.id)
+        const hasVehiclesToUpdate = garage.vehicleList.some(
+          (vehicle) => vehicle.id && vehicleInfoMap.has(vehicle.id)
         );
 
         if (hasVehiclesToUpdate) {
           // 更新车库中的载具信息
-          const updatedVehicleList = garage.vehicleList.map(vehicle => {
+          const updatedVehicleList = garage.vehicleList.map((vehicle) => {
             if (vehicle.id && vehicleInfoMap.has(vehicle.id)) {
               const updatedInfo = vehicleInfoMap.get(vehicle.id)!;
               return {
                 ...vehicle,
-                ...updatedInfo
+                ...updatedInfo,
               };
             }
             return vehicle;
@@ -232,7 +248,7 @@ const StorageListPage: React.FC<HomePageProps> = ({ className }) => {
           // 保存更新后的车库
           const updatedGarage = {
             ...garage,
-            vehicleList: updatedVehicleList
+            vehicleList: updatedVehicleList,
           };
 
           const updateResponse = await updateGarage(updatedGarage);
@@ -244,7 +260,7 @@ const StorageListPage: React.FC<HomePageProps> = ({ className }) => {
 
       // 重新获取车库列表
       await fetchGarages();
-      showNotificationMessage('已更新载具数据');
+      showNotificationMessage(`已更新 ${updatedCount} 辆载具数据`);
     } catch (error) {
       console.error('更新载具信息失败:', error);
       showNotificationMessage('更新载具信息失败');
@@ -258,11 +274,11 @@ const StorageListPage: React.FC<HomePageProps> = ({ className }) => {
     if (selectedGarageIds.length > 0) {
       try {
         // 批量删除选中的车库
-        const deletePromises = selectedGarageIds.map(id => deleteGarage(id));
+        const deletePromises = selectedGarageIds.map((id) => deleteGarage(id));
         const results = await Promise.all(deletePromises);
 
         // 检查是否所有删除都成功
-        const allSuccess = results.every(result => result.success);
+        const allSuccess = results.every((result) => result.success);
 
         if (allSuccess) {
           // 删除成功，重新获取车库列表
@@ -313,18 +329,16 @@ const StorageListPage: React.FC<HomePageProps> = ({ className }) => {
   const handleSaveRemarks = async (garageId: number) => {
     try {
       // 找到对应的车库
-      const garage = garages.find(g => g.id === garageId);
+      const garage = garages.find((g) => g.id === garageId);
       if (!garage) return;
 
       // 更新本地状态
       const updatedGarage = {
         ...garage,
-        remarks: editRemarks.trim() || undefined
+        remarks: editRemarks.trim() || undefined,
       };
 
-      setGarages(prev => prev.map(g =>
-        g.id === garageId ? updatedGarage : g
-      ));
+      setGarages((prev) => prev.map((g) => (g.id === garageId ? updatedGarage : g)));
 
       // 发送API请求保存到后端
       const response = await updateGarage(updatedGarage);
@@ -354,22 +368,30 @@ const StorageListPage: React.FC<HomePageProps> = ({ className }) => {
   };
 
   // 载具移动功能相关函数
-  const handleOpenMoveDialog = (garageId: number, vehicleIndex: number, vehicleData: GarageVehicle) => {
+  const handleOpenMoveDialog = (
+    garageId: number,
+    vehicleIndex: number,
+    vehicleData: GarageVehicle
+  ) => {
     setSelectedVehicle({
       garageId,
       vehicleIndex,
-      vehicleData
+      vehicleData,
     });
     setMoveStep('selectGarage');
     setShowMoveDialog(true);
   };
 
   // 载具删除功能相关函数
-  const handleOpenDeleteConfirmDialog = (garageId: number, vehicleIndex: number, vehicleData: GarageVehicle) => {
+  const handleOpenDeleteConfirmDialog = (
+    garageId: number,
+    vehicleIndex: number,
+    vehicleData: GarageVehicle
+  ) => {
     setSelectedVehicleToDelete({
       garageId,
       vehicleIndex,
-      vehicleData
+      vehicleData,
     });
     setShowDeleteConfirmDialog(true);
   };
@@ -384,15 +406,15 @@ const StorageListPage: React.FC<HomePageProps> = ({ className }) => {
 
     try {
       // 获取当前车库
-      const garageIndex = garages.findIndex(g => g.id === selectedVehicleToDelete.garageId);
+      const garageIndex = garages.findIndex((g) => g.id === selectedVehicleToDelete.garageId);
       if (garageIndex === -1) return;
 
       // 创建新的载具列表，将指定位置的载具设置为空对象
       const updatedGarage = {
         ...garages[garageIndex],
         vehicleList: garages[garageIndex].vehicleList.map((vehicle, index) =>
-          index === selectedVehicleToDelete.vehicleIndex ? {} as any : vehicle
-        )
+          index === selectedVehicleToDelete.vehicleIndex ? ({} as any) : vehicle
+        ),
       };
 
       // 更新车库
@@ -437,7 +459,7 @@ const StorageListPage: React.FC<HomePageProps> = ({ className }) => {
       setSwapTarget({
         garageId: selectedTargetGarage.id,
         vehicleIndex: targetIndex,
-        vehicleData: targetVehicle
+        vehicleData: targetVehicle,
       });
       setShowSwapConfirm(true);
     }
@@ -451,8 +473,8 @@ const StorageListPage: React.FC<HomePageProps> = ({ className }) => {
       const updatedGarages = [...garages];
 
       // 找到来源车库和目标车库
-      const sourceGarageIndex = updatedGarages.findIndex(g => g.id === selectedVehicle.garageId);
-      const targetGarageIndex = updatedGarages.findIndex(g => g.id === selectedTargetGarage.id);
+      const sourceGarageIndex = updatedGarages.findIndex((g) => g.id === selectedVehicle.garageId);
+      const targetGarageIndex = updatedGarages.findIndex((g) => g.id === selectedTargetGarage.id);
 
       if (sourceGarageIndex === -1 || targetGarageIndex === -1) return;
 
@@ -467,7 +489,7 @@ const StorageListPage: React.FC<HomePageProps> = ({ className }) => {
         // 更新车库信息
         updatedGarages[sourceGarageIndex] = {
           ...updatedGarages[sourceGarageIndex],
-          vehicleList
+          vehicleList,
         };
       } else {
         // 不同车库间移动
@@ -482,12 +504,12 @@ const StorageListPage: React.FC<HomePageProps> = ({ className }) => {
         // 更新车库信息
         updatedGarages[sourceGarageIndex] = {
           ...updatedGarages[sourceGarageIndex],
-          vehicleList: sourceVehicleList
+          vehicleList: sourceVehicleList,
         };
 
         updatedGarages[targetGarageIndex] = {
           ...updatedGarages[targetGarageIndex],
-          vehicleList: targetVehicleList
+          vehicleList: targetVehicleList,
         };
       }
 
@@ -497,7 +519,7 @@ const StorageListPage: React.FC<HomePageProps> = ({ className }) => {
       // 发送API请求保存到后端
       await Promise.all([
         updateGarage(updatedGarages[sourceGarageIndex]),
-        updateGarage(updatedGarages[targetGarageIndex])
+        updateGarage(updatedGarages[targetGarageIndex]),
       ]);
 
       // 显示成功通知
@@ -519,8 +541,8 @@ const StorageListPage: React.FC<HomePageProps> = ({ className }) => {
       const updatedGarages = [...garages];
 
       // 找到来源车库和目标车库
-      const sourceGarageIndex = updatedGarages.findIndex(g => g.id === selectedVehicle.garageId);
-      const targetGarageIndex = updatedGarages.findIndex(g => g.id === swapTarget.garageId);
+      const sourceGarageIndex = updatedGarages.findIndex((g) => g.id === selectedVehicle.garageId);
+      const targetGarageIndex = updatedGarages.findIndex((g) => g.id === swapTarget.garageId);
 
       if (sourceGarageIndex === -1 || targetGarageIndex === -1) return;
 
@@ -537,7 +559,7 @@ const StorageListPage: React.FC<HomePageProps> = ({ className }) => {
         // 更新车库信息
         updatedGarages[sourceGarageIndex] = {
           ...updatedGarages[sourceGarageIndex],
-          vehicleList
+          vehicleList,
         };
       } else {
         // 不同车库间交换
@@ -552,12 +574,12 @@ const StorageListPage: React.FC<HomePageProps> = ({ className }) => {
         // 更新车库信息
         updatedGarages[sourceGarageIndex] = {
           ...updatedGarages[sourceGarageIndex],
-          vehicleList: sourceVehicleList
+          vehicleList: sourceVehicleList,
         };
 
         updatedGarages[targetGarageIndex] = {
           ...updatedGarages[targetGarageIndex],
-          vehicleList: targetVehicleList
+          vehicleList: targetVehicleList,
         };
       }
 
@@ -567,7 +589,7 @@ const StorageListPage: React.FC<HomePageProps> = ({ className }) => {
       // 发送API请求保存到后端
       await Promise.all([
         updateGarage(updatedGarages[sourceGarageIndex]),
-        updateGarage(updatedGarages[targetGarageIndex])
+        updateGarage(updatedGarages[targetGarageIndex]),
       ]);
 
       // 显示成功通知
@@ -590,14 +612,12 @@ const StorageListPage: React.FC<HomePageProps> = ({ className }) => {
     setMoveStep('selectGarage');
   };
 
-
-
   // 处理车库选择
   const handleSelectGarage = (id: number) => {
-    setSelectedGarageIds(prev => {
+    setSelectedGarageIds((prev) => {
       if (prev.includes(id)) {
         // 如果已选中，则移除
-        return prev.filter(garageId => garageId !== id);
+        return prev.filter((garageId) => garageId !== id);
       } else {
         // 如果未选中，则添加
         return [...prev, id];
@@ -612,7 +632,7 @@ const StorageListPage: React.FC<HomePageProps> = ({ className }) => {
       setSelectedGarageIds([]);
     } else {
       // 否则全选所有车库
-      setSelectedGarageIds(garages.map(garage => garage.id));
+      setSelectedGarageIds(garages.map((garage) => garage.id));
     }
   };
 
@@ -651,22 +671,22 @@ const StorageListPage: React.FC<HomePageProps> = ({ className }) => {
               const isSelected = selectedGarageIds.includes(item.id);
               return (
                 <GarageItem
-                key={item.id}
-                garage={item}
-                isSelected={isSelected}
-                editingRemarksId={editingRemarksId}
-                editRemarks={editRemarks}
-                isUnsaved={isUnsaved}
-                editInputRef={editInputRef as React.RefObject<HTMLInputElement>}
-                handleSelectGarage={handleSelectGarage}
-                handleOpenEditRemarks={handleOpenEditRemarks}
-                handleSaveRemarks={handleSaveRemarks}
-                handleCancelEditRemarks={handleCancelEditRemarks}
-                handleChangeRemarks={handleChangeRemarks}
-                handleOpenMoveDialog={handleOpenMoveDialog}
-                handleOpenDeleteConfirmDialog={handleOpenDeleteConfirmDialog}
-                featureDict={featureDict}
-              />
+                  key={item.id}
+                  garage={item}
+                  isSelected={isSelected}
+                  editingRemarksId={editingRemarksId}
+                  editRemarks={editRemarks}
+                  isUnsaved={isUnsaved}
+                  editInputRef={editInputRef as React.RefObject<HTMLInputElement>}
+                  handleSelectGarage={handleSelectGarage}
+                  handleOpenEditRemarks={handleOpenEditRemarks}
+                  handleSaveRemarks={handleSaveRemarks}
+                  handleCancelEditRemarks={handleCancelEditRemarks}
+                  handleChangeRemarks={handleChangeRemarks}
+                  handleOpenMoveDialog={handleOpenMoveDialog}
+                  handleOpenDeleteConfirmDialog={handleOpenDeleteConfirmDialog}
+                  featureDict={featureDict}
+                />
               );
             })
           )}
@@ -698,7 +718,9 @@ const StorageListPage: React.FC<HomePageProps> = ({ className }) => {
         garages={garages}
         targetGarageId={selectedTargetGarage?.id || 0}
         targetVehicleIndex={selectedTargetGarage ? 0 : 0}
-        handleSelectTargetGarage={(garageId) => handleSelectTargetGarage(garages.find(g => g.id === garageId)!)}
+        handleSelectTargetGarage={(garageId) =>
+          handleSelectTargetGarage(garages.find((g) => g.id === garageId)!)
+        }
         handleSelectTargetPosition={handleSelectTargetPosition}
         handleCancelMove={handleCloseMoveDialog}
         handleMoveVehicle={() => setMoveStep('selectPosition')}

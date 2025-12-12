@@ -18,10 +18,10 @@ export const featureConfig = [
   { text: 'KOSATKA', bgColor: '#99227fff', textColor: '#FFFFFF' },
   { text: 'ELECTRIC', bgColor: '#91a82cff', textColor: '#FFFFFF' },
   { text: 'ARMED', bgColor: '#99227fff', textColor: '#FFFFFF' },
-  { text: 'ARMORED', bgColor: '#91a82cff', textColor: '#FFFFFF' }
+  { text: 'ARMORED', bgColor: '#91a82cff', textColor: '#FFFFFF' },
 ];
 
 // 创建特性映射以快速查找配置
 export const featureConfigMap = Object.fromEntries(
-  featureConfig.map(feature => [feature.text, feature])
+  featureConfig.map((feature) => [feature.text, feature])
 );

@@ -30,12 +30,12 @@ const featureConfig = [
   { text: 'KOSATKA', bgColor: '#99227fff', textColor: '#FFFFFF' },
   { text: 'ELECTRIC', bgColor: '#91a82cff', textColor: '#FFFFFF' },
   { text: 'ARMED', bgColor: '#99227fff', textColor: '#FFFFFF' },
-  { text: 'ARMORED', bgColor: '#91a82cff', textColor: '#FFFFFF' }
+  { text: 'ARMORED', bgColor: '#91a82cff', textColor: '#FFFFFF' },
 ];
 
 // 创建特性映射以快速查找配置
 const featureConfigMap = Object.fromEntries(
-  featureConfig.map(feature => [feature.text, feature])
+  featureConfig.map((feature) => [feature.text, feature])
 );
 
 interface VehicleItemProps {
@@ -43,8 +43,16 @@ interface VehicleItemProps {
   index: number;
   garageId: number;
   featureDict: Record<string, string>;
-  handleOpenMoveDialog: (garageId: number, vehicleIndex: number, vehicleData: GarageVehicle) => void;
-  handleOpenDeleteConfirmDialog: (garageId: number, vehicleIndex: number, vehicleData: GarageVehicle) => void;
+  handleOpenMoveDialog: (
+    garageId: number,
+    vehicleIndex: number,
+    vehicleData: GarageVehicle
+  ) => void;
+  handleOpenDeleteConfirmDialog: (
+    garageId: number,
+    vehicleIndex: number,
+    vehicleData: GarageVehicle
+  ) => void;
 }
 
 const VehicleItem: React.FC<VehicleItemProps> = ({
@@ -53,7 +61,7 @@ const VehicleItem: React.FC<VehicleItemProps> = ({
   garageId,
   featureDict,
   handleOpenMoveDialog,
-  handleOpenDeleteConfirmDialog
+  handleOpenDeleteConfirmDialog,
 }) => {
   // 检查载具是否为空对象
   const isEmptyVehicle = Object.keys(vehicle).length === 0;
@@ -66,19 +74,13 @@ const VehicleItem: React.FC<VehicleItemProps> = ({
             className={styles.moveVehicleButton}
             onClick={() => handleOpenMoveDialog(garageId, index, vehicle)}
           >
-            <img
-              src="/move.png"
-              style={{ display: 'block', cursor: 'pointer' }}
-            />
+            <img src="/move.png" style={{ display: 'block', cursor: 'pointer' }} />
           </button>
           <button
             className={styles.deleteVehicleButton}
             onClick={() => handleOpenDeleteConfirmDialog(garageId, index, vehicle)}
           >
-            <img
-              src="/delete.png"
-              style={{ display: 'block', cursor: 'pointer' }}
-            />
+            <img src="/delete.png" style={{ display: 'block', cursor: 'pointer' }} />
           </button>
         </div>
       )}
@@ -92,9 +94,7 @@ const VehicleItem: React.FC<VehicleItemProps> = ({
             <div className={styles.vehicleBrand}>{vehicle.brandName}</div>
             <div className={styles.vehicleName}>{vehicle.vehicleName}</div>
             <div className={styles.vehicleType}>{vehicle.vehicle_type}</div>
-            <div className={styles.vehiclePrice}>
-              {formatPrice(vehicle.price)}
-            </div>
+            <div className={styles.vehiclePrice}>{formatPrice(vehicle.price)}</div>
             {/* 只有当feature不为null且不为空时才显示特性列表 */}
             {vehicle.feature && vehicle.feature.trim() !== '' && (
               <div className={styles.vehicleFeature}>
@@ -108,20 +108,18 @@ const VehicleItem: React.FC<VehicleItemProps> = ({
                   const featureInfo = featureConfigMap[cleanFeatureText];
 
                   // 如果找到配置，使用配置的样式；否则使用默认样式
-                  const style = featureInfo ? {
-                    backgroundColor: featureInfo.bgColor,
-                    color: featureInfo.textColor
-                  } : {};
+                  const style = featureInfo
+                    ? {
+                        backgroundColor: featureInfo.bgColor,
+                        color: featureInfo.textColor,
+                      }
+                    : {};
 
                   // 获取中文特性名称
                   const translatedFeature = featureDict[cleanFeatureText] || cleanFeatureText;
 
                   return (
-                    <div
-                      className={styles.featureItem}
-                      style={style}
-                      key={index}
-                    >
+                    <div className={styles.featureItem} style={style} key={index}>
                       {translatedFeature}
                     </div>
                   );

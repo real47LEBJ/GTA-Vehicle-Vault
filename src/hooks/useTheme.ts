@@ -37,11 +37,11 @@ function useTheme(): {
     setTheme(newTheme);
     const finalTheme = newTheme === 'system' ? getSystemTheme() : newTheme;
     setCurrentTheme(finalTheme);
-    
+
     // 保存到localStorage
     if (typeof window !== 'undefined') {
       window.localStorage.setItem('theme', newTheme);
-      
+
       // 更新HTML根元素的class
       document.documentElement.classList.remove('light', 'dark');
       document.documentElement.classList.add(finalTheme);
@@ -62,7 +62,7 @@ function useTheme(): {
   // 监听系统主题变化
   useEffect(() => {
     const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-    
+
     const handleChange = () => {
       if (theme === 'system') {
         updateTheme('system');

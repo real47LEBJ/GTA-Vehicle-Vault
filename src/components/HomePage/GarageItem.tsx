@@ -16,8 +16,16 @@ interface GarageItemProps {
   handleSaveRemarks: (garageId: number) => void;
   handleCancelEditRemarks: () => void;
   handleChangeRemarks: (value: string) => void;
-  handleOpenMoveDialog: (garageId: number, vehicleIndex: number, vehicleData: GarageVehicle) => void;
-  handleOpenDeleteConfirmDialog: (garageId: number, vehicleIndex: number, vehicleData: GarageVehicle) => void;
+  handleOpenMoveDialog: (
+    garageId: number,
+    vehicleIndex: number,
+    vehicleData: GarageVehicle
+  ) => void;
+  handleOpenDeleteConfirmDialog: (
+    garageId: number,
+    vehicleIndex: number,
+    vehicleData: GarageVehicle
+  ) => void;
 }
 
 const GarageItem: React.FC<GarageItemProps> = ({
@@ -34,7 +42,7 @@ const GarageItem: React.FC<GarageItemProps> = ({
   handleCancelEditRemarks,
   handleChangeRemarks,
   handleOpenMoveDialog,
-  handleOpenDeleteConfirmDialog
+  handleOpenDeleteConfirmDialog,
 }) => {
   return (
     <div
@@ -117,7 +125,8 @@ const GarageItem: React.FC<GarageItemProps> = ({
           </div>
           <div className={styles.storageNumContainer}>
             <div className={styles.storageNum}>
-              {garage.vehicleList.filter(vehicle => Object.keys(vehicle).length > 0).length}/{garage.num}
+              {garage.vehicleList.filter((vehicle) => Object.keys(vehicle).length > 0).length}/
+              {garage.num}
             </div>
           </div>
         </div>

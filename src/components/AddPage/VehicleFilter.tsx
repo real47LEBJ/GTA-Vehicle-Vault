@@ -39,7 +39,7 @@ const VehicleFilter: React.FC<VehicleFilterProps> = ({
   onFeatureChange,
   onShowUnavailableChange,
   onResetFilters,
-  onPageChange
+  onPageChange,
 }) => {
   return (
     <div className={styles.vehicleFilterContainer}>
@@ -52,8 +52,10 @@ const VehicleFilter: React.FC<VehicleFilterProps> = ({
       {/* 分页组件 */}
       <div className={styles.paginationContainer}>
         <button
-          onClick={() => onPageChange(Math.max(currentPage - 1, 1))}
-          disabled={currentPage === 1}
+          onClick={() => {
+            if (totalPages <= 1) return;
+            onPageChange(currentPage === 1 ? totalPages : currentPage - 1);
+          }}
           className={styles.paginationButton}
         >
           <img src="/previous.png" className={styles.paginationImage} />
@@ -62,8 +64,10 @@ const VehicleFilter: React.FC<VehicleFilterProps> = ({
           {currentPage} / {totalPages}
         </span>
         <button
-          onClick={() => onPageChange(Math.min(currentPage + 1, totalPages))}
-          disabled={currentPage === totalPages}
+          onClick={() => {
+            if (totalPages <= 1) return;
+            onPageChange(currentPage === totalPages ? 1 : currentPage + 1);
+          }}
           className={styles.paginationButton}
         >
           <img src="/next.png" className={styles.paginationImage} />
@@ -106,9 +110,13 @@ const VehicleFilter: React.FC<VehicleFilterProps> = ({
             onVehicleTypeChange(e.target.value || null);
           }}
         >
-          <option value="" disabled className={styles.hiddenOption}>请选择载具类型</option>
+          <option value="" disabled className={styles.hiddenOption}>
+            请选择载具类型
+          </option>
           {Object.entries(vehicleTypeDict).map(([typeEn]) => (
-            <option key={typeEn} value={typeEn}>{typeEn}</option>
+            <option key={typeEn} value={typeEn}>
+              {typeEn}
+            </option>
           ))}
         </select>
         {selectedVehicleType && (
@@ -134,9 +142,13 @@ const VehicleFilter: React.FC<VehicleFilterProps> = ({
             onFeatureChange(e.target.value || null);
           }}
         >
-          <option value="" disabled className={styles.hiddenOption}>请选择特性</option>
+          <option value="" disabled className={styles.hiddenOption}>
+            请选择特性
+          </option>
           {Object.entries(featureDict).map(([featureEn, featureZh]) => (
-            <option key={featureEn} value={featureEn}>{featureZh}</option>
+            <option key={featureEn} value={featureEn}>
+              {featureZh}
+            </option>
           ))}
         </select>
         {selectedFeature && (
@@ -171,10 +183,7 @@ const VehicleFilter: React.FC<VehicleFilterProps> = ({
       </div>
 
       {/* 重置按钮 */}
-      <button
-        className={styles.resetButton}
-        onClick={onResetFilters}
-      >
+      <button className={styles.resetButton} onClick={onResetFilters}>
         重置筛选
       </button>
     </div>
@@ -182,5 +191,3 @@ const VehicleFilter: React.FC<VehicleFilterProps> = ({
 };
 
 export default VehicleFilter;
-
-

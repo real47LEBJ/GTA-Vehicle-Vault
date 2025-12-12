@@ -12,15 +12,9 @@ const Header: React.FC<HeaderProps> = ({ title, subtitle, children }) => {
     <header className="page-header">
       <div className="page-header-content">
         <h1>{title}</h1>
-        {subtitle && (
-          <p className="page-header-subtitle">{subtitle}</p>
-        )}
+        {subtitle && <p className="page-header-subtitle">{subtitle}</p>}
       </div>
-      {children && (
-        <div className="header-actions">
-          {children}
-        </div>
-      )}
+      {children && <div className="header-actions">{children}</div>}
     </header>
   );
 };

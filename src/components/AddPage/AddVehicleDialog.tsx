@@ -23,17 +23,19 @@ const AddVehicleDialog: React.FC<AddVehicleDialogProps> = ({
   onClose,
   onSelectGarage,
   onBackToGarageSelection,
-  onSelectPosition
+  onSelectPosition,
 }) => {
   if (!isOpen || !selectedVehicle) return null;
 
   // 使用useMemo缓存车库容量计算结果，减少每次渲染时的重复计算
   const garagesWithCapacity = useMemo(() => {
-    return garages.map(garage => {
-      const usedCapacity = garage.vehicleList.filter(vehicle => Object.keys(vehicle).length > 0).length;
+    return garages.map((garage) => {
+      const usedCapacity = garage.vehicleList.filter(
+        (vehicle) => Object.keys(vehicle).length > 0
+      ).length;
       return {
         ...garage,
-        usedCapacity
+        usedCapacity,
       };
     });
   }, [garages]);
@@ -41,7 +43,7 @@ const AddVehicleDialog: React.FC<AddVehicleDialogProps> = ({
   // 缓存目标车库的位置列表渲染结果
   const targetGaragePositions = useMemo(() => {
     if (!selectedTargetGarage) return null;
-    
+
     return selectedTargetGarage.vehicleList.map((vehicle, index) => {
       const isEmpty = Object.keys(vehicle).length === 0;
       return (
@@ -55,9 +57,7 @@ const AddVehicleDialog: React.FC<AddVehicleDialogProps> = ({
           {isEmpty ? (
             <div className={styles.positionStatus}>空</div>
           ) : (
-            <div className={styles.positionVehicle}>
-              {`${vehicle.vehicleName}`}
-            </div>
+            <div className={styles.positionVehicle}>{`${vehicle.vehicleName}`}</div>
           )}
         </div>
       );
@@ -75,14 +75,16 @@ const AddVehicleDialog: React.FC<AddVehicleDialogProps> = ({
             <>
               <h4>选择车库</h4>
               <div className={styles.garageSelection}>
-                {garagesWithCapacity.map(garage => (
+                {garagesWithCapacity.map((garage) => (
                   <div
                     key={garage.id}
                     className={styles.garageOption}
                     onClick={() => onSelectGarage(garage)}
                   >
                     <div className={styles.garageOptionName}>{garage.storageName}</div>
-                    <div className={styles.garageOptionCapacity}>{garage.usedCapacity}/{garage.num} 位置</div>
+                    <div className={styles.garageOptionCapacity}>
+                      {garage.usedCapacity}/{garage.num} 位置
+                    </div>
                   </div>
                 ))}
               </div>
@@ -92,10 +94,7 @@ const AddVehicleDialog: React.FC<AddVehicleDialogProps> = ({
           {purchaseStep === 'selectPosition' && selectedTargetGarage && (
             <>
               <div className={styles.dialogStepNavigation}>
-                <button
-                  className={styles.backButton}
-                  onClick={onBackToGarageSelection}
-                >
+                <button className={styles.backButton} onClick={onBackToGarageSelection}>
                   返回
                 </button>
                 <div className={styles.targetGarageInfo}>
@@ -103,17 +102,12 @@ const AddVehicleDialog: React.FC<AddVehicleDialogProps> = ({
                 </div>
               </div>
               <h4>选择目标位置</h4>
-              <div className={styles.positionSelection}>
-                {targetGaragePositions}
-              </div>
+              <div className={styles.positionSelection}>{targetGaragePositions}</div>
             </>
           )}
         </div>
         <div className={styles.moveDialogActions}>
-          <button
-            className={styles.confirmDialogCancel}
-            onClick={onClose}
-          >
+          <button className={styles.confirmDialogCancel} onClick={onClose}>
             取消
           </button>
         </div>

@@ -17,6 +17,47 @@
     margin: 0 0;
     padding: 0 0;
   }
+  
+  /* 只在cursor为pointer时使用自定义图标 */
+  button, 
+  a, 
+  img,
+  input, 
+  select, 
+  textarea, 
+  [role="button"], 
+  .btn, 
+  [onclick], 
+  [tabindex="0"], 
+  [class*="button"], 
+  [class*="btn"],
+  [class*="checkbox"],
+  [class*="radio"] {
+    cursor: url('/cursor.cur'), pointer !important;
+  }
+  
+  /* 为禁用状态保持原有光标 */
+  button:disabled, 
+  [disabled] {
+    cursor: not-allowed !important;
+  }
+  
+  /* 为文本输入字段保持原有光标 */
+  input[type="text"],
+  input[type="email"],
+  input[type="password"],
+  input[type="number"],
+  input[type="tel"],
+  input[type="url"],
+  input[type="search"],
+  textarea {
+    cursor: text !important;
+  }
+  
+  /* 为文件输入保持原有光标 */
+  input[type="file"] {
+    cursor: auto !important;
+  }
 </style>
 
 </html>

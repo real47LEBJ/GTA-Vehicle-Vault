@@ -8,7 +8,7 @@
  * @returns True if the string is empty, false otherwise
  */
 export const isEmpty = (str: string): boolean => {
-  return str.trim() === "";
+  return str.trim() === '';
 };
 
 /**
@@ -53,13 +53,8 @@ export const isValidPassword = (
     requireSpecialChar: false,
   }
 ): boolean => {
-  const {
-    minLength,
-    requireUppercase,
-    requireLowercase,
-    requireNumber,
-    requireSpecialChar,
-  } = options;
+  const { minLength, requireUppercase, requireLowercase, requireNumber, requireSpecialChar } =
+    options;
 
   if (password.length < (minLength ?? 8)) return false;
   if (requireUppercase && !/[A-Z]/.test(password)) return false;
@@ -79,7 +74,7 @@ export const isValidUrl = (url: string): boolean => {
   try {
     new URL(url);
     return true;
-  } catch (error) {
+  } catch {
     return false;
   }
 };

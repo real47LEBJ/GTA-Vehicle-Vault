@@ -14,12 +14,9 @@ interface UseFetchResult<T> {
   execute: () => Promise<void>;
 }
 
-function useFetch<T>(
-  url: string,
-  options: UseFetchOptions = {}
-): UseFetchResult<T> {
+function useFetch<T>(url: string, options: UseFetchOptions = {}): UseFetchResult<T> {
   const { method = 'GET', headers = {}, body, immediate = true } = options;
-  
+
   const [data, setData] = useState<T | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<Error | null>(null);

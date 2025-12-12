@@ -1,7 +1,15 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { RefreshContext } from '../App';
 import styles from '../styles/pages/AddPage.module.css';
-import { getBrands, getVehicles, getGarages, updateGarage, getAllVehicles, getFeatureTypeDicts, getVehicleTypeDicts } from '../utils/api';
+import {
+  getBrands,
+  getVehicles,
+  getGarages,
+  updateGarage,
+  getAllVehicles,
+  getFeatureTypeDicts,
+  getVehicleTypeDicts,
+} from '../utils/api';
 import { Brand, Garage, GarageVehicle, Vehicle as VehicleType } from '../types';
 import BrandSelector from '../components/AddPage/BrandSelector';
 import VehicleFilter from '../components/AddPage/VehicleFilter';
@@ -46,7 +54,9 @@ const AddPage: React.FC<AddPageProps> = ({ className }) => {
   const [garages, setGarages] = useState<Garage[]>([]);
   const [selectedVehicle, setSelectedVehicle] = useState<VehicleType | null>(null);
   const [selectedTargetGarage, setSelectedTargetGarage] = useState<Garage | null>(null);
-  const [purchaseStep, setPurchaseStep] = useState<'selectGarage' | 'selectPosition'>('selectGarage');
+  const [purchaseStep, setPurchaseStep] = useState<'selectGarage' | 'selectPosition'>(
+    'selectGarage'
+  );
   const [showReplaceConfirm, setShowReplaceConfirm] = useState<boolean>(false);
   const [targetPositionIndex, setTargetPositionIndex] = useState<number | null>(null);
   const [targetVehicle, setTargetVehicle] = useState<GarageVehicle | null>(null);
@@ -178,26 +188,27 @@ const AddPage: React.FC<AddPageProps> = ({ className }) => {
 
   // 过滤载具列表（支持多种筛选条件）
   const filteredVehicles = React.useMemo(() => {
-    let result = vehicles.filter(vehicle =>
-      vehicle.vehicle_name.toLowerCase().includes(vehicleSearchTerm.toLowerCase()) ||
-      vehicle.vehicle_name_en.toLowerCase().includes(vehicleSearchTerm.toLowerCase())
+    let result = vehicles.filter(
+      (vehicle) =>
+        vehicle.vehicle_name.toLowerCase().includes(vehicleSearchTerm.toLowerCase()) ||
+        vehicle.vehicle_name_en.toLowerCase().includes(vehicleSearchTerm.toLowerCase())
     );
 
     // 过滤载具类型
     if (selectedVehicleType) {
-      result = result.filter(vehicle => vehicle.vehicle_type === selectedVehicleType);
+      result = result.filter((vehicle) => vehicle.vehicle_type === selectedVehicleType);
     }
 
     // 过滤特性
     if (selectedFeature) {
-      result = result.filter(vehicle =>
-        vehicle.feature && vehicle.feature.includes(selectedFeature)
+      result = result.filter(
+        (vehicle) => vehicle.feature && vehicle.feature.includes(selectedFeature)
       );
     }
 
     // 过滤不可获取载具
     if (!showUnavailableVehicles) {
-      result = result.filter(vehicle => vehicle.price !== -1);
+      result = result.filter((vehicle) => vehicle.price !== -1);
     }
 
     // 价格排序
@@ -212,7 +223,14 @@ const AddPage: React.FC<AddPageProps> = ({ className }) => {
     }
 
     return result;
-  }, [vehicles, vehicleSearchTerm, selectedVehicleType, selectedFeature, showUnavailableVehicles, priceSort]);
+  }, [
+    vehicles,
+    vehicleSearchTerm,
+    selectedVehicleType,
+    selectedFeature,
+    showUnavailableVehicles,
+    priceSort,
+  ]);
 
   // 分页计算
   const paginatedVehicles = React.useMemo(() => {
@@ -227,26 +245,17 @@ const AddPage: React.FC<AddPageProps> = ({ className }) => {
   const totalPages = Math.ceil(filteredVehicles.length / itemsPerPage);
 
   // 获取当前选中的品牌信息
-  const currentBrand = brands.find(brand => brand.id === selectedBrand) || null;
+  const currentBrand = brands.find((brand) => brand.id === selectedBrand) || null;
 
   // 添加功能相关函数
   const handleOpenPurchaseDialog = async (vehicle: VehicleType) => {
     try {
-      // 获取当前最新的车库列表，用于检查是否有新添加的车库
-      const latestGaragesResponse = await getGarages();
-      if (latestGaragesResponse.success && latestGaragesResponse.data) {
-        const latestGarages = latestGaragesResponse.data || [];
-        
-        // 只有当最新车库列表与当前车库列表数量不同时，才更新车库列表
-        // 这样可以确保添加新车库后能看到，同时避免不必要的重新获取
-        if (latestGarages.length !== garages.length) {
-          setGarages(latestGarages);
-        }
-      }
+      // 每次打开载具添加对话框时，都重新请求查询一次车库列表接口
+      await fetchGarages();
     } catch (err) {
-      console.error('检查车库更新时发生错误:', err);
+      console.error('获取车库列表时发生错误:', err);
     }
-    
+
     setSelectedVehicle(vehicle);
     setPurchaseStep('selectGarage');
     setShowPurchaseDialog(true);
@@ -297,7 +306,7 @@ const AddPage: React.FC<AddPageProps> = ({ className }) => {
       const updatedGarages = [...garages];
 
       // 找到当前车库
-      const targetGarageIndex = updatedGarages.findIndex(g => g.id === selectedTargetGarage.id);
+      const targetGarageIndex = updatedGarages.findIndex((g) => g.id === selectedTargetGarage.id);
 
       if (targetGarageIndex === -1) return;
 
@@ -305,7 +314,7 @@ const AddPage: React.FC<AddPageProps> = ({ className }) => {
       const updatedVehicleList = [...updatedGarages[targetGarageIndex].vehicleList];
 
       // 找到载具对应的品牌信息
-      const brand = brands.find(b => b.id === selectedVehicle.brand_id);
+      const brand = brands.find((b) => b.id === selectedVehicle.brand_id);
       const brandName = brand ? brand.brand : '';
       const brandNameEn = brand ? brand.brand_en : '';
 
@@ -319,7 +328,7 @@ const AddPage: React.FC<AddPageProps> = ({ className }) => {
         brandNameEn: brandNameEn,
         price: selectedVehicle.price,
         vehicle_type: selectedVehicle.vehicle_type,
-        remarks: ''
+        remarks: '',
       };
 
       // 更新目标位置
@@ -328,7 +337,7 @@ const AddPage: React.FC<AddPageProps> = ({ className }) => {
       // 更新车库信息
       updatedGarages[targetGarageIndex] = {
         ...updatedGarages[targetGarageIndex],
-        vehicleList: updatedVehicleList
+        vehicleList: updatedVehicleList,
       };
 
       // 更新本地状态
@@ -360,7 +369,6 @@ const AddPage: React.FC<AddPageProps> = ({ className }) => {
     }
   };
 
-
   if (loading && brands.length === 0) {
     return <div className={styles.loadingContainer}>加载中...</div>;
   }
@@ -372,10 +380,7 @@ const AddPage: React.FC<AddPageProps> = ({ className }) => {
   return (
     <div className={`${styles.pageContainer} ${className}`}>
       {/* 通知组件 */}
-      <Notification
-        isVisible={showNotification}
-        message={notificationMessage}
-      />
+      <Notification isVisible={showNotification} message={notificationMessage} />
 
       <div className={styles.brandContainer}>
         <BrandSelector
@@ -393,7 +398,7 @@ const AddPage: React.FC<AddPageProps> = ({ className }) => {
           <div className={styles.loadingContainer}>加载中...</div>
         ) : error ? (
           <div className={styles.errorContainer}>错误: {error}</div>
-        ) : (currentBrand || selectedBrand === 'all') ? (
+        ) : currentBrand || selectedBrand === 'all' ? (
           <div className={styles.brandVehicleSection}>
             <div style={{ display: 'flex', alignItems: 'center' }}>
               <VehicleFilter

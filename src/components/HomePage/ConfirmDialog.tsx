@@ -12,7 +12,7 @@ const ConfirmDialog: React.FC<ConfirmDialogProps> = ({
   showConfirmDialog,
   selectedGarageIds,
   handleCancelDelete,
-  handleConfirmDelete
+  handleConfirmDelete,
 }) => {
   if (!showConfirmDialog) return null;
 
@@ -26,16 +26,10 @@ const ConfirmDialog: React.FC<ConfirmDialogProps> = ({
           <p>确定删除选中的 {selectedGarageIds.length} 个车库？</p>
         </div>
         <div className={styles.confirmDialogActions}>
-          <button
-            className={styles.confirmDialogCancel}
-            onClick={handleCancelDelete}
-          >
+          <button className={styles.confirmDialogCancel} onClick={handleCancelDelete}>
             取消
           </button>
-          <button
-            className={styles.confirmDialogConfirm}
-            onClick={handleConfirmDelete}
-          >
+          <button className={styles.confirmDialogConfirm} onClick={handleConfirmDelete}>
             删除
           </button>
         </div>

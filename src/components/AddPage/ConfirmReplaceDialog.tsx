@@ -17,7 +17,7 @@ const ConfirmReplaceDialog: React.FC<ConfirmReplaceDialogProps> = ({
   targetVehicle,
   targetPositionIndex,
   onCancel,
-  onConfirm
+  onConfirm,
 }) => {
   if (!isOpen || !selectedVehicle || !targetVehicle) return null;
 
@@ -41,10 +41,7 @@ const ConfirmReplaceDialog: React.FC<ConfirmReplaceDialogProps> = ({
           </div>
         </div>
         <div className={styles.swapDialogActions}>
-          <button
-            className={styles.confirmDialogCancel}
-            onClick={onCancel}
-          >
+          <button className={styles.confirmDialogCancel} onClick={onCancel}>
             取消
           </button>
           <button

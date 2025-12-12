@@ -3,8 +3,8 @@
  */
 
 // Theme types
-export type Theme = "light" | "dark" | "system";
-export type ActualTheme = "light" | "dark";
+export type Theme = 'light' | 'dark' | 'system';
+export type ActualTheme = 'light' | 'dark';
 
 // Form validation types
 export interface FormErrors<_T> {
@@ -25,17 +25,12 @@ export interface BaseComponentProps {
 }
 
 // Button variants and sizes
-export type ButtonVariant =
-  | "primary"
-  | "secondary"
-  | "danger"
-  | "success"
-  | "warning";
-export type ButtonSize = "small" | "medium" | "large";
+export type ButtonVariant = 'primary' | 'secondary' | 'danger' | 'success' | 'warning';
+export type ButtonSize = 'small' | 'medium' | 'large';
 
 // Input variants and sizes
-export type InputVariant = "default" | "error" | "success";
-export type InputSize = "small" | "medium" | "large";
+export type InputVariant = 'default' | 'error' | 'success';
+export type InputSize = 'small' | 'medium' | 'large';
 
 // Navigation types
 export interface NavItem {

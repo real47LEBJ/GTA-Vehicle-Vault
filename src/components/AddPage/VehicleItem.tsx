@@ -10,7 +10,12 @@ interface VehicleItemProps {
   featureDict: Record<string, string>;
 }
 
-const VehicleItem: React.FC<VehicleItemProps> = ({ vehicle, brands, onAddVehicle, featureDict }) => {
+const VehicleItem: React.FC<VehicleItemProps> = ({
+  vehicle,
+  brands,
+  onAddVehicle,
+  featureDict,
+}) => {
   // 格式化价格
   const formatPrice = (price: number) => {
     if (price === 0) {
@@ -24,19 +29,14 @@ const VehicleItem: React.FC<VehicleItemProps> = ({ vehicle, brands, onAddVehicle
 
   return (
     <div className={styles.vehicleItem} key={vehicle.id}>
-      <button
-        className={styles.moveVehicleButton}
-        onClick={() => onAddVehicle(vehicle)}
-      >
+      <button className={styles.moveVehicleButton} onClick={() => onAddVehicle(vehicle)}>
         <img src="/add.png" />
       </button>
       <div className={styles.vehicleInfo}>
         {/* 查找载具对应的品牌信息 */}
         {(() => {
-          const brand = brands.find(b => b.id === vehicle.brand_id);
-          return (
-            <div className={styles.vehicleBrand}>{brand ? brand.brand : '未知品牌'}</div>
-          );
+          const brand = brands.find((b) => b.id === vehicle.brand_id);
+          return <div className={styles.vehicleBrand}>{brand ? brand.brand : '未知品牌'}</div>;
         })()}
         <div className={styles.vehicleName}>{vehicle.vehicle_name}</div>
         <div className={styles.vehicleType}>{vehicle.vehicle_type}</div>
@@ -56,17 +56,15 @@ const VehicleItem: React.FC<VehicleItemProps> = ({ vehicle, brands, onAddVehicle
               const featureChinese = featureDict[cleanFeatureText] || cleanFeatureText;
 
               // 如果找到配置，使用配置的颜色；否则使用默认样式
-              const style = featureInfo ? {
-                backgroundColor: featureInfo.bgColor,
-                color: featureInfo.textColor
-              } : {};
+              const style = featureInfo
+                ? {
+                    backgroundColor: featureInfo.bgColor,
+                    color: featureInfo.textColor,
+                  }
+                : {};
 
               return (
-                <div
-                  className={styles.featureItem}
-                  style={style}
-                  key={index}
-                >
+                <div className={styles.featureItem} style={style} key={index}>
                   {featureChinese}
                 </div>
               );

@@ -14,9 +14,8 @@ const VehicleList: React.FC<VehicleListProps> = ({
   vehicles,
   brands,
   featureDict,
-  onAddVehicle
+  onAddVehicle,
 }) => {
-
   return (
     <div className={styles.vehicleListContainer}>
       {/* 载具列表 */}

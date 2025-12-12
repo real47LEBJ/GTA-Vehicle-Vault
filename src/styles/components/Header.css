@@ -1,19 +1,19 @@
 .page-header {
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    padding: 5px;
-    font-size: 12px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 5px;
+  font-size: 12px;
 }
 
 .page-header-content {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .page-header-subtitle {
-    font-size: 19px;
-    color: rgb(128, 128, 128);
-    padding: 0px 15px;
+  font-size: 19px;
+  color: rgb(128, 128, 128);
+  padding: 0px 15px;
 }

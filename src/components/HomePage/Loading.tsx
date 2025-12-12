@@ -7,7 +7,7 @@ interface LoadingProps {
 
 const Loading: React.FC<LoadingProps> = ({ loading }) => {
   if (!loading) return null;
-  
+
   return (
     <div className={styles.loadingContainer}>
       <div className={styles.loading}>加载中...</div>

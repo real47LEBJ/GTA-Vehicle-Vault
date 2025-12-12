@@ -1,1618 +1,1603 @@
- * {
-     overflow-x: hidden;
-     color: #ffffff;
- }
-
- .mainContainer {
-     height: 94vh;
-     width: 100%;
-     display: flex;
-     flex-direction: column;
-     padding: 20px;
-     box-sizing: border-box;
-     gap: 20px;
-     overflow: hidden;
-     background-color: #121212;
- }
-
- /* 通知组件样式 */
- .notification {
-     position: fixed;
-     top: 80px;
-     right: -300px;
-     /* 初始位置在屏幕右侧外 */
-     background-color: #0078d7;
-     color: white;
-     padding: 12px 16px;
-     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-     font-size: 16px;
-     font-weight: 500;
-     z-index: 1000;
-     transition: right 0.5s ease-in-out;
- }
-
- .notificationVisible {
-     right: 20px;
-     /* 滑入到屏幕右侧 */
- }
-
- /* 控制容器样式 */
- .controlContainer {
-     display: flex;
-     gap: 10px;
-     padding: 10px;
-     background-color: #1e1e1e;
-     border: 1px solid #444444;
-     position: sticky;
-     top: 0;
-     width: 97.8%;
-     z-index: 100;
-     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
- }
-
- /* 控制项样式 */
- .controlItem {
-     display: flex;
-     flex-direction: row;
-     align-items: center;
-     justify-content: flex-start;
-     gap: 5px;
-     margin-right: 30px;
- }
-
- /* 按钮控制项特殊样式 */
- .controlItem:last-child {
-     flex-direction: row;
-     align-items: center;
-     gap: 10px;
- }
-
- /* 控制标签样式 */
- .controlLabel {
-     font-size: 11px;
-     font-weight: 500;
-     color: #ffffff;
-     padding: 0 2px;
-     user-select: none;
- }
-
- /* 控制输入框样式 */
- .controlInput input {
-     padding: 10px 12px;
-     border: 1px solid #444444;
-     font-size: 16px;
-     transition: border-color 0.2s ease, box-shadow 0.2s ease;
-     box-sizing: border-box;
-     background-color: #272727;
-     color: #ffffff;
-     width: 200px
- }
-
- /* 车库名称输入框样式 - 稍微增大宽度 */
- .controlInput input.garageNameInput {
-     width: 220px;
- }
-
- /* 车库容量输入框样式 - 缩小宽度 */
- .controlInput input.garageCapacityInput {
-     width: 140px;
- }
-
- /* 车库备注输入框样式 - 稍微增大宽度 */
- .controlInput input.garageRemarksInput {
-     width: 220px;
- }
-
- .controlInput input:focus {
-     outline: none;
-     border-color: #007bff;
-     box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
-
- }
-
- .controlInput input::placeholder {
-     color: #aaaaaa;
-     border-color: #007bff;
- }
-
- /* 控制按钮样式 */
- .controlButton button {
-     padding: 8px 16px;
-     background-color: #0078d7;
-     color: white;
-     border: none;
-     cursor: pointer;
-     font-weight: 500;
-     white-space: nowrap;
-     transition: background-color 0.2s ease;
- }
-
- .controlButton button:hover {
-     background-color: #0076d7c5;
- }
-
-
- .controlButton button:disabled {
-     background-color: #555555;
-     cursor: not-allowed;
- }
-
- .controlButton .deleteButton {
-     background-color: #dc3545;
- }
-
- .controlButton .deleteButton:hover {
-     background-color: #c82333;
- }
-
- .controlButton .deleteButton:active {
-     background-color: #a71e2a;
- }
-
- /* 确认删除对话框样式 */
- .confirmDialogOverlay {
-     position: fixed;
-     top: 0;
-     left: 0;
-     right: 0;
-     bottom: 0;
-     background-color: rgba(0, 0, 0, 0.7);
-     display: flex;
-     justify-content: center;
-     align-items: center;
-     z-index: 1000;
- }
-
- .confirmDialog {
-     background-color: #1e1e1e;
-     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
-     width: 40vw;
-     overflow: hidden;
-     animation: slideIn 0.3s ease-out;
- }
-
- @keyframes slideIn {
-     from {
-         opacity: 0;
-         transform: translateY(-20px);
-     }
-
-     to {
-         opacity: 1;
-         transform: translateY(0);
-     }
- }
-
- .confirmDialogHeader {
-     padding: 16px 20px;
-     border-bottom: 1px solid #444444;
-     display: flex;
-     justify-content: space-between;
-     align-items: center;
- }
-
- .confirmDialogHeader h3 {
-     margin: 0;
-     font-size: 18px;
-     font-weight: 600;
-     color: #ffffff;
- }
-
- .confirmDialogContent {
-     padding: 20px;
- }
-
- .confirmDialogContent p {
-     margin: 0;
-     font-size: 18px;
-     color: #949494;
-     line-height: 1.5;
- }
-
- .confirmDialogActions {
-     padding: 16px 20px;
-     border-top: 1px solid #444444;
-     display: flex;
-     justify-content: flex-end;
-     gap: 12px;
- }
-
- .confirmDialogCancel {
-     background-color: #7a7a7a;
-     color: white;
-     border: none;
-     padding: 6px 12px;
-     cursor: pointer;
-     font-size: 12px;
-     transition: background-color 0.2s ease;
- }
-
- .confirmDialogCancel:hover {
-     background-color: #a1a1a1;
- }
-
- .confirmDialogBack {
-     background-color: #7a7a7a;
-     color: white;
-     border: none;
-     padding: 6px 12px;
-     cursor: pointer;
-     font-size: 12px;
-     transition: background-color 0.2s ease;
-     margin-bottom: 5px;
- }
-
- .confirmDialogBack:hover {
-     background-color: #a1a1a1;
- }
-
- /* 移动载具对话框样式 */
- .moveDialogOverlay {
-     position: fixed;
-     top: 0;
-     left: 0;
-     right: 0;
-     bottom: 0;
-     background-color: rgba(0, 0, 0, 0.7);
-     display: flex;
-     justify-content: center;
-     align-items: center;
-     z-index: 1000;
- }
-
- .moveDialog {
-     background-color: #1e1e1e;
-     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
-     width: 95vw;
-     overflow: hidden;
-     animation: slideIn 0.3s ease-out;
- }
-
- .moveDialogHeader {
-     padding: 16px 20px;
-     border-bottom: 1px solid #444444;
-     display: flex;
-     justify-content: space-between;
-     align-items: center;
- }
-
- .moveDialogHeader h3 {
-     margin: 0;
-     font-size: 18px;
-     font-weight: 600;
-     color: #ffffff;
- }
-
- .moveDialogContent {
-     padding: 20px;
- }
-
- .moveDialogContent p {
-     margin: 0;
-     font-size: 14px;
-     color: #ffffff;
-     line-height: 1.5;
- }
-
- .moveDialogActions {
-     padding: 16px 20px;
-     display: flex;
-     justify-content: flex-end;
-     gap: 10px;
- }
-
- /* 关闭按钮样式 */
- .closeButton {
-     background: none;
-     border: none;
-     font-size: 24px;
-     cursor: pointer;
-     color: #6c757d;
-     padding: 0;
-     width: 24px;
-     display: flex;
-     align-items: center;
-     justify-content: center;
- }
-
- .closeButton:hover {
-     color: #ffffff;
- }
-
- /* 车库列表样式 */
- .garageList {
-     display: flex;
-     flex-wrap: wrap;
-     gap: 10px;
-     max-height: 500px;
-     overflow-y: auto;
-     margin-top: 15px;
- }
-
- .garageItem {
-     background-color: #2a2a2a;
-     border: 1px solid #444444;
-     padding: 12px;
-     cursor: pointer;
-     transition: all 0.2s;
-     min-width: 150px;
- }
-
- .garageItem:hover {
-     background-color: #3a3a3a;
-     border-color: #666666;
- }
-
- .garageItemSelected {
-     background-color: #3a3a3a;
-     border: 2px solid #0078d7;
- }
-
- .garageName {
-     font-weight: bold;
-     margin-bottom: 5px;
-     color: #ffffff;
- }
-
- .garageCapacity {
-     font-size: 12px;
-     color: #aaaaaa;
- }
-
- /* 位置列表样式 */
- .positionList {
-     display: flex;
-     flex-wrap: wrap;
-     gap: 7px;
-     max-height: 500px;
-     overflow-y: auto;
-     margin-top: 15px;
- }
-
- .positionItem {
-     border: 1px solid #444444;
-     cursor: pointer;
-     transition: all 0.2s;
-     text-align: center;
-     flex: 0 0 calc(10% - 9px);
- }
-
-
- .positionItemSelected {
-     background-color: #3a3a3a;
-     border: 2px solid #0078d7;
- }
-
- /* 正在移动的载具车位 */
- .currentVehiclePosition {
-     cursor: not-allowed;
-     background-color: #444444;
-     border-color: #004499;
- }
-
- /* 空车位 */
- .emptyPosition {
-     background-color: #3f3f3f;
-     border-color: #b6b6b69d;
- }
-
- /* 非空车位 */
- .occupiedPosition {
-     background-color: #696969;
-     border-color: #646464;
-     min-height: 70px;
- }
-
- .positionIndex {
-     font-weight: bold;
-     margin-bottom: 5px;
-     color: #ffffff;
- }
-
- .positionVehicle {
-     font-size: 12px;
-     color: #cccccc;
- }
-
- .emptyPosition {
-     font-size: 12px;
-     color: #666666;
- }
-
- .movingVehicleLabel {
-     background-color: #9e9e9e;
-     color: #333333;
-     font-size: 11px;
-     border: 1px solid #3f3f3f;
-     text-align: center;
-     width: 99%;
-     margin-top: 13px;
-     display: flex;
-     align-items: center;
-     justify-content: center;
-     box-shadow: 0 2px 4px rgba(0, 0, 0, 1);
- }
-
- /* 交换载具对话框样式 */
- .swapDialogOverlay {
-     position: fixed;
-     top: 0;
-     left: 0;
-     right: 0;
-     bottom: 0;
-     background-color: rgba(0, 0, 0, 0.7);
-     display: flex;
-     justify-content: center;
-     align-items: center;
-     z-index: 1000;
- }
-
- .swapDialog {
-     background-color: #1e1e1e;
-     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
-     width: 550px;
-     max-width: 90%;
-     overflow: hidden;
-     animation: slideIn 0.3s ease-out;
- }
-
- .swapDialogHeader {
-     background-color: #2a2a2a;
-     padding: 16px;
-     border-bottom: 1px solid #444444;
- }
-
- .swapDialogHeader h3 {
-     margin: 0;
-     font-size: 18px;
-     font-weight: 600;
-     color: #ffffff;
- }
-
- .swapDialogContent {
-     padding: 20px;
- }
-
- .swapDialogContent p {
-     margin: 0;
-     font-size: 14px;
-     color: #ffffff;
-     line-height: 1.5;
- }
-
- .swapDialogActions {
-     padding: 16px;
-     background-color: #2a2a2a;
-     border-top: 1px solid #444444;
-     display: flex;
-     justify-content: flex-end;
-     gap: 12px;
- }
-
- .confirmDialogCancel:active {
-     background-color: #545b62;
- }
-
- .confirmDialogConfirm {
-     padding: 8px 16px;
-     background-color: #dc3545;
-     color: white;
-     border: none;
-     cursor: pointer;
-     font-weight: 500;
-     transition: background-color 0.2s ease;
- }
-
- .confirmDialogConfirm:hover {
-     background-color: #c82333;
- }
-
- .confirmDialogConfirm:active {
-     background-color: #a71e2a;
- }
-
- /* 错误消息样式 */
- .errorMessage {
-     padding: 12px;
-     background-color: #442222;
-     color: #ff4444;
-
-     margin-bottom: 16px;
-     font-size: 14px;
-     border-left: 4px solid #ff4444;
- }
-
- /* 加载状态样式 */
- .loadingContainer {
-     display: flex;
-     justify-content: center;
-     align-items: center;
-     padding: 40px;
- }
-
- .loading {
-     font-size: 16px;
-     color: #666666;
- }
-
- /* 空状态样式 */
- .emptyContainer {
-     display: flex;
-     justify-content: center;
-     align-items: center;
-     padding: 60px;
-     background-color: #1e1e1e;
-
-     margin-top: 16px;
-     border: 1px solid #444444;
- }
-
- .emptyText {
-     font-size: 16px;
-     color: #aaaaaa;
- }
-
- /* 选中状态样式 */
- .selectedStorageItem {
-     border: 2px solid #0078d7;
-     background-color: rgba(63, 81, 181, 0.2);
- }
-
- /* 空载具列表样式 */
- .emptyVehicleList {
-     padding: 10px;
-     text-align: center;
-     color: #aaaaaa;
-     margin-left: -50px;
- }
-
-
-
- .storageListContainer {
-     flex: 1;
-     display: flex;
-     flex-direction: column;
-     gap: 20px;
-     overflow-y: auto;
-     padding-right: 10px;
- }
-
- /* 滚动条样式 */
- .storageListContainer::-webkit-scrollbar {
-     width: 8px;
- }
-
- .storageListContainer::-webkit-scrollbar-track {
-     background: #1e1e1e;
-
- }
-
- .storageListContainer::-webkit-scrollbar-thumb {
-     background: #555555;
-
- }
-
- .storageListContainer::-webkit-scrollbar-thumb:hover {
-     background: #777777;
- }
-
- /* 其他容器的滚动条样式 */
- .garageList::-webkit-scrollbar,
- .positionList::-webkit-scrollbar,
- .garageSelection::-webkit-scrollbar,
- .positionSelection::-webkit-scrollbar,
- .editModal::-webkit-scrollbar {
-     width: 8px;
-     height: 8px;
- }
-
- .garageList::-webkit-scrollbar-track,
- .positionList::-webkit-scrollbar-track,
- .garageSelection::-webkit-scrollbar-track,
- .positionSelection::-webkit-scrollbar-track,
- .editModal::-webkit-scrollbar-track {
-     background-color: #1e1e1e;
-
- }
-
- .garageList::-webkit-scrollbar-thumb,
- .positionList::-webkit-scrollbar-thumb,
- .garageSelection::-webkit-scrollbar-thumb,
- .positionSelection::-webkit-scrollbar-thumb,
- .editModal::-webkit-scrollbar-thumb {
-     background-color: #555;
-
- }
-
- .garageList::-webkit-scrollbar-thumb:hover,
- .positionList::-webkit-scrollbar-thumb:hover,
- .garageSelection::-webkit-scrollbar-thumb:hover,
- .positionSelection::-webkit-scrollbar-thumb:hover,
- .editModal::-webkit-scrollbar-thumb:hover {
-     background-color: #777;
- }
-
- .storageItem {
-     background-color: #1e1e1e;
-
-     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-     transition: transform 0.2s ease, box-shadow 0.2s ease;
-     width: 100%;
-     border: 1px solid #444444;
-     min-height: 120px;
-     flex-shrink: 0;
- }
-
- .storageItemHeader {
-     display: flex;
-     align-items: center;
-     padding: 6px;
-     background-color: #2a2a2a;
-     border-bottom: 1px solid #444444;
- }
-
- .checkboxContainer {
-     display: flex;
-     align-items: center;
-     margin-right: 12px;
-     margin-top: 3px;
-     cursor: pointer;
-     user-select: none;
- }
-
- .checkbox {
-     position: absolute;
-     opacity: 0;
-     cursor: pointer;
-     height: 0;
-     width: 0;
- }
-
- .checkboxLabel {
-     position: relative;
-     display: block;
-     width: 20px;
-     height: 20px;
-     background-color: #1e1e1e;
-     border: 2px solid #444444;
-     cursor: pointer;
-     transition: all 0.2s ease;
- }
-
- .checkboxLabel:hover {
-     border-color: #007bff;
-     background-color: rgba(0, 123, 255, 0.1);
- }
-
- .selectedStorageItem .checkboxLabel {
-     border-color: #0078d7;
-     background-color: #0078d7;
- }
-
- .checkboxLabel:after {
-     content: "";
-     position: absolute;
-     display: none;
- }
-
- .selectedStorageItem .checkboxLabel:after {
-     display: block;
- }
-
- .checkboxLabel:after {
-     left: 7px;
-     top: 3px;
-     width: 5px;
-     height: 10px;
-     border: solid white;
-     border-width: 0 2px 2px 0;
-     transform: rotate(45deg);
- }
-
- .storageInfo {
-     display: flex;
-     align-items: center;
-     flex: 1;
-     gap: 10px;
- }
-
-
- .storageDetails {
-     display: flex;
-     align-items: center;
-     gap: 10px;
-     flex: 1;
- }
-
-
- .storageName {
-     font-size: 18px;
-     font-weight: 600;
-     color: #ffffff;
- }
-
-
- .remarksContainer {
-     display: flex;
-     align-items: center;
-     gap: 8px;
-     margin-top: 5px;
- }
-
- .storageRemarks {
-     color: #d1d1d1;
-     font-size: 15px;
-     cursor: default;
-     padding: 2px 8px;
-
-     text-align: right;
- }
-
- .editRemarksContainer {
-     flex: 1;
- }
-
- .editRemarksInput {
-     max-width: 100vh;
-     width: 70vh;
-     padding-right: 10px;
-     border: 1px solid #ddd;
-     font-size: 15px;
-     color: #b9b9b9;
-     background-color: transparent;
-     outline: none;
-     text-align: right;
-     resize: none;
-     overflow: hidden;
-     font-family: inherit;
-     white-space: nowrap;
-     display: inline-block;
- }
-
- .editRemarksInput:focus {
-     border-color: #4a90e2;
-     color: #a3a3a3;
- }
-
- .editRemarksButton {
-     background: none;
-     border: none;
-     cursor: pointer;
-     font-size: 16px;
-     color: #c2c2c2;
-     padding: 2px 6px;
-
-     transition: all 0.2s;
-     white-space: nowrap;
- }
-
-
- /* 编辑备注容器样式 */
- .editRemarksContainer {
-     position: relative;
-     color: #c2c2c2;
- }
-
- /* 编辑备注输入框样式 - 优化为更像普通div */
- .editRemarksInput {
-     /* 基础样式 - 完全像div */
-     font-size: 15px;
-     color: #d1d1d1;
-     white-space: nowrap;
-     overflow: hidden;
-     text-overflow: ellipsis;
-
-     /* 关键：移除边框和背景，使其看起来像普通文本 */
-     border: 1px solid transparent;
-     background-color: transparent;
-     padding: 2px 4px;
-     margin: 0;
-     outline: none;
-
-     /* 保持输入框功能 */
-     cursor: text;
-     resize: none;
-     transition: all 0.2s ease;
-
-     /* 占位符样式 */
-     display: inline-block;
-
- }
-
- /* 占位符样式 */
- .editRemarksInput::placeholder {
-     color: #bebebe;
- }
-
- /* 鼠标悬停时的微妙效果 */
- .editRemarksInput:hover {
-     background-color: #2a2a2a;
-     border-color: #444;
-
- }
-
- /* 聚焦时的编辑状态 */
- .editRemarksInput:focus {
-     background-color: #1e1e1e;
-     border-color: #007bff;
-
-     outline: none;
- }
-
- /* 未保存状态的输入框样式 */
- .editRemarksInput.unsavedInput {
-     border-color: #dc8635 !important;
-     background-color: #3c2c1d;
- }
-
- /* 载具编辑input的特殊样式 */
- .vehicleInfo .editRemarksInput {
-     max-width: 120px;
-     /* 载具input的宽度更窄 */
-     font-size: 12px;
- }
-
- /* 确保输入内容与普通文本对齐 */
- .editRemarksInput {
-     line-height: normal;
-     vertical-align: baseline;
- }
-
-
- .storageNumContainer {
-     display: flex;
-     flex-direction: row;
-     align-items: center;
-     justify-content: space-between;
-     margin-top: 2px;
- }
-
- .storageNum {
-     font-size: 24px;
-     font-weight: bold;
-     color: var(--color-text-primary);
-     margin-bottom: 2px;
- }
-
- .editIconContainer {
-     cursor: pointer;
-     padding: 4px;
-
-     transition: background-color 0.2s ease;
- }
-
- .editIconContainer:hover {
-     background-color: var(--color-background-hover);
- }
-
- .editIcon {
-     width: 18px;
-     height: 18px;
-     color: var(--color-text-secondary);
- }
-
- .editIconContainer {
-     display: flex;
-     align-items: center;
-     cursor: pointer;
-     padding: 4px;
-
-     transition: background-color 0.2s ease;
- }
-
- .editIconContainer:hover {
-     background-color: #e9ecef;
- }
-
- .editIcon {
-     width: 16px;
-     height: 16px;
-     color: #6c757d;
-     transition: color 0.2s ease;
- }
-
- .editIconContainer:hover .editIcon {
-     color: #007bff;
- }
-
- /* 编辑模态框样式 */
- .editModalOverlay {
-     position: fixed;
-     top: 0;
-     left: 0;
-     right: 0;
-     bottom: 0;
-     background-color: rgba(0, 0, 0, 0.7);
-     display: flex;
-     justify-content: center;
-     align-items: center;
-     z-index: 1000;
- }
-
- .editModal {
-     background-color: #1e1e1e;
-     border: 1px solid #444;
-
-     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
-     width: 600px;
-     max-width: 90%;
-     max-height: 90vh;
-     overflow-y: auto;
-     animation: slideIn 0.3s ease-out;
- }
-
- .editModalHeader {
-     background-color: #2a2a2a;
-     padding: 16px;
-     border-bottom: 1px solid #444;
-     display: flex;
-     justify-content: space-between;
-     align-items: center;
- }
-
- .editModalHeader h3 {
-     margin: 0;
-     font-size: 18px;
-     font-weight: 600;
-     color: #fff;
- }
-
- .closeButton {
-     background: none;
-     border: none;
-     font-size: 24px;
-     cursor: pointer;
-     color: #6c757d;
-     padding: 0;
-     width: 24px;
-     display: flex;
-     align-items: center;
-     justify-content: center;
- }
-
- .closeButton:hover {
-     background-color: #444;
-     color: #fff;
- }
-
- .editModalContent {
-     padding: 20px;
- }
-
- .formGroup {
-     margin-bottom: 16px;
- }
-
- .formLabel {
-     display: block;
-     margin-bottom: 8px;
-     font-weight: 500;
-     color: #495057;
-     font-size: 14px;
- }
-
- .formInput,
- .formTextarea {
-     width: 100%;
-     padding: 10px 12px;
-     border: 1px solid #ced4da;
-
-     font-size: 14px;
-     transition: border-color 0.2s ease, box-shadow 0.2s ease;
-     box-sizing: border-box;
-     resize: vertical;
- }
-
- .formInput:focus,
- .formTextarea:focus {
-     outline: none;
-     border-color: #007bff;
-     box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
- }
-
- .vehicleListEdit {
-     width: 100%;
-     padding: 12px;
-     background-color: var(--color-background-light);
-
-     margin-top: 8px;
-     border: 1px solid var(--color-border);
- }
-
- .formGroup {
-     display: flex;
-     flex-direction: column;
-     gap: 4px;
-     margin-bottom: 16px;
- }
-
- .formLabel {
-     font-size: 14px;
-     color: var(--color-text-secondary);
-     font-weight: 500;
- }
-
- .formInput,
- .formTextarea {
-     padding: 8px 12px;
-     border: 1px solid var(--color-border);
-
-     font-size: 14px;
-     background-color: var(--color-background);
-     color: var(--color-text-primary);
-     width: 100%;
- }
-
- .formTextarea {
-     resize: vertical;
-     min-height: 40px;
- }
-
- .formInput:focus,
- .formTextarea:focus {
-     outline: none;
-     border-color: var(--color-primary);
- }
-
- .vehicleListEdit h4 {
-     margin: 16px 0 12px 0;
-     color: var(--color-text-primary);
-     font-size: 16px;
-     border-bottom: 1px solid var(--color-border);
-     padding-bottom: 8px;
- }
-
- .vehicleItemEdit {
-     display: flex;
-     gap: 12px;
-     padding: 12px;
-     border: 1px solid var(--color-border);
-
-     background-color: var(--color-background);
-     margin-bottom: 12px;
-     align-items: flex-start;
- }
-
- .dragHandle {
-     cursor: grab;
-     color: var(--color-text-secondary);
-     padding: 4px;
-     display: flex;
-     align-items: center;
-     justify-content: center;
- }
-
- .dragHandle:active {
-     cursor: grabbing;
- }
-
- .vehicleFormInputs {
-     flex: 1;
-     display: flex;
-     flex-direction: column;
-     gap: 8px;
- }
-
- .vehicleFormInput {
-     padding: 6px 8px;
-     border: 1px solid var(--color-border);
-
-     font-size: 14px;
-     background-color: var(--color-background-light);
-     color: var(--color-text-primary);
-     width: 100%;
- }
-
- .vehicleFormInput.remarks {
-     resize: vertical;
-     min-height: 40px;
- }
-
- .vehicleFormInput:focus {
-     outline: none;
-     border-color: var(--color-primary);
- }
-
- .vehicleEditActions {
-     display: flex;
-     flex-direction: column;
-     gap: 8px;
- }
-
- .moveUpButton,
- .moveDownButton {
-     background-color: var(--color-background-light);
-     border: 1px solid var(--color-border);
-     color: var(--color-text-secondary);
-     padding: 6px;
-
-     cursor: pointer;
-     transition: all 0.2s ease;
-     width: 32px;
-     height: 32px;
-     display: flex;
-     align-items: center;
-     justify-content: center;
- }
-
- .moveUpButton:hover:not(:disabled),
- .moveDownButton:hover:not(:disabled) {
-     background-color: var(--color-primary);
-     color: white;
-     border-color: var(--color-primary);
- }
-
- .moveUpButton:disabled,
- .moveDownButton:disabled {
-     opacity: 0.4;
-     cursor: not-allowed;
- }
-
- .emptyVehiclesText {
-     color: var(--color-text-secondary);
-     font-size: 14px;
-     text-align: center;
-     padding: 16px;
-     border: 1px dashed var(--color-border);
-
-     margin: 16px 0;
- }
-
- .editModalActions {
-     display: flex;
-     justify-content: flex-end;
-     gap: 8px;
-     margin-top: 20px;
-     padding-top: 16px;
-     border-top: 1px solid var(--color-border);
- }
-
- .cancelButton,
- .saveButton {
-     padding: 8px 16px;
-
-     font-size: 14px;
-     cursor: pointer;
-     transition: all 0.2s ease;
-     border: 1px solid transparent;
- }
-
- .cancelButton {
-     background-color: var(--color-background-light);
-     color: var(--color-text-secondary);
-     border-color: var(--color-border);
- }
-
- .cancelButton:hover {
-     background-color: var(--color-background-hover);
- }
-
- .saveButton {
-     background-color: var(--color-primary);
-     color: white;
- }
-
- .saveButton:hover {
-     background-color: var(--color-primary-dark);
- }
-
- .vehicleList {
-     padding: 8px;
-     display: grid;
-     grid-template-columns: repeat(10, 1fr);
-     gap: 5px;
-     overflow-x: auto;
-
- }
-
- .vehicleItem {
-     background-color: #1e1e1e;
-     border: 1px solid #333;
-     min-height: 100px;
-     padding: 5px;
-     min-width: 0;
-     display: flex;
-     flex-direction: column;
-     position: relative;
-     /* 允许内容收缩 */
- }
-
- /* 载具特性样式 */
- .vehicleFeature {
-     display: flex;
-     flex-wrap: wrap;
-     gap: 2px;
-     margin-bottom: 2px;
-     width: 100%;
- }
-
- .featureItem {
-     font-size: 9px;
-     padding: 1px 3px;
-     background-color: #333;
-     color: #fff;
-     font-weight: bold;
-     text-shadow: 1px 1px 2px rgba(0, 0, 0, 1);
-     box-sizing: border-box;
-     flex: 0 0 auto;
-     width: fit-content;
- }
-
- /* 载具按钮容器样式 */
- .vehicleButtons {
-     position: absolute;
-     top: 5px;
-     right: 5px;
-     display: flex;
-     flex-direction: column;
-     align-items: center;
-     gap: 5px;
-     z-index: 10;
- }
-
- /* 载具移动功能样式 */
- .moveVehicleButton,
- .deleteVehicleButton {
-     background-color: rgba(30, 30, 30, 0.7);
-     border: none;
-     border-radius: 50%;
-     width: 18px;
-     height: 18px;
-     font-size: 14px;
-     cursor: pointer;
-     display: flex;
-     align-items: center;
-     justify-content: center;
-     transition: background-color 0.2s;
-     color: #fff;
- }
-
- .moveVehicleButton img,
- .deleteVehicleButton img {
-     width: 18px;
-     height: 18px;
-     object-fit: contain;
- }
-
- .moveVehicleButton:hover,
- .deleteVehicleButton:hover {
-     background-color: rgba(50, 50, 50, 0.9);
- }
-
- /* 车库选择对话框样式 */
- .garageSelection {
-     display: flex;
-     flex-wrap: wrap;
-     gap: 10px;
-     max-height: 300px;
-     overflow-y: auto;
-     margin-top: 15px;
- }
-
- .garageOption {
-     background-color: #1e1e1e;
-     border: 1px solid #444;
-
-     padding: 12px;
-     cursor: pointer;
-     transition: all 0.2s;
-     min-width: 150px;
- }
-
- .garageOption:hover {
-     background-color: #2a2a2a;
-     border-color: #666;
- }
-
- .garageOption.disabledOption {
-     opacity: 0.5;
-     cursor: not-allowed;
- }
-
- .garageOptionName {
-     font-weight: bold;
-     margin-bottom: 5px;
-     color: #fff;
- }
-
- .garageOptionCapacity {
-     font-size: 12px;
-     color: #aaa;
- }
-
- /* 位置选择对话框样式 */
- .positionSelection {
-     display: flex;
-     flex-wrap: wrap;
-     gap: 7px;
-     overflow-y: auto;
-     margin-top: 15px;
- }
-
- .positionOption {
-     border: 1px solid #444444;
-     cursor: pointer;
-     transition: all 0.2s;
-     text-align: center;
-     flex: 0 0 calc(10% - 9px);
- }
-
- .emptyPosition {
-     background-color: #3f3f3f;
-     border-color: #b6b6b69d;
-     min-height: 55px;
- }
-
-
- /* 当前正在移动的载具位置样式 */
- .currentVehiclePosition {
-     cursor: not-allowed;
-     background-color: #696969;
-     border-color: #646464;
-     color: #fff;
- }
-
- .currentVehicleMarker {
-     margin-top: 8px;
-     font-size: 10px;
-     color: #cdcdcd;
-     background-color: rgba(30, 30, 30, 0.7);
-     padding: 2px 6px;
-
- }
-
- .positionNumber {
-     font-weight: bold;
-     margin-bottom: 5px;
-     color: #c0c0c0;
-     font-size: 12px;
- }
-
- .positionStatus {
-     font-size: 14px;
-     color: #ffffff;
- }
-
- .positionVehicle {
-     font-size: 12px;
-     color: #e6e6e6;
-     word-break: break-word;
-     font-weight: bold;
- }
-
- /* 对话框步骤导航样式 */
- .dialogStepNavigation {
-     display: flex;
-     justify-content: space-between;
-     align-items: center;
-     margin-bottom: 15px;
-     padding-bottom: 10px;
-     border-bottom: 1px solid #444;
- }
-
- .backButton {
-     background-color: #444;
-     color: white;
-     border: none;
-
-     padding: 6px 12px;
-     cursor: pointer;
-     font-size: 12px;
-     transition: background-color 0.2s;
- }
-
- .backButton:hover {
-     background-color: #555;
- }
-
- .targetGarageInfo {
-     font-weight: bold;
-     color: #fff;
- }
-
- /* 交换信息样式 */
- .swapInfo {
-     display: flex;
-     align-items: center;
-     justify-content: space-around;
-     margin-top: 15px;
-     padding: 15px;
-     background-color: #1e1e1e;
-
-     border: 1px solid #444;
- }
-
- .swapVehicle {
-     text-align: center;
-     flex: 1;
-     color: #fff;
- }
-
- .swapVehicle h5 {
-     margin-top: 0;
-     margin-bottom: 5px;
-     font-size: 14px;
-     color: #fff;
- }
-
- .swapVehicle p {
-     margin: 5px 0;
-     color: #fff;
- }
-
- .swapVehicleLocation {
-     font-size: 12px;
-     color: #aaa;
- }
-
- .swapArrow {
-     font-size: 24px;
-     margin: 10px 10px 10px 10px;
-     color: #fff;
- }
-
- /* 关闭按钮样式 */
- .closeButton {
-     position: absolute;
-     top: 10px;
-     right: 10px;
-     background: none;
-     border: none;
-     font-size: 20px;
-     cursor: pointer;
-     color: #aaa;
-     padding: 0;
-     width: 24px;
-     height: 24px;
-     display: flex;
-     align-items: center;
-     justify-content: center;
- }
-
- .closeButton:hover {
-     color: #fff;
- }
-
- /* 特定特性的颜色样式 */
- .bennyFeature {
-     background-color: #8C2226;
-     /* 红色 */
-     color: #fff;
-     font-weight: 600;
- }
-
- .imaniFeature {
-     background-color: #9932cc;
-     /* 紫色 */
-     color: white;
-     font-weight: 600;
- }
-
- .haoFeature {
-     background-color: #E06A30;
-     /* 橙色 */
-     color: white;
-     font-weight: 600;
- }
-
- .policeFeature {
-     background-color: #050877;
-     /* 蓝色 */
-     color: white;
-     font-weight: 600;
- }
-
- .vehicleInfo {
-     display: flex;
-     flex-direction: column;
-     width: 100%;
- }
-
- /* 确保载具信息在小空间内正确显示 */
- .vehicleName {
-     font-size: 12px;
-     font-weight: 600;
-     color: #fff;
-     white-space: nowrap;
-     overflow: hidden;
-     text-overflow: ellipsis;
- }
-
- .vehicleNameEn {
-     font-size: 11px;
-     color: #aaa;
-     font-style: italic;
-     white-space: nowrap;
-     overflow: hidden;
-     text-overflow: ellipsis;
- }
-
- /* 载具备注样式已移至remarksContainer和storageRemarks类中 */
-
-
-
- .vehicleName {
-     font-size: 13px;
-     font-weight: 600;
-     color: #fff;
-     margin-bottom: 4px;
- }
-
- /* 空载具文本样式 */
- .emptyVehicleText {
-     font-size: 18px;
-     font-weight: 500;
-     color: #aaa;
-     display: flex;
-     justify-content: center;
-     align-items: center;
-     height: 100%;
-     text-align: center;
-     background-color: #1e1e1e;
- }
-
- .vehicleNameEn {
-     font-size: 14px;
-     color: #aaa;
-     font-style: italic;
-     margin-bottom: 8px;
- }
-
- /* 新增的载具信息样式 */
- .vehicleBrand {
-     font-size: 12px;
-     color: #aaa;
-     margin-bottom: 2px;
- }
-
- .vehicleType {
-     font-size: 12px;
-     color: #888;
-     margin-bottom: 4px;
- }
-
- .vehiclePrice {
-     font-size: 12px;
-     color: #4CAF50;
-     margin-bottom: 4px;
-     font-weight: 500;
- }
-
- .vehicleRemarks {
-     font-size: 13px;
-     color: #fff;
-     background-color: #3c2c1d;
-     padding: 6px 8px;
-
-     border: 1px solid #6a4a2d;
-     min-height: 24px;
-     display: flex;
-     align-items: center;
- }
-
- /* 响应式设计 */
- @media (max-width: 768px) {
-     .vehicleItem {
-         width: calc(50% - 16px);
-     }
-
-     .mainContainer {
-         padding: 10px;
-     }
- }
-
- @media (max-width: 480px) {
-     .vehicleItem {
-         width: 100%;
-     }
-
-     .controlContainer {
-         flex-direction: column;
-     }
-
-     .storageInfo {
-         flex-direction: column;
-         align-items: flex-start;
-         gap: 8px;
-     }
- }
+* {
+  overflow-x: hidden;
+  color: #ffffff;
+}
+
+.mainContainer {
+  height: 94vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  box-sizing: border-box;
+  gap: 20px;
+  overflow: hidden;
+  background-color: #121212;
+}
+
+/* 通知组件样式 */
+.notification {
+  position: fixed;
+  top: 80px;
+  right: -300px;
+  /* 初始位置在屏幕右侧外 */
+  background-color: #0078d7;
+  color: white;
+  padding: 12px 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  font-size: 16px;
+  font-weight: 500;
+  z-index: 1000;
+  transition: right 0.5s ease-in-out;
+}
+
+.notificationVisible {
+  right: 20px;
+  /* 滑入到屏幕右侧 */
+}
+
+/* 控制容器样式 */
+.controlContainer {
+  display: flex;
+  gap: 10px;
+  padding: 10px;
+  background-color: #1e1e1e;
+  border: 1px solid #444444;
+  position: sticky;
+  top: 0;
+  width: 97.8%;
+  z-index: 100;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* 控制项样式 */
+.controlItem {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 5px;
+  margin-right: 30px;
+}
+
+/* 按钮控制项特殊样式 */
+.controlItem:last-child {
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+}
+
+/* 控制标签样式 */
+.controlLabel {
+  font-size: 11px;
+  font-weight: 500;
+  color: #ffffff;
+  padding: 0 2px;
+  user-select: none;
+}
+
+/* 控制输入框样式 */
+.controlInput input {
+  padding: 10px 12px;
+  border: 1px solid #444444;
+  font-size: 16px;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+  box-sizing: border-box;
+  background-color: #272727;
+  color: #ffffff;
+  width: 200px;
+}
+
+/* 车库名称输入框样式 - 稍微增大宽度 */
+.controlInput input.garageNameInput {
+  width: 220px;
+}
+
+/* 车库容量输入框样式 - 缩小宽度 */
+.controlInput input.garageCapacityInput {
+  width: 140px;
+}
+
+/* 车库备注输入框样式 - 稍微增大宽度 */
+.controlInput input.garageRemarksInput {
+  width: 220px;
+}
+
+.controlInput input:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+}
+
+.controlInput input::placeholder {
+  color: #aaaaaa;
+  border-color: #007bff;
+}
+
+/* 控制按钮样式 */
+.controlButton button {
+  padding: 8px 16px;
+  background-color: #0078d7;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-weight: 500;
+  white-space: nowrap;
+  transition: background-color 0.2s ease;
+}
+
+.controlButton button:hover {
+  background-color: #0076d7c5;
+}
+
+.controlButton button:disabled {
+  background-color: #555555;
+  cursor: not-allowed;
+}
+
+.controlButton .deleteButton {
+  background-color: #dc3545;
+}
+
+.controlButton .deleteButton:hover {
+  background-color: #c82333;
+}
+
+.controlButton .deleteButton:active {
+  background-color: #a71e2a;
+}
+
+/* 确认删除对话框样式 */
+.confirmDialogOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.confirmDialog {
+  background-color: #1e1e1e;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+  width: 40vw;
+  overflow: hidden;
+  animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.confirmDialogHeader {
+  padding: 16px 20px;
+  border-bottom: 1px solid #444444;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.confirmDialogHeader h3 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.confirmDialogContent {
+  padding: 20px;
+}
+
+.confirmDialogContent p {
+  margin: 0;
+  font-size: 18px;
+  color: #949494;
+  line-height: 1.5;
+}
+
+.confirmDialogActions {
+  padding: 16px 20px;
+  border-top: 1px solid #444444;
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+.confirmDialogCancel {
+  background-color: #7a7a7a;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  cursor: pointer;
+  font-size: 12px;
+  transition: background-color 0.2s ease;
+}
+
+.confirmDialogCancel:hover {
+  background-color: #a1a1a1;
+}
+
+.confirmDialogBack {
+  background-color: #7a7a7a;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  cursor: pointer;
+  font-size: 12px;
+  transition: background-color 0.2s ease;
+  margin-bottom: 5px;
+}
+
+.confirmDialogBack:hover {
+  background-color: #a1a1a1;
+}
+
+/* 移动载具对话框样式 */
+.moveDialogOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.moveDialog {
+  background-color: #1e1e1e;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+  width: 95vw;
+  overflow: hidden;
+  animation: slideIn 0.3s ease-out;
+}
+
+.moveDialogHeader {
+  padding: 16px 20px;
+  border-bottom: 1px solid #444444;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.moveDialogHeader h3 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.moveDialogContent {
+  padding: 20px;
+}
+
+.moveDialogContent p {
+  margin: 0;
+  font-size: 14px;
+  color: #ffffff;
+  line-height: 1.5;
+}
+
+.moveDialogActions {
+  padding: 16px 20px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+/* 关闭按钮样式 */
+.closeButton {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: #6c757d;
+  padding: 0;
+  width: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.closeButton:hover {
+  color: #ffffff;
+}
+
+/* 车库列表样式 */
+.garageList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  max-height: 500px;
+  overflow-y: auto;
+  margin-top: 15px;
+}
+
+.garageItem {
+  background-color: #2a2a2a;
+  border: 1px solid #444444;
+  padding: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+  min-width: 150px;
+}
+
+.garageItem:hover {
+  background-color: #3a3a3a;
+  border-color: #666666;
+}
+
+.garageItemSelected {
+  background-color: #3a3a3a;
+  border: 2px solid #0078d7;
+}
+
+.garageName {
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: #ffffff;
+}
+
+.garageCapacity {
+  font-size: 12px;
+  color: #aaaaaa;
+}
+
+/* 位置列表样式 */
+.positionList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  max-height: 500px;
+  overflow-y: auto;
+  margin-top: 15px;
+}
+
+.positionItem {
+  border: 1px solid #444444;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: center;
+  flex: 0 0 calc(10% - 9px);
+}
+
+.positionItemSelected {
+  background-color: #3a3a3a;
+  border: 2px solid #0078d7;
+}
+
+/* 正在移动的载具车位 */
+.currentVehiclePosition {
+  cursor: not-allowed;
+  background-color: #444444;
+  border-color: #004499;
+}
+
+/* 空车位 */
+.emptyPosition {
+  background-color: #3f3f3f;
+  border-color: #b6b6b69d;
+}
+
+/* 非空车位 */
+.occupiedPosition {
+  background-color: #696969;
+  border-color: #646464;
+  min-height: 70px;
+}
+
+.positionIndex {
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: #ffffff;
+}
+
+.positionVehicle {
+  font-size: 12px;
+  color: #cccccc;
+}
+
+.emptyPosition {
+  font-size: 12px;
+  color: #666666;
+}
+
+.movingVehicleLabel {
+  background-color: #9e9e9e;
+  color: #333333;
+  font-size: 11px;
+  border: 1px solid #3f3f3f;
+  text-align: center;
+  width: 99%;
+  margin-top: 13px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 1);
+}
+
+/* 交换载具对话框样式 */
+.swapDialogOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.swapDialog {
+  background-color: #1e1e1e;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+  width: 550px;
+  max-width: 90%;
+  overflow: hidden;
+  animation: slideIn 0.3s ease-out;
+}
+
+.swapDialogHeader {
+  background-color: #2a2a2a;
+  padding: 16px;
+  border-bottom: 1px solid #444444;
+}
+
+.swapDialogHeader h3 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.swapDialogContent {
+  padding: 20px;
+}
+
+.swapDialogContent p {
+  margin: 0;
+  font-size: 14px;
+  color: #ffffff;
+  line-height: 1.5;
+}
+
+.swapDialogActions {
+  padding: 16px;
+  background-color: #2a2a2a;
+  border-top: 1px solid #444444;
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+.confirmDialogCancel:active {
+  background-color: #545b62;
+}
+
+.confirmDialogConfirm {
+  padding: 8px 16px;
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.2s ease;
+}
+
+.confirmDialogConfirm:hover {
+  background-color: #c82333;
+}
+
+.confirmDialogConfirm:active {
+  background-color: #a71e2a;
+}
+
+/* 错误消息样式 */
+.errorMessage {
+  padding: 12px;
+  background-color: #442222;
+  color: #ff4444;
+
+  margin-bottom: 16px;
+  font-size: 14px;
+  border-left: 4px solid #ff4444;
+}
+
+/* 加载状态样式 */
+.loadingContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+}
+
+.loading {
+  font-size: 16px;
+  color: #666666;
+}
+
+/* 空状态样式 */
+.emptyContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 60px;
+  background-color: #1e1e1e;
+
+  margin-top: 16px;
+  border: 1px solid #444444;
+}
+
+.emptyText {
+  font-size: 16px;
+  color: #aaaaaa;
+}
+
+/* 选中状态样式 */
+.selectedStorageItem {
+  border: 2px solid #0078d7;
+  background-color: rgba(63, 81, 181, 0.2);
+}
+
+/* 空载具列表样式 */
+.emptyVehicleList {
+  padding: 10px;
+  text-align: center;
+  color: #aaaaaa;
+  margin-left: -50px;
+}
+
+.storageListContainer {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  overflow-y: auto;
+  padding-right: 10px;
+}
+
+/* 滚动条样式 */
+.storageListContainer::-webkit-scrollbar {
+  width: 8px;
+}
+
+.storageListContainer::-webkit-scrollbar-track {
+  background: #1e1e1e;
+}
+
+.storageListContainer::-webkit-scrollbar-thumb {
+  background: #555555;
+}
+
+.storageListContainer::-webkit-scrollbar-thumb:hover {
+  background: #777777;
+}
+
+/* 其他容器的滚动条样式 */
+.garageList::-webkit-scrollbar,
+.positionList::-webkit-scrollbar,
+.garageSelection::-webkit-scrollbar,
+.positionSelection::-webkit-scrollbar,
+.editModal::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.garageList::-webkit-scrollbar-track,
+.positionList::-webkit-scrollbar-track,
+.garageSelection::-webkit-scrollbar-track,
+.positionSelection::-webkit-scrollbar-track,
+.editModal::-webkit-scrollbar-track {
+  background-color: #1e1e1e;
+}
+
+.garageList::-webkit-scrollbar-thumb,
+.positionList::-webkit-scrollbar-thumb,
+.garageSelection::-webkit-scrollbar-thumb,
+.positionSelection::-webkit-scrollbar-thumb,
+.editModal::-webkit-scrollbar-thumb {
+  background-color: #555;
+}
+
+.garageList::-webkit-scrollbar-thumb:hover,
+.positionList::-webkit-scrollbar-thumb:hover,
+.garageSelection::-webkit-scrollbar-thumb:hover,
+.positionSelection::-webkit-scrollbar-thumb:hover,
+.editModal::-webkit-scrollbar-thumb:hover {
+  background-color: #777;
+}
+
+.storageItem {
+  background-color: #1e1e1e;
+
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+  width: 100%;
+  border: 1px solid #444444;
+  min-height: 120px;
+  flex-shrink: 0;
+}
+
+.storageItemHeader {
+  display: flex;
+  align-items: center;
+  padding: 6px;
+  background-color: #2a2a2a;
+  border-bottom: 1px solid #444444;
+}
+
+.checkboxContainer {
+  display: flex;
+  align-items: center;
+  margin-right: 12px;
+  margin-top: 3px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.checkbox {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.checkboxLabel {
+  position: relative;
+  display: block;
+  width: 20px;
+  height: 20px;
+  background-color: #1e1e1e;
+  border: 2px solid #444444;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.checkboxLabel:hover {
+  border-color: #007bff;
+  background-color: rgba(0, 123, 255, 0.1);
+}
+
+.selectedStorageItem .checkboxLabel {
+  border-color: #0078d7;
+  background-color: #0078d7;
+}
+
+.checkboxLabel:after {
+  content: '';
+  position: absolute;
+  display: none;
+}
+
+.selectedStorageItem .checkboxLabel:after {
+  display: block;
+}
+
+.checkboxLabel:after {
+  left: 7px;
+  top: 3px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+.storageInfo {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  gap: 10px;
+}
+
+.storageDetails {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+}
+
+.storageName {
+  font-size: 18px;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.remarksContainer {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 5px;
+}
+
+.storageRemarks {
+  color: #d1d1d1;
+  font-size: 15px;
+  cursor: default;
+  padding: 2px 8px;
+
+  text-align: right;
+}
+
+.editRemarksContainer {
+  flex: 1;
+}
+
+.editRemarksInput {
+  max-width: 100vh;
+  width: 70vh;
+  padding-right: 10px;
+  border: 1px solid #ddd;
+  font-size: 15px;
+  color: #b9b9b9;
+  background-color: transparent;
+  outline: none;
+  text-align: right;
+  resize: none;
+  overflow: hidden;
+  font-family: inherit;
+  white-space: nowrap;
+  display: inline-block;
+}
+
+.editRemarksInput:focus {
+  border-color: #4a90e2;
+  color: #a3a3a3;
+}
+
+.editRemarksButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  color: #c2c2c2;
+  padding: 2px 6px;
+
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+/* 编辑备注容器样式 */
+.editRemarksContainer {
+  position: relative;
+  color: #c2c2c2;
+}
+
+/* 编辑备注输入框样式 - 优化为更像普通div */
+.editRemarksInput {
+  /* 基础样式 - 完全像div */
+  font-size: 15px;
+  color: #d1d1d1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  /* 关键：移除边框和背景，使其看起来像普通文本 */
+  border: 1px solid transparent;
+  background-color: transparent;
+  padding: 2px 4px;
+  margin: 0;
+  outline: none;
+
+  /* 保持输入框功能 */
+  cursor: text;
+  resize: none;
+  transition: all 0.2s ease;
+
+  /* 占位符样式 */
+  display: inline-block;
+}
+
+/* 占位符样式 */
+.editRemarksInput::placeholder {
+  color: #bebebe;
+}
+
+/* 鼠标悬停时的微妙效果 */
+.editRemarksInput:hover {
+  background-color: #2a2a2a;
+  border-color: #444;
+}
+
+/* 聚焦时的编辑状态 */
+.editRemarksInput:focus {
+  background-color: #1e1e1e;
+  border-color: #007bff;
+
+  outline: none;
+}
+
+/* 未保存状态的输入框样式 */
+.editRemarksInput.unsavedInput {
+  border-color: #dc8635 !important;
+  background-color: #3c2c1d;
+}
+
+/* 载具编辑input的特殊样式 */
+.vehicleInfo .editRemarksInput {
+  max-width: 120px;
+  /* 载具input的宽度更窄 */
+  font-size: 12px;
+}
+
+/* 确保输入内容与普通文本对齐 */
+.editRemarksInput {
+  line-height: normal;
+  vertical-align: baseline;
+}
+
+.storageNumContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 2px;
+}
+
+.storageNum {
+  font-size: 24px;
+  font-weight: bold;
+  color: var(--color-text-primary);
+  margin-bottom: 2px;
+}
+
+.editIconContainer {
+  cursor: pointer;
+  padding: 4px;
+
+  transition: background-color 0.2s ease;
+}
+
+.editIconContainer:hover {
+  background-color: var(--color-background-hover);
+}
+
+.editIcon {
+  width: 18px;
+  height: 18px;
+  color: var(--color-text-secondary);
+}
+
+.editIconContainer {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  padding: 4px;
+
+  transition: background-color 0.2s ease;
+}
+
+.editIconContainer:hover {
+  background-color: #e9ecef;
+}
+
+.editIcon {
+  width: 16px;
+  height: 16px;
+  color: #6c757d;
+  transition: color 0.2s ease;
+}
+
+.editIconContainer:hover .editIcon {
+  color: #007bff;
+}
+
+/* 编辑模态框样式 */
+.editModalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.editModal {
+  background-color: #1e1e1e;
+  border: 1px solid #444;
+
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+  width: 600px;
+  max-width: 90%;
+  max-height: 90vh;
+  overflow-y: auto;
+  animation: slideIn 0.3s ease-out;
+}
+
+.editModalHeader {
+  background-color: #2a2a2a;
+  padding: 16px;
+  border-bottom: 1px solid #444;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.editModalHeader h3 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: #fff;
+}
+
+.closeButton {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: #6c757d;
+  padding: 0;
+  width: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.closeButton:hover {
+  background-color: #444;
+  color: #fff;
+}
+
+.editModalContent {
+  padding: 20px;
+}
+
+.formGroup {
+  margin-bottom: 16px;
+}
+
+.formLabel {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+  color: #495057;
+  font-size: 14px;
+}
+
+.formInput,
+.formTextarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #ced4da;
+
+  font-size: 14px;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+  box-sizing: border-box;
+  resize: vertical;
+}
+
+.formInput:focus,
+.formTextarea:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+}
+
+.vehicleListEdit {
+  width: 100%;
+  padding: 12px;
+  background-color: var(--color-background-light);
+
+  margin-top: 8px;
+  border: 1px solid var(--color-border);
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 16px;
+}
+
+.formLabel {
+  font-size: 14px;
+  color: var(--color-text-secondary);
+  font-weight: 500;
+}
+
+.formInput,
+.formTextarea {
+  padding: 8px 12px;
+  border: 1px solid var(--color-border);
+
+  font-size: 14px;
+  background-color: var(--color-background);
+  color: var(--color-text-primary);
+  width: 100%;
+}
+
+.formTextarea {
+  resize: vertical;
+  min-height: 40px;
+}
+
+.formInput:focus,
+.formTextarea:focus {
+  outline: none;
+  border-color: var(--color-primary);
+}
+
+.vehicleListEdit h4 {
+  margin: 16px 0 12px 0;
+  color: var(--color-text-primary);
+  font-size: 16px;
+  border-bottom: 1px solid var(--color-border);
+  padding-bottom: 8px;
+}
+
+.vehicleItemEdit {
+  display: flex;
+  gap: 12px;
+  padding: 12px;
+  border: 1px solid var(--color-border);
+
+  background-color: var(--color-background);
+  margin-bottom: 12px;
+  align-items: flex-start;
+}
+
+.dragHandle {
+  cursor: grab;
+  color: var(--color-text-secondary);
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dragHandle:active {
+  cursor: grabbing;
+}
+
+.vehicleFormInputs {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.vehicleFormInput {
+  padding: 6px 8px;
+  border: 1px solid var(--color-border);
+
+  font-size: 14px;
+  background-color: var(--color-background-light);
+  color: var(--color-text-primary);
+  width: 100%;
+}
+
+.vehicleFormInput.remarks {
+  resize: vertical;
+  min-height: 40px;
+}
+
+.vehicleFormInput:focus {
+  outline: none;
+  border-color: var(--color-primary);
+}
+
+.vehicleEditActions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.moveUpButton,
+.moveDownButton {
+  background-color: var(--color-background-light);
+  border: 1px solid var(--color-border);
+  color: var(--color-text-secondary);
+  padding: 6px;
+
+  cursor: pointer;
+  transition: all 0.2s ease;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.moveUpButton:hover:not(:disabled),
+.moveDownButton:hover:not(:disabled) {
+  background-color: var(--color-primary);
+  color: white;
+  border-color: var(--color-primary);
+}
+
+.moveUpButton:disabled,
+.moveDownButton:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.emptyVehiclesText {
+  color: var(--color-text-secondary);
+  font-size: 14px;
+  text-align: center;
+  padding: 16px;
+  border: 1px dashed var(--color-border);
+
+  margin: 16px 0;
+}
+
+.editModalActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid var(--color-border);
+}
+
+.cancelButton,
+.saveButton {
+  padding: 8px 16px;
+
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: 1px solid transparent;
+}
+
+.cancelButton {
+  background-color: var(--color-background-light);
+  color: var(--color-text-secondary);
+  border-color: var(--color-border);
+}
+
+.cancelButton:hover {
+  background-color: var(--color-background-hover);
+}
+
+.saveButton {
+  background-color: var(--color-primary);
+  color: white;
+}
+
+.saveButton:hover {
+  background-color: var(--color-primary-dark);
+}
+
+.vehicleList {
+  padding: 8px;
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  gap: 5px;
+  overflow-x: auto;
+}
+
+.vehicleItem {
+  background-color: #1e1e1e;
+  border: 1px solid #333;
+  min-height: 100px;
+  padding: 5px;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  /* 允许内容收缩 */
+}
+
+/* 载具特性样式 */
+.vehicleFeature {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px;
+  margin-bottom: 2px;
+  width: 100%;
+}
+
+.featureItem {
+  font-size: 9px;
+  padding: 1px 3px;
+  background-color: #333;
+  color: #fff;
+  font-weight: bold;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 1);
+  box-sizing: border-box;
+  flex: 0 0 auto;
+  width: fit-content;
+}
+
+/* 载具按钮容器样式 */
+.vehicleButtons {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  z-index: 10;
+}
+
+/* 载具移动功能样式 */
+.moveVehicleButton,
+.deleteVehicleButton {
+  background-color: rgba(30, 30, 30, 0.7);
+  border: none;
+  border-radius: 50%;
+  width: 18px;
+  height: 18px;
+  font-size: 14px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s;
+  color: #fff;
+}
+
+.moveVehicleButton img,
+.deleteVehicleButton img {
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+}
+
+.moveVehicleButton:hover,
+.deleteVehicleButton:hover {
+  background-color: rgba(50, 50, 50, 0.9);
+}
+
+/* 车库选择对话框样式 */
+.garageSelection {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  max-height: 300px;
+  overflow-y: auto;
+  margin-top: 15px;
+}
+
+.garageOption {
+  background-color: #1e1e1e;
+  border: 1px solid #444;
+
+  padding: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+  min-width: 150px;
+}
+
+.garageOption:hover {
+  background-color: #2a2a2a;
+  border-color: #666;
+}
+
+.garageOption.disabledOption {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.garageOptionName {
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: #fff;
+}
+
+.garageOptionCapacity {
+  font-size: 12px;
+  color: #aaa;
+}
+
+/* 位置选择对话框样式 */
+.positionSelection {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  overflow-y: auto;
+  margin-top: 15px;
+}
+
+.positionOption {
+  border: 1px solid #444444;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: center;
+  flex: 0 0 calc(10% - 9px);
+}
+
+.emptyPosition {
+  background-color: #3f3f3f;
+  border-color: #b6b6b69d;
+  min-height: 55px;
+}
+
+/* 当前正在移动的载具位置样式 */
+.currentVehiclePosition {
+  cursor: not-allowed;
+  background-color: #696969;
+  border-color: #646464;
+  color: #fff;
+}
+
+.currentVehicleMarker {
+  margin-top: 8px;
+  font-size: 10px;
+  color: #cdcdcd;
+  background-color: rgba(30, 30, 30, 0.7);
+  padding: 2px 6px;
+}
+
+.positionNumber {
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: #c0c0c0;
+  font-size: 12px;
+}
+
+.positionStatus {
+  font-size: 14px;
+  color: #ffffff;
+}
+
+.positionVehicle {
+  font-size: 12px;
+  color: #e6e6e6;
+  word-break: break-word;
+  font-weight: bold;
+}
+
+/* 对话框步骤导航样式 */
+.dialogStepNavigation {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #444;
+}
+
+.backButton {
+  background-color: #444;
+  color: white;
+  border: none;
+
+  padding: 6px 12px;
+  cursor: pointer;
+  font-size: 12px;
+  transition: background-color 0.2s;
+}
+
+.backButton:hover {
+  background-color: #555;
+}
+
+.targetGarageInfo {
+  font-weight: bold;
+  color: #fff;
+}
+
+/* 交换信息样式 */
+.swapInfo {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  margin-top: 15px;
+  padding: 15px;
+  background-color: #1e1e1e;
+
+  border: 1px solid #444;
+}
+
+.swapVehicle {
+  text-align: center;
+  flex: 1;
+  color: #fff;
+}
+
+.swapVehicle h5 {
+  margin-top: 0;
+  margin-bottom: 5px;
+  font-size: 14px;
+  color: #fff;
+}
+
+.swapVehicle p {
+  margin: 5px 0;
+  color: #fff;
+}
+
+.swapVehicleLocation {
+  font-size: 12px;
+  color: #aaa;
+}
+
+.swapArrow {
+  font-size: 24px;
+  margin: 10px 10px 10px 10px;
+  color: #fff;
+}
+
+/* 关闭按钮样式 */
+.closeButton {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: #aaa;
+  padding: 0;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.closeButton:hover {
+  color: #fff;
+}
+
+/* 特定特性的颜色样式 */
+.bennyFeature {
+  background-color: #8c2226;
+  /* 红色 */
+  color: #fff;
+  font-weight: 600;
+}
+
+.imaniFeature {
+  background-color: #9932cc;
+  /* 紫色 */
+  color: white;
+  font-weight: 600;
+}
+
+.haoFeature {
+  background-color: #e06a30;
+  /* 橙色 */
+  color: white;
+  font-weight: 600;
+}
+
+.policeFeature {
+  background-color: #050877;
+  /* 蓝色 */
+  color: white;
+  font-weight: 600;
+}
+
+.vehicleInfo {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+/* 确保载具信息在小空间内正确显示 */
+.vehicleName {
+  font-size: 12px;
+  font-weight: 600;
+  color: #fff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.vehicleNameEn {
+  font-size: 11px;
+  color: #aaa;
+  font-style: italic;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* 载具备注样式已移至remarksContainer和storageRemarks类中 */
+
+.vehicleName {
+  font-size: 13px;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 4px;
+}
+
+/* 空载具文本样式 */
+.emptyVehicleText {
+  font-size: 18px;
+  font-weight: 500;
+  color: #aaa;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  text-align: center;
+  background-color: #1e1e1e;
+}
+
+.vehicleNameEn {
+  font-size: 14px;
+  color: #aaa;
+  font-style: italic;
+  margin-bottom: 8px;
+}
+
+/* 新增的载具信息样式 */
+.vehicleBrand {
+  font-size: 12px;
+  color: #aaa;
+  margin-bottom: 2px;
+}
+
+.vehicleType {
+  font-size: 12px;
+  color: #888;
+  margin-bottom: 4px;
+}
+
+.vehiclePrice {
+  font-size: 12px;
+  color: #4caf50;
+  margin-bottom: 4px;
+  font-weight: 500;
+}
+
+.vehicleRemarks {
+  font-size: 13px;
+  color: #fff;
+  background-color: #3c2c1d;
+  padding: 6px 8px;
+
+  border: 1px solid #6a4a2d;
+  min-height: 24px;
+  display: flex;
+  align-items: center;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .vehicleItem {
+    width: calc(50% - 16px);
+  }
+
+  .mainContainer {
+    padding: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .vehicleItem {
+    width: 100%;
+  }
+
+  .controlContainer {
+    flex-direction: column;
+  }
+
+  .storageInfo {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+}

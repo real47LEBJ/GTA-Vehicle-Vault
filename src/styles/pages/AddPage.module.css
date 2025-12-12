@@ -1,1061 +1,1053 @@
 /* 页面容器 */
 .pageContainer {
-    display: flex;
-    height: 94.9vh;
-    width: 100%;
-    box-sizing: border-box;
-    overflow: hidden;
-    background-color: #121212;
-    color: #ffffff;
+  display: flex;
+  height: 94.9vh;
+  width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
+  background-color: #121212;
+  color: #ffffff;
 }
 
 /* 品牌列表容器 */
 .brandContainer {
-    width: 220px;
-    height: 100%;
-    border-right: 1px solid #333333;
-    overflow-y: auto;
-    box-shadow: 2px 0 4px rgba(0, 0, 0, 0.3);
-    box-sizing: border-box;
-    position: relative;
-    background-color: #1e1e1e;
+  width: 220px;
+  height: 100%;
+  border-right: 1px solid #333333;
+  overflow-y: auto;
+  box-shadow: 2px 0 4px rgba(0, 0, 0, 0.3);
+  box-sizing: border-box;
+  position: relative;
+  background-color: #1e1e1e;
 }
 
 /* 自定义滚动条样式 */
 .brandContainer::-webkit-scrollbar,
 .garageSelection::-webkit-scrollbar,
 .positionSelection::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
+  width: 8px;
+  height: 8px;
 }
 
 .brandContainer::-webkit-scrollbar-track,
 .garageSelection::-webkit-scrollbar-track,
 .positionSelection::-webkit-scrollbar-track {
-    background: #1e1e1e;
+  background: #1e1e1e;
 }
 
 .brandContainer::-webkit-scrollbar-thumb,
 .garageSelection::-webkit-scrollbar-thumb,
 .positionSelection::-webkit-scrollbar-thumb {
-    background: #555;
+  background: #555;
 }
 
 .brandContainer::-webkit-scrollbar-thumb:hover,
 .garageSelection::-webkit-scrollbar-thumb:hover,
 .positionSelection::-webkit-scrollbar-thumb:hover {
-    background: #777;
+  background: #777;
 }
 
 /* 过滤容器 */
 .filterContainer {
-    width: 100%;
-    box-sizing: border-box;
-    position: sticky;
-    top: 0;
-    background-color: #1e1e1e;
-    z-index: 10;
-    border-bottom: 1px solid #333333;
+  width: 100%;
+  box-sizing: border-box;
+  position: sticky;
+  top: 0;
+  background-color: #1e1e1e;
+  z-index: 10;
+  border-bottom: 1px solid #333333;
 }
 
 /* VehicleFilter组件样式 */
 .vehicleFilterContainer {
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 15px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 15px;
 }
 
 .totalVehiclesContainer {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    font-size: 13px;
-    font-weight: bold;
-    color: #ffffff;
-    background-color: rgba(255, 255, 255, 0.1);
-    padding: 4px 6px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 13px;
+  font-weight: bold;
+  color: #ffffff;
+  background-color: rgba(255, 255, 255, 0.1);
+  padding: 4px 6px;
 }
 
 .totalLabel {
-    font-size: 11px;
-    font-weight: bold;
-    color: #b1b1b1ff;
-
+  font-size: 11px;
+  font-weight: bold;
+  color: #b1b1b1ff;
 }
 
 .paginationContainer {
-    display: flex;
-    align-items: center;
-    margin-left: -0.5vw;
-    margin-right: 0.5vw;
+  display: flex;
+  align-items: center;
+  margin-left: -0.5vw;
+  margin-right: 0.5vw;
 }
 
 .paginationButton {
-    width: 32px;
-    height: 32px;
-    background-color: transparent;
-    color: white;
-    border: none;
-    border-radius: 50%;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0;
+  width: 32px;
+  height: 32px;
+  background-color: transparent;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
 }
 
 .paginationButton:disabled {
-    cursor: not-allowed;
+  cursor: not-allowed;
 }
 
 .paginationImage {
-    width: 20px;
-    height: 20px;
+  width: 20px;
+  height: 20px;
 }
 
 .paginationText {
-    font-size: 20px;
-    color: #ffffff;
-    padding-bottom: 3px;
+  font-size: 20px;
+  color: #ffffff;
+  padding-bottom: 3px;
 }
 
 .vehicleSearchInputWrapper {
-    width: 14.5vw;
-    margin-left: -1vw;
+  width: 14.5vw;
+  margin-left: -1vw;
 }
 
 .hiddenOption {
-    display: none;
+  display: none;
 }
 
 /* 搜索输入框容器 */
 .searchInputWrapper {
-    position: relative;
-    display: flex;
-    align-items: center;
+  position: relative;
+  display: flex;
+  align-items: center;
 }
 
 /* 搜索输入框 */
 .searchInput {
-    padding: 8px 12px 8px 12px;
-    border: 1px solid #444444;
-    font-size: 14px;
-    transition: border-color 0.2s ease;
-    outline: none;
-    background-color: #272727;
-    color: #ffffff;
+  padding: 8px 12px 8px 12px;
+  border: 1px solid #444444;
+  font-size: 14px;
+  transition: border-color 0.2s ease;
+  outline: none;
+  background-color: #272727;
+  color: #ffffff;
 }
 
 .searchInput:focus {
-    border-color: #2196f3;
-    box-shadow: 0 0 0 2px rgba(33, 150, 243, 0.1);
+  border-color: #2196f3;
+  box-shadow: 0 0 0 2px rgba(33, 150, 243, 0.1);
 }
 
 /* 载具页面特定搜索输入框 - 完全重置样式 */
 .vehicleSpecificSearchInput {
-    /* 完全重置默认样式 */
-    appearance: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    box-sizing: border-box;
-    
-    /* 设置合适的宽度 */
-    width: 100%;
-    max-width: 200px;
-    
-    /* 自定义样式 */
-    padding: 8px 12px;
-    border: 1px solid #444444;
-    border-radius: 4px;
-    font-size: 14px;
-    font-family: inherit;
-    background-color: #272727;
-    color: #ffffff;
-    
-    /* 过渡效果 */
-    transition: all 0.2s ease;
-    
-    /* 移除默认的内外边距和边框 */
-    margin: 0;
-    outline: none;
-    box-shadow: none;
+  /* 完全重置默认样式 */
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  box-sizing: border-box;
+
+  /* 设置合适的宽度 */
+  width: 100%;
+  max-width: 200px;
+
+  /* 自定义样式 */
+  padding: 8px 12px;
+  border: 1px solid #444444;
+  border-radius: 4px;
+  font-size: 14px;
+  font-family: inherit;
+  background-color: #272727;
+  color: #ffffff;
+
+  /* 过渡效果 */
+  transition: all 0.2s ease;
+
+  /* 移除默认的内外边距和边框 */
+  margin: 0;
+  outline: none;
+  box-shadow: none;
 }
 
 .vehicleSpecificSearchInput:focus {
-    border-color: #2196f3;
-    background-color: #2a2a2a;
-    box-shadow: 0 0 0 2px rgba(33, 150, 243, 0.2);
+  border-color: #2196f3;
+  background-color: #2a2a2a;
+  box-shadow: 0 0 0 2px rgba(33, 150, 243, 0.2);
 }
 
 .vehicleSpecificSearchInput::placeholder {
-    color: #888888;
-    opacity: 1;
+  color: #888888;
+  opacity: 1;
 }
 
 /* 筛选下拉框样式 */
 .filterSelect {
-    padding: 8px 12px;
-    border: 1px solid #333;
-    background-color: #1a1a1a;
-    color: #ffffff;
-    font-size: 14px;
-    cursor: pointer;
-    width: 180px;
-    position: relative;
-    appearance: none;
-    background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: right 8px center;
-    background-size: 16px;
-    width: 10vw;
+  padding: 8px 12px;
+  border: 1px solid #333;
+  background-color: #1a1a1a;
+  color: #ffffff;
+  font-size: 14px;
+  cursor: pointer;
+  width: 180px;
+  position: relative;
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 8px center;
+  background-size: 16px;
+  width: 10vw;
 }
-
 
 .filterSelect option {
-    color: #ffffff;
-    background-color: #1a1a1a;
+  color: #ffffff;
+  background-color: #1a1a1a;
 }
-
 
 /* 自定义滚动条样式 */
 .filterSelect::-webkit-scrollbar {
-    width: 8px;
+  width: 8px;
 }
 
 .filterSelect::-webkit-scrollbar-track {
-    background: #121212;
+  background: #121212;
 }
 
 .filterSelect::-webkit-scrollbar-thumb {
-    background: #333;
+  background: #333;
 }
 
 .filterSelect::-webkit-scrollbar-thumb:hover {
-    background: #555;
+  background: #555;
 }
 
 .filterSelect:focus {
-    border-color: #007bff;
-    outline: none;
-    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+  border-color: #007bff;
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
 }
 
 /* 筛选复选框样式 */
 .filterCheckbox {
-    accent-color: #007bff;
-    width: 16px;
-    height: 16px;
-    cursor: pointer;
+  accent-color: #007bff;
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
 }
 
 /* 重置按钮样式 */
 .resetButton {
-    padding: 4px 8px;
-    border: 1px solid #444;
-    font-size: 14px;
-    background-color: #333;
-    color: #fff;
-    cursor: pointer;
-    transition: background-color 0.3s;
+  padding: 4px 8px;
+  border: 1px solid #444;
+  font-size: 14px;
+  background-color: #333;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.3s;
 }
 
 .resetButton:hover {
-    background-color: #444;
+  background-color: #444;
 }
 
 /* 清除搜索按钮 */
 .clearSearchButton {
-    position: absolute;
-    right: 8px; /* 使用固定像素值替代视窗单位 */
-    top: 50%;
-    transform: translateY(-50%);
-    background: #333333;
-    border: none;
-    border-radius: 50%;
-    width: 24px;
-    height: 24px;
-    font-size: 18px;
-    cursor: pointer;
-    color: #ffffff;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: background-color 0.2s ease;
-    line-height: 1;
-    z-index: 1; /* 确保按钮在输入框上方 */
+  position: absolute;
+  right: 8px; /* 使用固定像素值替代视窗单位 */
+  top: 50%;
+  transform: translateY(-50%);
+  background: #333333;
+  border: none;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  font-size: 18px;
+  cursor: pointer;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s ease;
+  line-height: 1;
+  z-index: 1; /* 确保按钮在输入框上方 */
 }
 
 .clearSearchButton:hover {
-    background-color: #f0f0f0;
-    color: #666;
+  background-color: #f0f0f0;
+  color: #666;
 }
 
 /* 下拉框容器 */
 .selectContainer {
-    position: relative;
-    display: inline-block;
+  position: relative;
+  display: inline-block;
 }
 
 /* 下拉框清除按钮 */
 .clearSelectButton {
-    position: absolute;
-    right: 2vw;
-    top: 49%;
-    transform: translateY(-50%);
-    background: transparent;
-    border: none;
-    border-radius: 50%;
-    font-size: 18px;
-    cursor: pointer;
-    color: #ffffff;
-    width: 20px;
-    height: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: background-color 0.2s ease;
-    line-height: 1;
-    z-index: 1;
+  position: absolute;
+  right: 2vw;
+  top: 49%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  border-radius: 50%;
+  font-size: 18px;
+  cursor: pointer;
+  color: #ffffff;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s ease;
+  line-height: 1;
+  z-index: 1;
 }
 
 /* 通知组件样式 */
 .notification {
-    position: fixed;
-    top: 80px;
-    right: -300px;
-    /* 初始位置在屏幕右侧外 */
-    background-color: #0078d7;
-    color: white;
-    padding: 12px 16px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    font-size: 16px;
-    font-weight: 500;
-    z-index: 1000;
-    transition: right 0.5s ease-in-out;
+  position: fixed;
+  top: 80px;
+  right: -300px;
+  /* 初始位置在屏幕右侧外 */
+  background-color: #0078d7;
+  color: white;
+  padding: 12px 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  font-size: 16px;
+  font-weight: 500;
+  z-index: 1000;
+  transition: right 0.5s ease-in-out;
 }
 
 .notificationVisible {
-    right: 20px;
-    /* 滑入到屏幕右侧 */
+  right: 20px;
+  /* 滑入到屏幕右侧 */
 }
 
 .clearSelectButton:hover {
-    background-color: rgba(255, 255, 255, 0.2);
+  background-color: rgba(255, 255, 255, 0.2);
 }
 
 /* 复选框容器 */
 .checkboxContainer {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    cursor: pointer;
-    user-select: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  user-select: none;
 }
 
 /* 自定义复选框 */
 .customCheckbox {
-    position: absolute;
-    opacity: 0;
-    cursor: pointer;
-    height: 0;
-    width: 0;
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
 }
 
 /* 复选框样式 */
 .checkboxContainer .checkboxStyle {
-    position: relative;
-    display: block;
-    width: 20px;
-    height: 20px;
-    background-color: #1e1e1e;
-    border: 2px solid #444444;
-    cursor: pointer;
-    transition: all 0.2s ease;
+  position: relative;
+  display: block;
+  width: 20px;
+  height: 20px;
+  background-color: #1e1e1e;
+  border: 2px solid #444444;
+  cursor: pointer;
+  transition: all 0.2s ease;
 }
 
 .checkboxContainer:hover .checkboxStyle {
-    border-color: #007bff;
-    background-color: rgba(0, 123, 255, 0.1);
+  border-color: #007bff;
+  background-color: rgba(0, 123, 255, 0.1);
 }
 
-.checkboxContainer input:checked+.checkboxStyle {
-    border-color: #0078d7;
-    background-color: #0078d7;
-}
-
-.checkboxContainer .checkboxStyle:after {
-    content: "";
-    position: absolute;
-    display: none;
-}
-
-.checkboxContainer input:checked+.checkboxStyle:after {
-    display: block;
+.checkboxContainer input:checked + .checkboxStyle {
+  border-color: #0078d7;
+  background-color: #0078d7;
 }
 
 .checkboxContainer .checkboxStyle:after {
-    left: 7px;
-    top: 3px;
-    width: 5px;
-    height: 10px;
-    border: solid white;
-    border-width: 0 2px 2px 0;
-    transform: rotate(45deg);
+  content: '';
+  position: absolute;
+  display: none;
+}
+
+.checkboxContainer input:checked + .checkboxStyle:after {
+  display: block;
+}
+
+.checkboxContainer .checkboxStyle:after {
+  left: 7px;
+  top: 3px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
 }
 
 /* 复选框包装器 */
 .checkboxWrapper {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    cursor: pointer;
-    user-select: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  user-select: none;
 }
 
 /* 复选框文本标签 */
 .checkboxLabelText {
-    color: #ffffff;
-    font-size: 14px;
-    cursor: pointer;
-    user-select: none;
+  color: #ffffff;
+  font-size: 14px;
+  cursor: pointer;
+  user-select: none;
 }
 
 /* 品牌名称 */
 .brandName {
-    font-size: 14px;
-    font-weight: 500;
-    color: #ffffff;
-    margin-bottom: 2px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+  font-size: 14px;
+  font-weight: 500;
+  color: #ffffff;
+  margin-bottom: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 /* 品牌英文名称 */
 .brandNameEn {
-    font-size: 12px;
-    color: #aaaaaa;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+  font-size: 12px;
+  color: #aaaaaa;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 /* 品牌图标 */
 .brandLogo {
-    width: 20px;
-    height: 20px;
-    object-fit: contain;
-    flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+  flex-shrink: 0;
 }
 
 /* 品牌信息容器 */
 .brandInfo {
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-    min-width: 0;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
 }
 
 /* 品牌项 */
 .brandItem {
-    width: 100%;
-    padding: 10px 16px;
-    margin-bottom: 0;
-    cursor: pointer;
-    box-sizing: border-box;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    background-color: #121212;
-    border-bottom: 1px solid #3f3f3f3b;
+  width: 100%;
+  padding: 10px 16px;
+  margin-bottom: 0;
+  cursor: pointer;
+  box-sizing: border-box;
+  display: flex;
+  border:none;
+  align-items: center;
+  gap: 12px;
+  background-color: #121212;
+  border-bottom: 1px solid #3f3f3f3b;
 }
 
 .brandItem.active {
-
-    color: #000000;
+  color: #000000;
 }
 
 /* 品牌名称 */
 .brandName {
-    font-size: 16px;
-    color: #ffffff;
-    margin-bottom: 4px;
+  font-size: 16px;
+  color: #ffffff;
+  margin-bottom: 4px;
 }
 
 .brandNameEn {
-    font-size: 12px;
-    color: #aaaaaa;
-    font-style: italic;
+  font-size: 12px;
+  color: #aaaaaa;
+  font-style: italic;
 }
 
 /* 载具容器 */
 .vehicleContainer {
-    flex: 1;
-    height: 100%;
-    padding: 20px;
-    box-sizing: border-box;
-    background-color: #121212;
-    overflow-y: auto;
-    overflow-x: hidden;
+  flex: 1;
+  height: 100%;
+  padding: 20px;
+  box-sizing: border-box;
+  background-color: #121212;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 /* 品牌载具部分 */
 .brandVehicleSection {
-    margin-bottom: 32px;
+  margin-bottom: 32px;
 }
 
 .brandVehicleSection h2 {
-    font-size: 24px;
-    color: #ffffff;
-    margin-bottom: 16px;
-    padding-bottom: 8px;
-    border-bottom: 2px solid #333333;
-    width: fit-content;
-    padding-right: 10px;
+  font-size: 24px;
+  color: #ffffff;
+  margin-bottom: 16px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid #333333;
+  width: fit-content;
+  padding-right: 10px;
 }
 
 /* 载具列表 */
 .vehicleList {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 5px;
-    overflow-x: auto;
-    justify-content: flex-start;
-    background-color: #121212;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  overflow-x: auto;
+  justify-content: flex-start;
+  background-color: #121212;
 }
 
 /* 载具项 */
 .vehicleItem {
-    background-color: #1e1e1e;
-    border: 1px solid #333333;
-    padding: 5px;
-    min-width: 0;
-    display: flex;
-    flex-direction: column;
-    position: relative;
-    transition: all 0.5s ease;
-    flex: 0 0 calc(11%);
-    /* 10%宽度减去gap的影响，确保一行能容纳10个 */
+  background-color: #1e1e1e;
+  border: 1px solid #333333;
+  padding: 5px;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  transition: all 0.5s ease;
+  flex: 0 0 calc(11%);
+  /* 10%宽度减去gap的影响，确保一行能容纳10个 */
 }
 
 .vehicleItem:hover {
-    box-shadow: 0 2px 4px rgba(255, 255, 255, 0.1);
-    border-color: #555555;
+  box-shadow: 0 2px 4px rgba(255, 255, 255, 0.1);
+  border-color: #555555;
 }
 
 /* 载具特性 */
 .vehicleFeature {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 2px;
-    margin-bottom: 2px;
-    width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px;
+  margin-bottom: 2px;
+  width: 100%;
 }
 
 .featureItem {
-    font-size: 9px;
-    padding: 1px 3px;
-    background-color: #333;
-    color: #fff;
-    font-weight: bold;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 1);
-    box-sizing: border-box;
-    flex: 0 0 auto;
-    width: fit-content;
+  font-size: 9px;
+  padding: 1px 3px;
+  background-color: #333;
+  color: #fff;
+  font-weight: bold;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 1);
+  box-sizing: border-box;
+  flex: 0 0 auto;
+  width: fit-content;
 }
-
 
 /* 载具信息 */
 .vehicleInfo {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
 }
 
 /* 确保载具信息在小空间内正确显示 */
 .vehicleName {
-    font-size: 12px;
-    font-weight: 600;
-    color: #ffffff;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+  font-size: 12px;
+  font-weight: 600;
+  color: #ffffff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .vehicleNameEn {
-    font-size: 11px;
-    color: #aaaaaa;
-    font-style: italic;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+  font-size: 11px;
+  color: #aaaaaa;
+  font-style: italic;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 /* 载具名称 */
 .vehicleName {
-    font-size: 13px;
-    font-weight: 600;
-    color: #ffffff;
-    margin-bottom: 2px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+  font-size: 13px;
+  font-weight: 600;
+  color: #ffffff;
+  margin-bottom: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .vehicleNameEn {
-    font-size: 11px;
-    color: #aaaaaa;
-    font-style: italic;
-    margin-bottom: 4px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+  font-size: 11px;
+  color: #aaaaaa;
+  font-style: italic;
+  margin-bottom: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 /* 品牌名称样式 */
 .vehicleBrand {
-    font-size: 15px;
-    color: #b1b1b1;
-    margin-bottom: 2px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+  font-size: 15px;
+  color: #b1b1b1;
+  margin-bottom: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 /* 载具类型样式 */
 .vehicleType {
-    font-size: 11px;
-    color: #aaaaaa;
-    margin-top: 2px;
-    margin-bottom: 2px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+  font-size: 11px;
+  color: #aaaaaa;
+  margin-top: 2px;
+  margin-bottom: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 /* 载具价格样式 */
 .vehiclePrice {
-    font-size: 11px;
-    font-weight: bold;
-    color: #73ff7a;
-    margin-top: 2px;
-    margin-bottom: 2px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+  font-size: 11px;
+  font-weight: bold;
+  color: #73ff7a;
+  margin-top: 2px;
+  margin-bottom: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 /* 自定义滚动条 */
 .brandContainer::-webkit-scrollbar,
 .vehicleContainer::-webkit-scrollbar {
-    width: 6px;
+  width: 6px;
 }
 
 .brandContainer::-webkit-scrollbar-track,
 .vehicleContainer::-webkit-scrollbar-track {
-    background: #1e1e1e;
+  background: #1e1e1e;
 }
 
 .brandContainer::-webkit-scrollbar-thumb,
 .vehicleContainer::-webkit-scrollbar-thumb {
-    background: #555555;
+  background: #555555;
 }
 
 .brandContainer::-webkit-scrollbar-thumb:hover,
 .vehicleContainer::-webkit-scrollbar-thumb:hover {
-    background: #777777;
+  background: #777777;
 }
 
 /* 响应式设计 - 中等屏幕 (992px以下) */
 @media (max-width: 992px) {
-
-    /* 调整载具项宽度，减少每行显示数量 */
-    .vehicleItem {
-        flex: 0 0 calc(14.28% - 7px);
-        /* 7个/行 */
-    }
+  /* 调整载具项宽度，减少每行显示数量 */
+  .vehicleItem {
+    flex: 0 0 calc(14.28% - 7px);
+    /* 7个/行 */
+  }
 }
 
 /* 响应式设计 - 小屏幕 (768px以下) */
 @media (max-width: 768px) {
-    .pageContainer {
-        flex-direction: column;
-    }
+  .pageContainer {
+    flex-direction: column;
+  }
 
-    .brandContainer {
-        width: 100%;
-        height: auto;
-        flex-direction: row;
-        flex-wrap: wrap;
-        padding: 8px;
-        border-right: none;
-        border-bottom: 1px solid #333333;
-    }
+  .brandContainer {
+    width: 100%;
+    height: auto;
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding: 8px;
+    border-right: none;
+    border-bottom: 1px solid #333333;
+  }
 
-    .brandItem {
-        margin-bottom: 0;
-        margin-right: 8px;
-        margin-bottom: 8px;
-        border-left: none;
-        border-bottom: 3px solid transparent;
-        padding: 8px 12px;
-    }
+  .brandItem {
+    margin-bottom: 0;
+    margin-right: 8px;
+    margin-bottom: 8px;
+    border-left: none;
+    border-bottom: 3px solid transparent;
+    padding: 8px 12px;
+  }
 
-    /* 调整载具项宽度，减少每行显示数量 */
-    .vehicleItem {
-        flex: 0 0 calc(20% - 7px);
-        /* 5个/行 */
-    }
+  /* 调整载具项宽度，减少每行显示数量 */
+  .vehicleItem {
+    flex: 0 0 calc(20% - 7px);
+    /* 5个/行 */
+  }
 
-    /* 调整载具列表内边距 */
-    .vehicleList {
-        padding-left: 10px;
-    }
+  /* 调整载具列表内边距 */
+  .vehicleList {
+    padding-left: 10px;
+  }
 }
 
 /* 响应式设计 - 超小屏幕 (576px以下) */
 @media (max-width: 576px) {
-
-    /* 进一步调整载具项宽度 */
-    .vehicleItem {
-        flex: 0 0 calc(25% - 7px);
-        /* 4个/行 */
-    }
+  /* 进一步调整载具项宽度 */
+  .vehicleItem {
+    flex: 0 0 calc(25% - 7px);
+    /* 4个/行 */
+  }
 }
 
 /* 加载和错误状态 */
 .loadingContainer {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-    font-size: 18px;
-    color: #aaaaaa;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  font-size: 18px;
+  color: #aaaaaa;
 }
 
 .errorContainer {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-    font-size: 18px;
-    color: #ff4444;
-    padding: 20px;
-    text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  font-size: 18px;
+  color: #ff4444;
+  padding: 20px;
+  text-align: center;
 }
 
 /* 无载具数据提示 */
 .noVehicles {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 16px;
-    color: #aaaaaa;
-    text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 16px;
+  color: #aaaaaa;
+  text-align: center;
 }
 
 /* 无品牌选择提示 */
 .noBrandSelected {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-    font-size: 18px;
-    color: #aaaaaa;
-    text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  font-size: 18px;
+  color: #aaaaaa;
+  text-align: center;
 }
 
 .brandItem.active {
-    background-color: #424242;
+  background-color: #424242;
 }
 
 .vehicleList {
-    grid-template-columns: 1fr;
+  grid-template-columns: 1fr;
 }
 
 /* 购买/移动载具按钮 */
 .moveVehicleButton {
-    position: absolute;
-    top: 5px;
-    right: 5px;
-    background-color: rgba(51, 51, 51, 0.7);
-    border: none;
-    border-radius: 50%;
-    width: 20px;
-    height: 20px;
-    font-size: 14px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: background-color 0.2s;
-    z-index: 10;
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background-color: rgba(51, 51, 51, 0.7);
+  border: none;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  font-size: 14px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s;
+  z-index: 10;
 }
 
 .moveVehicleButton img {
-    width: 16px;
-    height: 16px;
-    object-fit: contain;
+  width: 16px;
+  height: 16px;
+  object-fit: contain;
 }
 
 .moveVehicleButton:hover {
-    background-color: rgba(78, 78, 78, 0.9);
+  background-color: rgba(78, 78, 78, 0.9);
 }
 
 /* 对话框样式 */
 .moveDialogOverlay,
 .swapDialogOverlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.7);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
 }
 
 .moveDialog,
 .swapDialog {
-    background-color: #1e1e1e;
-    max-height: 90vh;
-    overflow-y: auto;
+  background-color: #1e1e1e;
+  max-height: 90vh;
+  overflow-y: auto;
 }
 
 .moveDialog {
-    width: 95vw;
+  width: 95vw;
 }
 
 .swapDialog {
-    width: 40vw;
+  width: 40vw;
 }
 
 .moveDialogHeader,
 .swapDialogHeader {
-    padding: 16px 20px;
-    border-bottom: 1px solid #444444;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  padding: 16px 20px;
+  border-bottom: 1px solid #444444;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .moveDialogHeader h3,
 .swapDialogHeader h3 {
-    margin: 0;
-    font-size: 18px;
+  margin: 0;
+  font-size: 18px;
 }
 
 .closeButton {
-    background: none;
-    border: none;
-    font-size: 24px;
-    cursor: pointer;
-    color: #6c757d;
-    padding: 0;
-    width: 24px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: #6c757d;
+  padding: 0;
+  width: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-
 
 .moveDialogContent,
 .swapDialogContent {
-    padding: 20px;
+  padding: 20px;
 }
 
 /* 车库选择样式 */
 .garageSelection {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    max-height: 500px;
-    overflow-y: auto;
-    margin-top: 15px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  max-height: 500px;
+  overflow-y: auto;
+  margin-top: 15px;
 }
 
 .garageOption {
-    background-color: #2a2a2a;
-    border: 1px solid #444444;
-    padding: 12px;
-    cursor: pointer;
-    transition: all 0.2s;
-    min-width: 150px;
+  background-color: #2a2a2a;
+  border: 1px solid #444444;
+  padding: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+  min-width: 150px;
 }
 
 .garageOption:hover {
-    background-color: #3a3a3a;
-    border-color: #666666;
+  background-color: #3a3a3a;
+  border-color: #666666;
 }
 
 .garageOptionName {
-    font-weight: bold;
-    margin-bottom: 5px;
-    color: #ffffff;
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: #ffffff;
 }
 
 .garageOptionCapacity {
-    font-size: 12px;
-    color: #aaaaaa;
+  font-size: 12px;
+  color: #aaaaaa;
 }
 
 /* 位置选择样式 */
 .positionSelection {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 7px;
-    max-height: 500px;
-    overflow-y: auto;
-    margin-top: 15px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  max-height: 500px;
+  overflow-y: auto;
+  margin-top: 15px;
 }
 
 .positionOption {
-    border: 1px solid #444444;
-    cursor: pointer;
-    transition: all 0.2s;
-    text-align: center;
-    flex: 0 0 calc(10% - 9px);
-    padding-top: 10px;
-    padding-bottom: 10px;
+  border: 1px solid #444444;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: center;
+  flex: 0 0 calc(10% - 9px);
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 
 .occupiedPosition {
-    background-color: #696969;
-    border-color: #646464;
+  background-color: #696969;
+  border-color: #646464;
 }
 
 .emptyPosition {
-    background-color: #3f3f3f;
-    border-color: #b6b6b69d;
+  background-color: #3f3f3f;
+  border-color: #b6b6b69d;
 }
 
 .currentVehiclePosition {
-    cursor: not-allowed;
-    background-color: #001c3c;
-    border-color: #004499;
+  cursor: not-allowed;
+  background-color: #001c3c;
+  border-color: #004499;
 }
 
 .positionNumber {
-    font-weight: bold;
-    margin-bottom: 5px;
-    color: #c0c0c0;
-    font-size: 12px;
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: #c0c0c0;
+  font-size: 12px;
 }
 
 .positionStatus {
-    font-size: 14px;
-    color: #d8d8d8;
-    font-weight: bold;
+  font-size: 14px;
+  color: #d8d8d8;
+  font-weight: bold;
 }
 
 .positionVehicle {
-    font-size: 12px;
-    color: #e6e6e6;
-    word-break: break-word;
-    font-weight: bold;
+  font-size: 12px;
+  color: #e6e6e6;
+  word-break: break-word;
+  font-weight: bold;
 }
 
 /* 对话框步骤导航样式 */
 .dialogStepNavigation {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 10px;
-    padding-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
 }
 
 .backButton {
-    background-color: #7a7a7a;
-    color: white;
-    border: none;
-    padding: 6px 12px;
-    cursor: pointer;
-    font-size: 12px;
-    transition: background-color 0.2s;
+  background-color: #7a7a7a;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  cursor: pointer;
+  font-size: 12px;
+  transition: background-color 0.2s;
 }
 
 .backButton:hover {
-    background-color: #666666;
+  background-color: #666666;
 }
 
 .targetGarageInfo {
-    font-weight: bold;
-    color: #ffffff;
+  font-weight: bold;
+  color: #ffffff;
 }
 
 /* 交换信息样式 */
 .swapInfo {
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-    margin-top: 15px;
-    padding: 15px;
-    background-color: #2a2a2a;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  margin-top: 15px;
+  padding: 15px;
+  background-color: #2a2a2a;
 }
 
 .swapVehicle {
-    text-align: center;
-    flex: 1;
+  text-align: center;
+  flex: 1;
 }
 
 .swapVehicle h5 {
-    margin-top: 0;
-    margin-bottom: 5px;
-    font-size: 14px;
-    color: #aaaaaa;
-
+  margin-top: 0;
+  margin-bottom: 5px;
+  font-size: 14px;
+  color: #aaaaaa;
 }
 
 .swapVehicle p {
-    margin: 5px 0;
-    color: #ffffff;
-    font-weight: bold;
+  margin: 5px 0;
+  color: #ffffff;
+  font-weight: bold;
 }
 
 .swapArrow {
-    font-size: 24px;
-    margin: 0 20px;
-    color: #6c757d;
+  font-size: 24px;
+  margin: 0 20px;
+  color: #6c757d;
 }
 
 /* 对话框操作按钮样式 */
 .moveDialogActions,
 .swapDialogActions {
-    padding: 16px 20px;
-    display: flex;
-    justify-content: flex-end;
-    gap: 10px;
+  padding: 16px 20px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
 }
 
 .confirmDialogCancel {
-    background-color: #7a7a7a;
-    color: white;
-    border: none;
-    padding: 6px 12px;
-    cursor: pointer;
-    font-size: 12px;
-    transition: background-color 0.2s;
+  background-color: #7a7a7a;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  cursor: pointer;
+  font-size: 12px;
+  transition: background-color 0.2s;
 }
 
 .confirmDialogCancel:hover {
-    background-color: #a1a1a1;
+  background-color: #a1a1a1;
 }
 
 .confirmDialogConfirm {
-    background-color: #007bff;
-    color: white;
-    border: none;
-    padding: 8px 16px;
-    cursor: pointer;
-    font-size: 14px;
-    transition: background-color 0.2s;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.2s;
 }
 
 .confirmDialogConfirm:hover {
-    background-color: #0056b3;
+  background-color: #0056b3;
 }

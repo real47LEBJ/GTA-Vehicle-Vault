@@ -17,18 +17,19 @@ const BrandSelector: React.FC<BrandSelectorProps> = ({
   searchTerm,
   onBrandSelect,
   onSearchChange,
-  onPageChange
+  onPageChange,
 }) => {
   // 过滤品牌列表（支持中英文搜索）
-  const filteredBrands = brands.filter(brand =>
-    brand.brand.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    brand.brand_en.toLowerCase().includes(searchTerm.toLowerCase())
+  const filteredBrands = brands.filter(
+    (brand) =>
+      brand.brand.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      brand.brand_en.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   return (
     <div className={styles.brandContainer}>
       <div className={styles.filterContainer}>
-        <div className={styles.searchInputWrapper} >
+        <div className={styles.searchInputWrapper}>
           <input
             style={{ width: '15vw' }}
             type="text"
@@ -38,17 +39,14 @@ const BrandSelector: React.FC<BrandSelectorProps> = ({
             onChange={(e) => onSearchChange(e.target.value)}
           />
           {searchTerm && (
-            <button
-              className={styles.clearSearchButton}
-              onClick={() => onSearchChange('')}
-            >
+            <button className={styles.clearSearchButton} onClick={() => onSearchChange('')}>
               ×
             </button>
           )}
         </div>
       </div>
       {/* 添加"全部"选项 */}
-      <div
+      <button
         className={`${styles.brandItem} ${selectedBrand === 'all' ? styles.active : ''}`}
         key="all"
         onClick={() => {
@@ -59,13 +57,13 @@ const BrandSelector: React.FC<BrandSelectorProps> = ({
         <div className={styles.brandInfo}>
           <div className={styles.brandName}>全部</div>
         </div>
-      </div>
+      </button>
       {filteredBrands.map((brand) => {
         // 构建图标路径，使用厂商的英文名称作为文件名
         const logoPath = `/logos/${brand.brand_en}.webp`;
 
         return (
-          <div
+          <button
             className={`${styles.brandItem} ${selectedBrand === brand.id ? styles.active : ''}`}
             key={brand.id}
             onClick={() => {
@@ -85,7 +83,7 @@ const BrandSelector: React.FC<BrandSelectorProps> = ({
             <div className={styles.brandInfo}>
               <div className={styles.brandName}>{brand.brand}</div>
             </div>
-          </div>
+          </button>
         );
       })}
     </div>

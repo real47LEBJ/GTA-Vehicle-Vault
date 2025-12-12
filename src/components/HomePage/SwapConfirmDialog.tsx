@@ -17,7 +17,7 @@ const SwapConfirmDialog: React.FC<SwapConfirmDialogProps> = ({
   swapTarget,
   garages,
   handleCancelSwap,
-  handleSwapVehicles
+  handleSwapVehicles,
 }) => {
   if (!showSwapConfirmDialog || !swapSource || !swapTarget) return null;
 
@@ -30,32 +30,52 @@ const SwapConfirmDialog: React.FC<SwapConfirmDialogProps> = ({
         <div className={styles.confirmDialogContent}>
           <div className={styles.swapDetails}>
             <div className={styles.swapItem}>
-              <p>从 <span style={{ fontSize: '22px' }}>{garages.find(g => g.id === swapSource.garageId)?.storageName || '未知车库'}</span> 位置 {swapSource.vehicleIndex + 1}</p>
-              <p className={styles.swapVehicleName} style={{ color: '#ffffff', fontSize: '22px' }}>{swapSource.vehicleData.brandName} {swapSource.vehicleData.vehicleName}</p>
+              <p>
+                从{' '}
+                <span style={{ fontSize: '22px' }}>
+                  {garages.find((g) => g.id === swapSource.garageId)?.storageName || '未知车库'}
+                </span>{' '}
+                位置 {swapSource.vehicleIndex + 1}
+              </p>
+              <p className={styles.swapVehicleName} style={{ color: '#ffffff', fontSize: '22px' }}>
+                {swapSource.vehicleData.brandName} {swapSource.vehicleData.vehicleName}
+              </p>
             </div>
             <div className={styles.swapArrow}>
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
                 <polyline points="12 5 12 19"></polyline>
                 <polyline points="5 12 12 19 19 12"></polyline>
               </svg>
             </div>
             <div className={styles.swapItem}>
-              <p>到 <span style={{ fontSize: '22px' }}>{garages.find(g => g.id === swapTarget.garageId)?.storageName || '未知车库'}</span> 位置 {swapTarget.vehicleIndex + 1}</p>
-              <p className={styles.swapVehicleName} style={{ color: '#ffffff', fontSize: '22px' }}>{swapTarget.vehicleData.brandName} {swapTarget.vehicleData.vehicleName}</p>
+              <p>
+                到{' '}
+                <span style={{ fontSize: '22px' }}>
+                  {garages.find((g) => g.id === swapTarget.garageId)?.storageName || '未知车库'}
+                </span>{' '}
+                位置 {swapTarget.vehicleIndex + 1}
+              </p>
+              <p className={styles.swapVehicleName} style={{ color: '#ffffff', fontSize: '22px' }}>
+                {swapTarget.vehicleData.brandName} {swapTarget.vehicleData.vehicleName}
+              </p>
             </div>
           </div>
         </div>
         <div className={styles.confirmDialogActions}>
-          <button
-            className={styles.confirmDialogCancel}
-            onClick={handleCancelSwap}
-          >
+          <button className={styles.confirmDialogCancel} onClick={handleCancelSwap}>
             取消
           </button>
-          <button
-            className={styles.confirmDialogConfirm}
-            onClick={handleSwapVehicles}
-          >
+          <button className={styles.confirmDialogConfirm} onClick={handleSwapVehicles}>
             交换
           </button>
         </div>

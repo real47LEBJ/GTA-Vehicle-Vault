@@ -1,8 +1,8 @@
 /**
  * API utility functions
  */
-import { invoke } from "@tauri-apps/api/core";
-import { Brand, Vehicle, ApiResponse, Garage } from "../types";
+import { invoke } from '@tauri-apps/api/core';
+import { Brand, Vehicle, ApiResponse, Garage } from '../types';
 
 /**
  * Generic function to call Tauri backend commands
@@ -10,10 +10,7 @@ import { Brand, Vehicle, ApiResponse, Garage } from "../types";
  * @param args - Arguments to pass to the command
  * @returns A promise that resolves with the command result
  */
-export const callBackend = async <T>(
-  command: string,
-  args?: Record<string, any>
-): Promise<T> => {
+export const callBackend = async <T>(command: string, args?: Record<string, any>): Promise<T> => {
   try {
     const result = await invoke<T>(command, args);
     return result;
@@ -27,24 +24,24 @@ export const callBackend = async <T>(
  * API endpoints configuration
  */
 export const apiEndpoints = {
-  greet: "greet",
-  getBrands: "get_vehicle_brands",
-  getVehicles: "get_vehicle_overviews_by_brand",
-  getAllVehicles: "get_vehicle_overviews",
-  addVehicle: "add_vehicle_overview",
+  greet: 'greet',
+  getBrands: 'get_vehicle_brands',
+  getVehicles: 'get_vehicle_overviews_by_brand',
+  getAllVehicles: 'get_vehicle_overviews',
+  addVehicle: 'add_vehicle_overview',
   // Garage endpoints
-  getGarages: "get_garage_overviews",
-  addGarage: "add_garage_overview",
-  updateGarage: "update_garage_overview",
-  deleteGarage: "delete_garage_overview",
+  getGarages: 'get_garage_overviews',
+  addGarage: 'add_garage_overview',
+  updateGarage: 'update_garage_overview',
+  deleteGarage: 'delete_garage_overview',
   // Feature type dict endpoints
-  getFeatureTypeDicts: "get_feature_type_dicts",
-  getFeatureTypeDictByKey: "get_feature_type_dict_by_key",
+  getFeatureTypeDicts: 'get_feature_type_dicts',
+  getFeatureTypeDictByKey: 'get_feature_type_dict_by_key',
   // Vehicle type dict endpoints
-  getVehicleTypeDicts: "get_vehicle_type_dicts",
-  getVehicleTypeDictByKey: "get_vehicle_type_dict_by_key",
+  getVehicleTypeDicts: 'get_vehicle_type_dicts',
+  getVehicleTypeDictByKey: 'get_vehicle_type_dict_by_key',
   // Data info endpoints
-  getDataInfo: "get_data_info",
+  getDataInfo: 'get_data_info',
 };
 
 /**
@@ -66,7 +63,7 @@ export const getFeatureTypeDicts = async (): Promise<ApiResponse<Record<string, 
       const data = response.data || [];
       // 创建一个映射，键为英文单词，值为中文翻译
       const featureDict: Record<string, string> = {};
-      data.forEach(dict => {
+      data.forEach((dict) => {
         if (dict.dict_key && dict.dict_value) {
           featureDict[dict.dict_key.trim()] = dict.dict_value.trim();
         }
@@ -81,15 +78,15 @@ export const getFeatureTypeDicts = async (): Promise<ApiResponse<Record<string, 
       return {
         success: false,
         data: null,
-        error: response.error || "获取特性类型字典失败",
+        error: response.error || '获取特性类型字典失败',
       };
     }
   } catch (error) {
-    console.error("Error fetching feature type dicts:", error);
+    console.error('Error fetching feature type dicts:', error);
     return {
       success: false,
       data: null,
-      error: "获取数据时发生错误",
+      error: '获取数据时发生错误',
     };
   }
 };
@@ -113,7 +110,7 @@ export const getVehicleTypeDicts = async (): Promise<ApiResponse<Record<string, 
       const data = response.data || [];
       // 创建一个映射，键为英文单词，值为中文翻译
       const vehicleTypeDict: Record<string, string> = {};
-      data.forEach(dict => {
+      data.forEach((dict) => {
         if (dict.dict_key && dict.dict_value) {
           vehicleTypeDict[dict.dict_key.trim()] = dict.dict_value.trim();
         }
@@ -128,15 +125,15 @@ export const getVehicleTypeDicts = async (): Promise<ApiResponse<Record<string, 
       return {
         success: false,
         data: null,
-        error: response.error || "获取载具类型字典失败",
+        error: response.error || '获取载具类型字典失败',
       };
     }
   } catch (error) {
-    console.error("Error fetching vehicle type dicts:", error);
+    console.error('Error fetching vehicle type dicts:', error);
     return {
       success: false,
       data: null,
-      error: "获取数据时发生错误",
+      error: '获取数据时发生错误',
     };
   }
 };
@@ -161,17 +158,15 @@ export const greet = async (name: string): Promise<string> => {
 export const getBrands = async (): Promise<ApiResponse<Brand[]>> => {
   try {
     // 调用后端API获取原始数据
-    const response = await callBackend<ApiResponse<any[]>>(
-      apiEndpoints.getBrands
-    );
+    const response = await callBackend<ApiResponse<any[]>>(apiEndpoints.getBrands);
 
     // 转换数据格式以匹配前端类型定义
     if (response.success && response.data) {
       // 将后端的VehicleBrand转换为前端的Brand格式
       const transformedBrands = response.data.map((brand) => ({
-        id: brand.id?.toString() || "",
-        brand: brand.brand_name || "",
-        brand_en: brand.brand_name_en || "",
+        id: brand.id?.toString() || '',
+        brand: brand.brand_name || '',
+        brand_en: brand.brand_name_en || '',
       }));
 
       return {
@@ -183,15 +178,15 @@ export const getBrands = async (): Promise<ApiResponse<Brand[]>> => {
       return {
         success: false,
         data: null,
-        error: response.error || "获取品牌列表失败",
+        error: response.error || '获取品牌列表失败',
       };
     }
   } catch (error) {
-    console.error("Error fetching brands:", error);
+    console.error('Error fetching brands:', error);
     return {
       success: false,
       data: null,
-      error: "获取数据时发生错误",
+      error: '获取数据时发生错误',
     };
   }
 };
@@ -201,27 +196,22 @@ export const getBrands = async (): Promise<ApiResponse<Brand[]>> => {
  * @param brandId - The brand ID
  * @returns A promise that resolves with the list of vehicles
  */
-export const getVehicles = async (
-  brandId: string
-): Promise<ApiResponse<Vehicle[]>> => {
+export const getVehicles = async (brandId: string): Promise<ApiResponse<Vehicle[]>> => {
   try {
     // 调用后端API获取原始数据
-    const response = await callBackend<ApiResponse<any[]>>(
-      apiEndpoints.getVehicles,
-      {
-        brandId: parseInt(brandId),
-      }
-    );
+    const response = await callBackend<ApiResponse<any[]>>(apiEndpoints.getVehicles, {
+      brandId: parseInt(brandId),
+    });
 
     // 转换数据格式以匹配前端类型定义
     if (response.success && response.data) {
       const transformedVehicles = response.data.map((vehicle) => ({
-        id: vehicle.id?.toString() || "",
-        brand_id: vehicle.brand_id?.toString() || "",
-        vehicle_name: vehicle.vehicle_name || "",
-        vehicle_name_en: vehicle.vehicle_name_en || "",
-        feature: vehicle.feature || "",
-        vehicle_type: vehicle.vehicle_type || "",
+        id: vehicle.id?.toString() || '',
+        brand_id: vehicle.brand_id?.toString() || '',
+        vehicle_name: vehicle.vehicle_name || '',
+        vehicle_name_en: vehicle.vehicle_name_en || '',
+        feature: vehicle.feature || '',
+        vehicle_type: vehicle.vehicle_type || '',
         price: vehicle.price || 0,
       }));
 
@@ -234,15 +224,15 @@ export const getVehicles = async (
       return {
         success: false,
         data: null,
-        error: response.error || "获取载具列表失败",
+        error: response.error || '获取载具列表失败',
       };
     }
   } catch (error) {
-    console.error("Error fetching vehicles:", error);
+    console.error('Error fetching vehicles:', error);
     return {
       success: false,
       data: null,
-      error: "获取数据时发生错误",
+      error: '获取数据时发生错误',
     };
   }
 };
@@ -251,32 +241,28 @@ export const getVehicles = async (
  * Gets all vehicles with brand information
  * @returns A promise that resolves with the list of vehicles with brand information
  */
-export const getAllVehicles = async (): Promise<
-  ApiResponse<Array<[Brand, Vehicle]>>
-> => {
+export const getAllVehicles = async (): Promise<ApiResponse<Array<[Brand, Vehicle]>>> => {
   try {
     // 调用后端API获取原始数据
-    const response = await callBackend<ApiResponse<any[]>>(
-      apiEndpoints.getAllVehicles
-    );
+    const response = await callBackend<ApiResponse<any[]>>(apiEndpoints.getAllVehicles);
 
     // 转换数据格式以匹配前端类型定义
     if (response.success && response.data) {
       const transformedVehicles = response.data.map((vehicle) => [
         // 品牌信息
         {
-          id: vehicle.brand_id?.toString() || "",
-          brand: vehicle.brand_name || "",
-          brand_en: vehicle.brand_name_en || "",
+          id: vehicle.brand_id?.toString() || '',
+          brand: vehicle.brand_name || '',
+          brand_en: vehicle.brand_name_en || '',
         },
         // 载具信息
         {
-          id: vehicle.id?.toString() || "",
-          brand_id: vehicle.brand_id?.toString() || "",
-          vehicle_name: vehicle.vehicle_name || "",
-          vehicle_name_en: vehicle.vehicle_name_en || "",
-          feature: vehicle.feature || "",
-          vehicle_type: vehicle.vehicle_type || "",
+          id: vehicle.id?.toString() || '',
+          brand_id: vehicle.brand_id?.toString() || '',
+          vehicle_name: vehicle.vehicle_name || '',
+          vehicle_name_en: vehicle.vehicle_name_en || '',
+          feature: vehicle.feature || '',
+          vehicle_type: vehicle.vehicle_type || '',
           price: vehicle.price || 0,
         },
       ]);
@@ -290,15 +276,15 @@ export const getAllVehicles = async (): Promise<
       return {
         success: false,
         data: null,
-        error: response.error || "获取载具列表失败",
+        error: response.error || '获取载具列表失败',
       };
     }
   } catch (error) {
-    console.error("Error fetching all vehicles:", error);
+    console.error('Error fetching all vehicles:', error);
     return {
       success: false,
       data: null,
-      error: "获取数据时发生错误",
+      error: '获取数据时发生错误',
     };
   }
 };
@@ -310,16 +296,14 @@ export const getAllVehicles = async (): Promise<
 export const getAllVehiclesFeature = async (): Promise<ApiResponse<Map<string, string>>> => {
   try {
     // 调用后端API获取原始数据
-    const response = await callBackend<ApiResponse<any[]>>(
-      apiEndpoints.getAllVehicles
-    );
+    const response = await callBackend<ApiResponse<any[]>>(apiEndpoints.getAllVehicles);
 
     // 转换数据格式以匹配前端类型定义
     if (response.success && response.data) {
       const featureMap = new Map<string, string>();
       response.data.forEach((vehicle) => {
         if (vehicle.id) {
-          featureMap.set(vehicle.id.toString(), vehicle.feature || "");
+          featureMap.set(vehicle.id.toString(), vehicle.feature || '');
         }
       });
 
@@ -332,15 +316,15 @@ export const getAllVehiclesFeature = async (): Promise<ApiResponse<Map<string, s
       return {
         success: false,
         data: null,
-        error: response.error || "获取载具特性列表失败",
+        error: response.error || '获取载具特性列表失败',
       };
     }
   } catch (error) {
-    console.error("Error fetching all vehicles feature:", error);
+    console.error('Error fetching all vehicles feature:', error);
     return {
       success: false,
       data: null,
-      error: "获取数据时发生错误",
+      error: '获取数据时发生错误',
     };
   }
 };
@@ -350,9 +334,7 @@ export const getAllVehiclesFeature = async (): Promise<ApiResponse<Map<string, s
  * @param vehicle - The vehicle to add
  * @returns A promise that resolves with the added vehicle
  */
-export const addVehicle = async (
-  vehicle: Vehicle
-): Promise<ApiResponse<Vehicle>> => {
+export const addVehicle = async (vehicle: Vehicle): Promise<ApiResponse<Vehicle>> => {
   try {
     // 转换前端数据格式以匹配后端API要求
     const vehicleData = {
@@ -365,21 +347,18 @@ export const addVehicle = async (
     };
 
     // 调用后端API
-    const response = await callBackend<ApiResponse<any>>(
-      apiEndpoints.addVehicle,
-      {
-        vehicle: vehicleData,
-      }
-    );
+    const response = await callBackend<ApiResponse<any>>(apiEndpoints.addVehicle, {
+      vehicle: vehicleData,
+    });
 
     // 转换响应数据格式
     if (response.success && response.data) {
       const transformedVehicle = {
-        id: response.data.id?.toString() || "",
-        brand_id: response.data.brand_id?.toString() || "",
-        vehicle_name: response.data.vehicle_name || "",
-        vehicle_name_en: response.data.vehicle_name_en || "",
-        feature: response.data.feature || "",
+        id: response.data.id?.toString() || '',
+        brand_id: response.data.brand_id?.toString() || '',
+        vehicle_name: response.data.vehicle_name || '',
+        vehicle_name_en: response.data.vehicle_name_en || '',
+        feature: response.data.feature || '',
       };
 
       return {
@@ -391,15 +370,15 @@ export const addVehicle = async (
       return {
         success: false,
         data: null,
-        error: response.error || "添加载具失败",
+        error: response.error || '添加载具失败',
       };
     }
   } catch (error) {
-    console.error("Error adding vehicle:", error);
+    console.error('Error adding vehicle:', error);
     return {
       success: false,
       data: null,
-      error: "添加数据时发生错误",
+      error: '添加数据时发生错误',
     };
   }
 };
@@ -415,9 +394,7 @@ export const addVehicle = async (
 export const getGarages = async (): Promise<ApiResponse<Garage[]>> => {
   try {
     // 调用后端API获取原始数据
-    const response = await callBackend<ApiResponse<any[]>>(
-      apiEndpoints.getGarages
-    );
+    const response = await callBackend<ApiResponse<any[]>>(apiEndpoints.getGarages);
 
     // 转换数据格式以匹配前端类型定义
     if (response.success) {
@@ -432,14 +409,14 @@ export const getGarages = async (): Promise<ApiResponse<Garage[]>> => {
           try {
             vehicleList = JSON.parse(garage.vehicle_list);
           } catch (e) {
-            console.error("Error parsing vehicle_list:", e);
+            console.error('Error parsing vehicle_list:', e);
             vehicleList = [];
           }
         }
 
         return {
           id: garage.id || 0,
-          storageName: garage.garage_name || "",
+          storageName: garage.garage_name || '',
           num: garage.num || 0,
           remarks: garage.remarks || undefined,
           vehicleList: vehicleList,
@@ -456,15 +433,15 @@ export const getGarages = async (): Promise<ApiResponse<Garage[]>> => {
       return {
         success: false,
         data: null,
-        error: response.error || "获取车库列表失败",
+        error: response.error || '获取车库列表失败',
       };
     }
   } catch (error) {
-    console.error("Error fetching garages:", error);
+    console.error('Error fetching garages:', error);
     return {
       success: false,
       data: null,
-      error: "获取数据时发生错误",
+      error: '获取数据时发生错误',
     };
   }
 };
@@ -474,9 +451,7 @@ export const getGarages = async (): Promise<ApiResponse<Garage[]>> => {
  * @param garage - The garage to add
  * @returns A promise that resolves with the added garage
  */
-export const addGarage = async (
-  garage: Omit<Garage, "id">
-): Promise<ApiResponse<Garage>> => {
+export const addGarage = async (garage: Omit<Garage, 'id'>): Promise<ApiResponse<Garage>> => {
   try {
     // 转换前端数据格式以匹配后端API要求
     const garageData = {
@@ -489,12 +464,9 @@ export const addGarage = async (
     };
 
     // 调用后端API
-    const response = await callBackend<ApiResponse<any>>(
-      apiEndpoints.addGarage,
-      {
-        garage: garageData,
-      }
-    );
+    const response = await callBackend<ApiResponse<any>>(apiEndpoints.addGarage, {
+      garage: garageData,
+    });
 
     // 转换响应数据格式
     if (response.success && response.data) {
@@ -505,14 +477,14 @@ export const addGarage = async (
         try {
           vehicleList = JSON.parse(response.data.vehicle_list);
         } catch (e) {
-          console.error("Error parsing vehicle_list:", e);
+          console.error('Error parsing vehicle_list:', e);
           vehicleList = [];
         }
       }
 
       const transformedGarage = {
         id: response.data.id || 0,
-        storageName: response.data.garage_name || "",
+        storageName: response.data.garage_name || '',
         num: response.data.num || 0,
         remarks: response.data.remarks || undefined,
         vehicleList: vehicleList,
@@ -528,15 +500,15 @@ export const addGarage = async (
       return {
         success: false,
         data: null,
-        error: response.error || "添加车库失败",
+        error: response.error || '添加车库失败',
       };
     }
   } catch (error) {
-    console.error("Error adding garage:", error);
+    console.error('Error adding garage:', error);
     return {
       success: false,
       data: null,
-      error: "添加数据时发生错误",
+      error: '添加数据时发生错误',
     };
   }
 };
@@ -546,9 +518,7 @@ export const addGarage = async (
  * @param garage - The garage to update
  * @returns A promise that resolves with the updated garage
  */
-export const updateGarage = async (
-  garage: Garage
-): Promise<ApiResponse<Garage>> => {
+export const updateGarage = async (garage: Garage): Promise<ApiResponse<Garage>> => {
   try {
     // 转换前端数据格式以匹配后端API要求
     const garageData = {
@@ -562,12 +532,9 @@ export const updateGarage = async (
     };
 
     // 调用后端API
-    const response = await callBackend<ApiResponse<any>>(
-      apiEndpoints.updateGarage,
-      {
-        garage: garageData,
-      }
-    );
+    const response = await callBackend<ApiResponse<any>>(apiEndpoints.updateGarage, {
+      garage: garageData,
+    });
 
     // 转换响应数据格式
     if (response.success && response.data) {
@@ -578,14 +545,14 @@ export const updateGarage = async (
         try {
           vehicleList = JSON.parse(response.data.vehicle_list);
         } catch (e) {
-          console.error("Error parsing vehicle_list:", e);
+          console.error('Error parsing vehicle_list:', e);
           vehicleList = [];
         }
       }
 
       const transformedGarage = {
         id: response.data.id || 0,
-        storageName: response.data.garage_name || "",
+        storageName: response.data.garage_name || '',
         num: response.data.num || 0,
         remarks: response.data.remarks || undefined,
         vehicleList: vehicleList,
@@ -601,15 +568,15 @@ export const updateGarage = async (
       return {
         success: false,
         data: null,
-        error: response.error || "更新车库失败",
+        error: response.error || '更新车库失败',
       };
     }
   } catch (error) {
-    console.error("Error updating garage:", error);
+    console.error('Error updating garage:', error);
     return {
       success: false,
       data: null,
-      error: "更新数据时发生错误",
+      error: '更新数据时发生错误',
     };
   }
 };
@@ -622,24 +589,21 @@ export const updateGarage = async (
 export const deleteGarage = async (id: number): Promise<ApiResponse<void>> => {
   try {
     // 调用后端API
-    const response = await callBackend<ApiResponse<any>>(
-      apiEndpoints.deleteGarage,
-      {
-        id: id,
-      }
-    );
+    const response = await callBackend<ApiResponse<any>>(apiEndpoints.deleteGarage, {
+      id: id,
+    });
 
     return {
       success: response.success,
       data: null,
-      error: response.error || (response.success ? null : "删除车库失败"),
+      error: response.error || (response.success ? null : '删除车库失败'),
     };
   } catch (error) {
-    console.error("Error deleting garage:", error);
+    console.error('Error deleting garage:', error);
     return {
       success: false,
       data: null,
-      error: "删除数据时发生错误",
+      error: '删除数据时发生错误',
     };
   }
 };
@@ -655,11 +619,11 @@ export const getDataInfo = async (): Promise<ApiResponse<any>> => {
 
     return response;
   } catch (error) {
-    console.error("Error fetching data info:", error);
+    console.error('Error fetching data info:', error);
     return {
       success: false,
       data: null,
-      error: "获取数据信息时发生错误",
+      error: '获取数据信息时发生错误',
     };
   }
 };
@@ -674,11 +638,11 @@ export const handleApiError = (error: any): string => {
     return error.message;
   }
 
-  if (typeof error === "string") {
+  if (typeof error === 'string') {
     return error;
   }
 
-  return "An unexpected error occurred";
+  return 'An unexpected error occurred';
 };
 
 /**
@@ -686,9 +650,7 @@ export const handleApiError = (error: any): string => {
  * @param apiCall - The API call function
  * @returns A promise that resolves with a standardized response
  */
-export const wrapApiCall = async <T>(
-  apiCall: () => Promise<T>
-): Promise<ApiResponse<T>> => {
+export const wrapApiCall = async <T>(apiCall: () => Promise<T>): Promise<ApiResponse<T>> => {
   try {
     const data = await apiCall();
     return {

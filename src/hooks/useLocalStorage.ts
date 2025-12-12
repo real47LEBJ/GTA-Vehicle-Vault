@@ -1,6 +1,9 @@
 import { useState, useEffect } from 'react';
 
-function useLocalStorage<T>(key: string, initialValue: T): [T, (value: T | ((val: T) => T)) => void] {
+function useLocalStorage<T>(
+  key: string,
+  initialValue: T
+): [T, (value: T | ((val: T) => T)) => void] {
   // 获取初始值（从localStorage或使用默认值）
   const readValue = (): T => {
     if (typeof window === 'undefined') {
@@ -23,12 +26,11 @@ function useLocalStorage<T>(key: string, initialValue: T): [T, (value: T | ((val
   const setValue = (value: T | ((val: T) => T)) => {
     try {
       // 允许值是函数，类似于useState
-      const valueToStore =
-        value instanceof Function ? value(storedValue) : value;
-      
+      const valueToStore = value instanceof Function ? value(storedValue) : value;
+
       // 保存状态
       setStoredValue(valueToStore);
-      
+
       // 保存到localStorage
       if (typeof window !== 'undefined') {
         window.localStorage.setItem(key, JSON.stringify(valueToStore));
@@ -48,7 +50,7 @@ function useLocalStorage<T>(key: string, initialValue: T): [T, (value: T | ((val
 
     // 添加事件监听
     window.addEventListener('storage', handleStorageChange);
-    
+
     // 清理事件监听
     return () => {
       window.removeEventListener('storage', handleStorageChange);

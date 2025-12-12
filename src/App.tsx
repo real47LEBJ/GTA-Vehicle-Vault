@@ -26,7 +26,7 @@ type NavItem = {
 export const RefreshContext = createContext<{
   refreshHomePage: () => void;
 }>({
-  refreshHomePage: () => { }
+  refreshHomePage: () => {},
 });
 
 function App() {
@@ -37,7 +37,7 @@ function App() {
 
   // Create a ref to store page refresh triggers
   const refreshTriggers = useRef({
-    home: 0
+    home: 0,
   });
 
   // Fetch data info on component mount
@@ -83,9 +83,19 @@ function App() {
           </div>
           {currentPage === 'vehicleList' && (
             <div className={styles.appInfo}>
-              <div>数据更新至：<span style={{ color: '#ffffff', fontSize: '15px' }}>{dataInfo?.dlc_name || ''}</span></div>
+              <div>
+                数据更新至：
+                <span style={{ color: '#ffffff', fontSize: '15px' }}>
+                  {dataInfo?.dlc_name || ''}
+                </span>
+              </div>
               {dataInfo?.update_time && (
-                <div>数据更新时间：<span style={{ color: '#ffffff', fontSize: '15px' }}>{dataInfo.update_time.substring(0, 10)}</span></div>
+                <div>
+                  数据更新时间：
+                  <span style={{ color: '#ffffff', fontSize: '15px' }}>
+                    {dataInfo.update_time.substring(0, 10)}
+                  </span>
+                </div>
               )}
             </div>
           )}
@@ -94,16 +104,14 @@ function App() {
         {/* Main Content - No sidebar */}
         <main className={styles.mainContent}>
           {/* 使用动态显示控制，保持组件挂载状态，避免不必要的重新渲染 */}
-          <MemoizedHomePage 
-            className={currentPage === 'home' ? styles.pageVisible : styles.pageHidden} 
+          <MemoizedHomePage
+            className={currentPage === 'home' ? styles.pageVisible : styles.pageHidden}
             key={refreshTriggers.current.home} // Only refresh when explicitly triggered
           />
-          <MemoizedAddPage 
-            className={currentPage === 'vehicleList' ? styles.pageVisible : styles.pageHidden} 
+          <MemoizedAddPage
+            className={currentPage === 'vehicleList' ? styles.pageVisible : styles.pageHidden}
           />
-          <AboutPage 
-            className={currentPage === 'about' ? styles.pageVisible : styles.pageHidden} 
-          />
+          <AboutPage className={currentPage === 'about' ? styles.pageVisible : styles.pageHidden} />
         </main>
       </div>
     </RefreshContext.Provider>

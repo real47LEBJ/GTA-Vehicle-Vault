@@ -32,7 +32,7 @@ const ControlPanel: React.FC<ControlPanelProps> = ({
   handleUpdateVehicleFeatures,
   loading,
   garages,
-  selectedGarageIds
+  selectedGarageIds,
 }) => {
   return (
     <div className={styles.controlContainer}>
@@ -94,35 +94,41 @@ const ControlPanel: React.FC<ControlPanelProps> = ({
             {loading ? '更新中...' : '更新数据'}
           </button>
         </div>
-        <div style={{
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'center',
-          alignItems: 'center',
-          fontSize: '13px',
-          fontWeight: 'bold',
-          color: '#ffffff',
-          backgroundColor: 'rgba(255, 255, 255, 0.1)',
-          padding: '4px 6px',
-          width: '50px'
-        }}>
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
+            fontSize: '13px',
+            fontWeight: 'bold',
+            color: '#ffffff',
+            backgroundColor: 'rgba(255, 255, 255, 0.1)',
+            padding: '4px 6px',
+            width: '50px',
+          }}
+        >
           <div style={{ fontSize: '11px' }}>车库总计</div>
           <div>{garages.length}</div>
         </div>
-        <div style={{
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'center',
-          alignItems: 'center',
-          fontSize: '13px',
-          fontWeight: 'bold',
-          color: '#ffffff',
-          backgroundColor: 'rgba(255, 255, 255, 0.1)',
-          padding: '4px 6px',
-          width: '50px'
-        }}>
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
+            fontSize: '13px',
+            fontWeight: 'bold',
+            color: '#ffffff',
+            backgroundColor: 'rgba(255, 255, 255, 0.1)',
+            padding: '4px 6px',
+            width: '50px',
+          }}
+        >
           <div style={{ fontSize: '11px' }}>载具总计</div>
-          <div>{garages.reduce((total, garage) => total + (garage.vehicleList?.length || 0), 0)}</div>
+          <div>
+            {garages.reduce((total, garage) => total + (garage.vehicleList?.length || 0), 0)}
+          </div>
         </div>
       </div>
     </div>
