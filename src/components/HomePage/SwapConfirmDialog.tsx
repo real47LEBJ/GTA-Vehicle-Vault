@@ -38,7 +38,7 @@ const SwapConfirmDialog: React.FC<SwapConfirmDialogProps> = ({
                 位置 {swapSource.vehicleIndex + 1}
               </p>
               <p className={styles.swapVehicleName} style={{ color: '#ffffff', fontSize: '22px' }}>
-                {swapSource.vehicleData.brandName} {swapSource.vehicleData.vehicleName}
+                {swapSource.vehicleData.brand_name} {swapSource.vehicleData.vehicle_name}
               </p>
             </div>
             <div className={styles.swapArrow}>
@@ -66,7 +66,7 @@ const SwapConfirmDialog: React.FC<SwapConfirmDialogProps> = ({
                 位置 {swapTarget.vehicleIndex + 1}
               </p>
               <p className={styles.swapVehicleName} style={{ color: '#ffffff', fontSize: '22px' }}>
-                {swapTarget.vehicleData.brandName} {swapTarget.vehicleData.vehicleName}
+                {swapTarget.vehicleData.brand_name} {swapTarget.vehicleData.vehicle_name}
               </p>
             </div>
           </div>

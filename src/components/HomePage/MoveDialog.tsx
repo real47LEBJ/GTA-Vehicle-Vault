@@ -78,7 +78,7 @@ const MoveDialog: React.FC<MoveDialogProps> = ({
             ) : (
               <>
                 <div>
-                  {vehicle.brandName} {vehicle.vehicleName}
+                  {vehicle.brand_name} {vehicle.vehicle_name}
                 </div>
                 {isMovingVehicle && <div className={styles.movingVehicleLabel}>正在移动的载具</div>}
               </>
@@ -114,8 +114,8 @@ const MoveDialog: React.FC<MoveDialogProps> = ({
                 <span style={{ fontSize: '22px' }}>{sourceGarage?.storageName || '未知车库'}</span>{' '}
                 移动{' '}
                 <span style={{ fontSize: '22px', color: '#ffffff' }}>
-                  {selectedVehicleToMove.vehicleData.brandName}{' '}
-                  {selectedVehicleToMove.vehicleData.vehicleName}
+                  {selectedVehicleToMove.vehicleData.brand_name}{' '}
+                  {selectedVehicleToMove.vehicleData.vehicle_name}
                 </span>
               </p>
               <p>选择目标车库:</p>
@@ -142,8 +142,8 @@ const MoveDialog: React.FC<MoveDialogProps> = ({
                 <span style={{ fontSize: '22px' }}>{sourceGarage?.storageName || '未知车库'}</span>{' '}
                 移动{' '}
                 <span style={{ fontSize: '22px', color: '#ffffff' }}>
-                  {selectedVehicleToMove.vehicleData.brandName}{' '}
-                  {selectedVehicleToMove.vehicleData.vehicleName}
+                  {selectedVehicleToMove.vehicleData.brand_name}{' '}
+                  {selectedVehicleToMove.vehicleData.vehicle_name}
                 </span>
               </p>
               <p>

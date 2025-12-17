@@ -26,10 +26,10 @@ export interface Vehicle {
  */
 export interface GarageVehicle {
   id: string;
-  vehicleName: string;
-  vehicleNameEn: string;
-  brandName: string;
-  brandNameEn: string;
+  vehicle_name: string;
+  vehicle_name_en: string;
+  brand_name: string;
+  brand_name_en: string;
   feature: string;
   price: number;
   vehicle_type: string;

@@ -321,11 +321,11 @@ const AddPage: React.FC<AddPageProps> = ({ className }) => {
       // 将选中的载具转换为GarageVehicle格式
       const garageVehicle: GarageVehicle = {
         id: selectedVehicle.id,
-        vehicleName: selectedVehicle.vehicle_name,
-        vehicleNameEn: selectedVehicle.vehicle_name_en,
+        vehicle_name: selectedVehicle.vehicle_name,
+        vehicle_name_en: selectedVehicle.vehicle_name_en,
         feature: selectedVehicle.feature,
-        brandName: brandName,
-        brandNameEn: brandNameEn,
+        brand_name: brandName,
+        brand_name_en: brandNameEn,
         price: selectedVehicle.price,
         vehicle_type: selectedVehicle.vehicle_type,
         remarks: '',

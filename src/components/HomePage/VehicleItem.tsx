@@ -42,7 +42,7 @@ const VehicleItem: React.FC<VehicleItemProps> = ({
   const isEmptyVehicle = Object.keys(vehicle).length === 0;
 
   // 构建图片路径
-  const imagePath = !isEmptyVehicle ? `/vehicle_thumbnails/${vehicle.vehicleNameEn}.webp` : '';
+  const imagePath = !isEmptyVehicle ? `/vehicle_thumbnails/${vehicle.vehicle_name_en}.webp` : '';
   // const imagePath = !isEmptyVehicle ? `/vehicle_thumbnails/S95.webp` : '';
 
   return (
@@ -71,8 +71,8 @@ const VehicleItem: React.FC<VehicleItemProps> = ({
         ) : (
           // 有内容的载具显示详细信息
           <>
-            <div className={styles.vehicleBrand}>{vehicle.brandName}</div>
-            <div className={styles.vehicleName}>{vehicle.vehicleName}</div>
+            <div className={styles.vehicleBrand}>{vehicle.brand_name}</div>
+            <div className={styles.vehicleName}>{vehicle.vehicle_name}</div>
             <div className={styles.vehicleType}>{vehicle.vehicle_type}</div>
             <div className={styles.vehiclePrice}>{formatPrice(vehicle.price)}</div>
 
@@ -82,13 +82,13 @@ const VehicleItem: React.FC<VehicleItemProps> = ({
                 {!imageError ? (
                   <img
                     src={imagePath}
-                    alt={vehicle.vehicleName}
+                    alt={vehicle.vehicle_name}
                     className={styles.vehicleImage}
                     onError={() => setImageError(true)}
                   />
                 ) : (
                   <div className={styles.vehicleImagePlaceholder}>
-                    <span>{vehicle.vehicleNameEn.slice(0, 2)}</span>
+                    <span>{vehicle.vehicle_name_en.slice(0, 2)}</span>
                   </div>
                 )}
               </div>

@@ -186,6 +186,29 @@ const StorageListPage: React.FC<HomePageProps> = ({ className }) => {
     }
   };
 
+  // 转换函数：将驼峰命名的字段转换为下划线命名，并处理重复字段
+  const convertToSnakeCase = (obj: any): any => {
+    const result: any = {};
+    // 遍历对象的所有属性
+    for (const key in obj) {
+      if (obj.hasOwnProperty(key)) {
+        // 如果是下划线命名的字段，直接保留
+        if (key.includes('_')) {
+          result[key] = obj[key];
+        } else {
+          // 将驼峰命名转换为下划线命名
+          const snakeCaseKey = key.replace(/([A-Z])/g, '_$1').toLowerCase();
+          // 如果下划线命名的字段已经存在，直接删除当前驼峰命名的字段（不添加到结果中）
+          // 这样可以确保以下划线命名的字段为准
+          if (!result.hasOwnProperty(snakeCaseKey)) {
+            result[snakeCaseKey] = obj[key];
+          }
+        }
+      }
+    }
+    return result;
+  };
+
   // 更新车库中所有载具的信息（vehicle_name, vehicle_name_en, vehicle_type, feature, price）
   const handleUpdateVehicleFeatures = async () => {
     setLoading(true);
@@ -203,8 +226,8 @@ const StorageListPage: React.FC<HomePageProps> = ({ className }) => {
         string,
         {
           price: number;
-          vehicleName: string;
-          vehicleNameEn: string;
+          vehicle_name: string;
+          vehicle_name_en: string;
           vehicle_type: string;
           feature: string;
         }
@@ -215,8 +238,8 @@ const StorageListPage: React.FC<HomePageProps> = ({ className }) => {
         if (vehicle.id) {
           vehicleInfoMap.set(vehicle.id, {
             price: vehicle.price || 0,
-            vehicleName: vehicle.vehicle_name || '',
-            vehicleNameEn: vehicle.vehicle_name_en || '',
+            vehicle_name: vehicle.vehicle_name || '',
+            vehicle_name_en: vehicle.vehicle_name_en || '',
             vehicle_type: vehicle.vehicle_type || '',
             feature: vehicle.feature || '',
           });
@@ -237,12 +260,16 @@ const StorageListPage: React.FC<HomePageProps> = ({ className }) => {
           const updatedVehicleList = garage.vehicleList.map((vehicle) => {
             if (vehicle.id && vehicleInfoMap.has(vehicle.id)) {
               const updatedInfo = vehicleInfoMap.get(vehicle.id)!;
-              return {
+              // 合并车辆信息并转换为下划线命名规则
+              const mergedVehicle = {
                 ...vehicle,
                 ...updatedInfo,
               };
+              // 应用转换函数，将驼峰命名转换为下划线命名，并处理重复字段
+              return convertToSnakeCase(mergedVehicle);
             }
-            return vehicle;
+            // 对空的车辆对象也应用转换函数（虽然可能不需要）
+            return convertToSnakeCase(vehicle);
           });
 
           // 保存更新后的车库
