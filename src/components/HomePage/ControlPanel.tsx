@@ -127,7 +127,11 @@ const ControlPanel: React.FC<ControlPanelProps> = ({
         >
           <div style={{ fontSize: '11px' }}>载具总计</div>
           <div>
-            {garages.reduce((total, garage) => total + (garage.vehicleList?.length || 0), 0)}
+            {garages.reduce((total, garage) => {
+              const nonEmptyVehicles =
+                garage.vehicleList?.filter((vehicle) => Object.keys(vehicle).length > 0) || [];
+              return total + nonEmptyVehicles.length;
+            }, 0)}
           </div>
         </div>
       </div>

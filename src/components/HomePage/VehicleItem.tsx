@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styles from '../../styles/pages/HomePage.module.css';
 import { GarageVehicle } from '../../types';
+import { featureConfigMap } from '../../utils/features';
 
 // 格式化价格函数
 const formatPrice = (price: number | null | undefined): string => {
@@ -9,34 +10,6 @@ const formatPrice = (price: number | null | undefined): string => {
   if (price === -1) return '无法获取';
   return '$' + new Intl.NumberFormat('zh-CN').format(price);
 };
-
-// 特性配置数组 - 存储每个特性的文本、背景颜色和字体颜色
-const featureConfig = [
-  { text: 'BENNY', bgColor: '#CC5555', textColor: '#FFFFFF' },
-  { text: 'IMANI', bgColor: '#3D9992', textColor: '#FFFFFF' },
-  { text: 'HAO', bgColor: '#3499B2', textColor: '#FFFFFF' },
-  { text: 'POLICE', bgColor: '#229954', textColor: '#FFFFFF' },
-  { text: 'ARENA', bgColor: '#7D4693', textColor: '#FFFFFF' },
-  { text: 'PEGASUS', bgColor: '#D35400', textColor: '#FFFFFF' },
-  { text: 'DRIFT', bgColor: '#C0392B', textColor: '#FFFFFF' },
-  { text: 'WEAPONIZED', bgColor: '#3f6d99ff', textColor: '#FFFFFF' },
-  { text: 'NIGHTCLUB', bgColor: '#703688', textColor: '#FFFFFF' },
-  { text: 'BUNKER', bgColor: '#6C7A7D', textColor: '#FFFFFF' },
-  { text: 'WAREHOUSE', bgColor: '#A93226', textColor: '#FFFFFF' },
-  { text: 'FACILITY', bgColor: '#138D75', textColor: '#FFFFFF' },
-  { text: 'HANGAR', bgColor: '#6d2299ff', textColor: '#FFFFFF' },
-  { text: 'SALVAGE YARDS', bgColor: '#228799ff', textColor: '#FFFFFF' },
-  { text: 'FREAKSHOP', bgColor: '#999722ff', textColor: '#FFFFFF' },
-  { text: 'KOSATKA', bgColor: '#99227fff', textColor: '#FFFFFF' },
-  { text: 'ELECTRIC', bgColor: '#91a82cff', textColor: '#FFFFFF' },
-  { text: 'ARMED', bgColor: '#99227fff', textColor: '#FFFFFF' },
-  { text: 'ARMORED', bgColor: '#91a82cff', textColor: '#FFFFFF' },
-];
-
-// 创建特性映射以快速查找配置
-const featureConfigMap = Object.fromEntries(
-  featureConfig.map((feature) => [feature.text, feature])
-);
 
 interface VehicleItemProps {
   vehicle: GarageVehicle;
@@ -63,8 +36,14 @@ const VehicleItem: React.FC<VehicleItemProps> = ({
   handleOpenMoveDialog,
   handleOpenDeleteConfirmDialog,
 }) => {
+  const [imageError, setImageError] = useState(false);
+
   // 检查载具是否为空对象
   const isEmptyVehicle = Object.keys(vehicle).length === 0;
+
+  // 构建图片路径
+  const imagePath = !isEmptyVehicle ? `/vehicle_thumbnails/${vehicle.vehicleNameEn}.webp` : '';
+  // const imagePath = !isEmptyVehicle ? `/vehicle_thumbnails/S95.webp` : '';
 
   return (
     <div className={styles.vehicleItem} key={index}>
@@ -84,6 +63,7 @@ const VehicleItem: React.FC<VehicleItemProps> = ({
           </button>
         </div>
       )}
+
       <div className={styles.vehicleInfo}>
         {isEmptyVehicle ? (
           // 空载具显示"空"
@@ -95,6 +75,24 @@ const VehicleItem: React.FC<VehicleItemProps> = ({
             <div className={styles.vehicleName}>{vehicle.vehicleName}</div>
             <div className={styles.vehicleType}>{vehicle.vehicle_type}</div>
             <div className={styles.vehiclePrice}>{formatPrice(vehicle.price)}</div>
+
+            {/* 载具图片展示 */}
+            {!isEmptyVehicle && (
+              <div className={styles.vehicleImageContainer}>
+                {!imageError ? (
+                  <img
+                    src={imagePath}
+                    alt={vehicle.vehicleName}
+                    className={styles.vehicleImage}
+                    onError={() => setImageError(true)}
+                  />
+                ) : (
+                  <div className={styles.vehicleImagePlaceholder}>
+                    <span>{vehicle.vehicleNameEn.slice(0, 2)}</span>
+                  </div>
+                )}
+              </div>
+            )}
             {/* 只有当feature不为null且不为空时才显示特性列表 */}
             {vehicle.feature && vehicle.feature.trim() !== '' && (
               <div className={styles.vehicleFeature}>

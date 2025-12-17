@@ -1,7 +1,7 @@
 // 特性配置数组 - 存储每个特性的文本、背景颜色和字体颜色
 export const featureConfig = [
   { text: 'BENNY', bgColor: '#CC5555', textColor: '#FFFFFF' },
-  { text: 'IMANI', bgColor: '#3D9992', textColor: '#FFFFFF' },
+  { text: 'IMANI', bgColor: '#A93226', textColor: '#FFFFFF' },
   { text: 'HAO', bgColor: '#3499B2', textColor: '#FFFFFF' },
   { text: 'POLICE', bgColor: '#229954', textColor: '#FFFFFF' },
   { text: 'ARENA', bgColor: '#7D4693', textColor: '#FFFFFF' },

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styles from '../../styles/pages/AddPage.module.css';
 import { Vehicle as VehicleType, Brand } from '../../types';
 import { featureConfigMap } from '../../utils/features';
@@ -16,6 +16,11 @@ const VehicleItem: React.FC<VehicleItemProps> = ({
   onAddVehicle,
   featureDict,
 }) => {
+  const [imageError, setImageError] = useState(false);
+
+  // 构建图片路径
+  const imagePath = `/vehicle_thumbnails/${vehicle.vehicle_name_en}.webp`;
+
   // 格式化价格
   const formatPrice = (price: number) => {
     if (price === 0) {
@@ -32,6 +37,7 @@ const VehicleItem: React.FC<VehicleItemProps> = ({
       <button className={styles.moveVehicleButton} onClick={() => onAddVehicle(vehicle)}>
         <img src="/add.png" />
       </button>
+
       <div className={styles.vehicleInfo}>
         {/* 查找载具对应的品牌信息 */}
         {(() => {
@@ -41,6 +47,23 @@ const VehicleItem: React.FC<VehicleItemProps> = ({
         <div className={styles.vehicleName}>{vehicle.vehicle_name}</div>
         <div className={styles.vehicleType}>{vehicle.vehicle_type}</div>
         <div className={styles.vehiclePrice}>{formatPrice(vehicle.price)}</div>
+
+        {/* 载具图片展示 */}
+        <div className={styles.vehicleImageContainer}>
+          {!imageError ? (
+            <img
+              src={imagePath}
+              alt={vehicle.vehicle_name}
+              className={styles.vehicleImage}
+              onError={() => setImageError(true)}
+            />
+          ) : (
+            <div className={styles.vehicleImagePlaceholder}>
+              <span>{vehicle.vehicle_name_en.slice(0, 2)}</span>
+            </div>
+          )}
+        </div>
+
         {/* 只有当feature不为null且不为空时才显示特性列表 */}
         {vehicle.feature && vehicle.feature.trim() !== '' && (
           <div className={styles.vehicleFeature}>
