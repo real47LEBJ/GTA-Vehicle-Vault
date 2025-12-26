@@ -17,9 +17,17 @@ const VehicleItem: React.FC<VehicleItemProps> = ({
   featureDict,
 }) => {
   const [imageError, setImageError] = useState(false);
+  const [triedNoSpaces, setTriedNoSpaces] = useState(false);
 
   // 构建图片路径
-  const imagePath = `/vehicle_thumbnails/${vehicle.vehicle_name_en}.webp`;
+  const baseImageName = vehicle.vehicle_name_en || '';
+  const imageNameWithSpaces = `${baseImageName}.webp`;
+  const imageNameWithoutSpaces = `${baseImageName.replace(/\s+/g, '')}.webp`;
+
+  // 先尝试带空格的图片名，失败后尝试不带空格的图片名
+  const imagePath = triedNoSpaces
+    ? `/vehicle_thumbnails/${imageNameWithoutSpaces}`
+    : `/vehicle_thumbnails/${imageNameWithSpaces}`;
 
   // 格式化价格
   const formatPrice = (price: number) => {
@@ -55,11 +63,19 @@ const VehicleItem: React.FC<VehicleItemProps> = ({
               src={imagePath}
               alt={vehicle.vehicle_name}
               className={styles.vehicleImage}
-              onError={() => setImageError(true)}
+              onError={() => {
+                if (!triedNoSpaces) {
+                  // 第一次失败，尝试不带空格的版本
+                  setTriedNoSpaces(true);
+                } else {
+                  // 第二次也失败了，显示占位符
+                  setImageError(true);
+                }
+              }}
             />
           ) : (
             <div className={styles.vehicleImagePlaceholder}>
-              <span>{vehicle.vehicle_name_en.slice(0, 2)}</span>
+              {/* <span>{vehicle.vehicle_name_en.slice(0, 2)}</span> */}
             </div>
           )}
         </div>

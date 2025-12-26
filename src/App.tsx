@@ -99,6 +99,16 @@ function App() {
               )}
             </div>
           )}
+          {currentPage === 'home' && (
+            <div className={styles.appInfo}>
+              <div>
+                <span style={{ color: '#ffffff', fontSize: '15px', marginRight: '5px' }}>
+                  Ctrl+F
+                </span>
+                进行搜索
+              </div>
+            </div>
+          )}
         </nav>
 
         {/* Main Content - No sidebar */}

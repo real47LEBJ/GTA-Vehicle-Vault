@@ -57,7 +57,7 @@ const AddVehicleDialog: React.FC<AddVehicleDialogProps> = ({
           {isEmpty ? (
             <div className={styles.positionStatus}>空</div>
           ) : (
-            <div className={styles.positionVehicle}>{`${vehicle.vehicleName}`}</div>
+            <div className={styles.positionVehicle}>{`${vehicle.vehicle_name}`}</div>
           )}
         </div>
       );

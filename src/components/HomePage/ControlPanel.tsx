@@ -134,6 +134,30 @@ const ControlPanel: React.FC<ControlPanelProps> = ({
             }, 0)}
           </div>
         </div>
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
+            fontSize: '13px',
+            fontWeight: 'bold',
+            color: '#ffffff',
+            backgroundColor: 'rgba(255, 255, 255, 0.1)',
+            padding: '4px 6px',
+            width: '50px',
+          }}
+        >
+          <div style={{ fontSize: '11px' }}>空余车位</div>
+          <div>
+            {garages.reduce((total, garage) => total + garage.num, 0) -
+              garages.reduce((total, garage) => {
+                const nonEmptyVehicles =
+                  garage.vehicleList?.filter((vehicle) => Object.keys(vehicle).length > 0) || [];
+                return total + nonEmptyVehicles.length;
+              }, 0)}
+          </div>
+        </div>
       </div>
     </div>
   );
